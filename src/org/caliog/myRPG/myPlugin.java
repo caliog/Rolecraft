@@ -214,8 +214,8 @@ public class myPlugin extends JavaPlugin {
 				@Override
 				public void onFinish(Updater updater) {
 					if (updater.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE))
-						getLogger().info("There is a new version (" + updater.getLatestName().replace("Rolecrafts", "").trim()
-								+ ") of Rolecrafts available!");
+						getLogger().info("There is a new version (" + updater.getLatestName().replace("Rolecraft", "").trim()
+								+ ") of Rolecraft available!");
 
 				}
 			});

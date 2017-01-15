@@ -1,7 +1,7 @@
 package org.caliog.myRPG.Utils;
 
 public class FilePath {
-	public static String main = "plugins/Rolecrafts/";
+	public static String main = "plugins/Rolecraft/";
 	public static String con = main + "Config/";
 	public static String data = main + "Data/";
 	public static String backup = data + "Backup/";

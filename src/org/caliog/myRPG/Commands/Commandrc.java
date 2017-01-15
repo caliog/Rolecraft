@@ -68,7 +68,7 @@ public class Commandrc extends Commands {
 				int page = 1;
 				if (args.length == 2)
 					page = Integer.parseInt(args[1]);
-				player.sendMessage(ChatColor.BLUE + "All permitted Rolecrafts commands: (Page " + page + ")");
+				player.sendMessage(ChatColor.BLUE + "All permitted Rolecraft commands: (Page " + page + ")");
 				int counter = 0;
 				int limit = 9 * page;
 				if (Manager.plugin.cmdReg.getPermittedCommands(player).size() >= limit - 9)
