@@ -1,0 +1,55 @@
+comment_0: '#Decide if the plugin should search for new updates.#'
+comment_0a: '#There will be no auto-download of new updates.#'
+enable-update-check: true
+comment1: '#You can choose every material you like (e.g. GOLD_NUGGETS, IRON_INGOT)#'
+currency: EMERALD
+comment2: '#Set the default class, players are assigned on first join#'
+default-class: Warrior
+comment3: '#Linear means that the amount of experience you need#'
+comment4: '#to reach the next level, stays constant! If its false#'
+comment4a: '#the higher your level the more exp you need until next level!#'
+linear-experience: false
+comment4b: '#Chat format: %PLAYER%, %MESSAGE%, %GROUP%, %CLASS%, %LEVEL%#'
+comment4c: '#Leave it blank or set to none if you dont want to use it#'
+chat-format: '&9[&9%CLASS%&9]&8[&2%PLAYER% &6%LEVEL%&8]&f: %MESSAGE%'
+comment5a: '#Instead of droping items, chests will spawn on death#'
+comment5b: '#Decide if a player loses his inventory on death or not#'
+keep-inventory: true
+enable-loot-chest: true
+comment5: '#The time after droped items/chests will be removed (in seconds)#'
+remove-item-delay: 120
+comment6: '#myRPG will not touch these worlds#'
+disable-worlds:
+  - world_nether
+  - world_the_end
+comment7: '#Decide if you like to have a small firework on level up and death#'
+firework: true
+comment8: '#How much percent of experience player lose on death#'
+exp-loss-on-death: 25
+comment9: '#If you do not enable spells, players will not be able to use them#'
+enable-spells: true
+comment10: '#The time between death and respawn of mobs (in seconds)#'
+comment11: '#You can set a additional individual amount of time in the mob file#'
+mob-spawn-time: 15
+comment11a: '#Disable natural spawn of the usual minecraft mobs in given world#'
+disable-natural-spawn:
+  world: false
+  world_nether: false
+  world_the_end: false
+comment17: '#Player with mtaching level will be moved into these groups#'
+comment18: '#ignore: names of the players who should not be moved#'
+group-assignment:
+  ignore: caliog,DrBaron,Syrios
+  Default: 1
+  Builder: 5
+comment12: '#If this is false, myRPG will install (by command or reload)#' 
+comment13: '#the Mobs&Items Creator which allows you to create custom mobs & items#'
+disable-mic: false
+comment13a: '#If you this is enabled, myRPG will extract the SpellCollection#'
+comment13b: '#It contains usefull standard spells for myRPG#'
+enable-spell-collection: true
+comment14: '#The maximum amount of backups in your Backup folder#'
+max-backups: 20
+comment15: '#Automatically backup after this time (in minutes)#'
+comment16: '#Set to zero if you do not want automatic backups#'
+backup-time: 60

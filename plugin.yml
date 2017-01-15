@@ -1,0 +1,44 @@
+name: Rolecrafts
+author: caliog
+website: http://www.caliog.org
+main: org.caliog.myRPG.myPlugin
+version: 3.1.25
+softdepend: [Vault]
+
+commands:
+    rc:
+        usage: /rc
+        description: shows information about the plugin!
+        aliases: [myrpg, rolecraft, rolecrafts]
+    msz:
+        usage: /msz create|remove|info <mob> <radius> <amount>
+        aliases: mobspawnzone
+        description: Creates a spawn zone around you.
+    level:
+        usage: /level set <player> <level>
+        description: Set level of a player.
+    item:
+        usage: /item <name> <level/amount> [tradeable]
+        description: Gives a myrpg custom item!
+    trader:
+        usage: /trader create <name>
+        description: Creates a trader!
+    priest:
+        usage: /priest create <name>
+        description: Creates a priest!
+    vg:
+        usage: /vg create
+        description: Creates a Villager!
+        aliases: villager
+    path:
+        usage: /path create
+        description: Creates a Path!
+    guard:
+        usage: /guard create
+        description: Creates a Guard!
+    group:
+        usage: /group create|invite|leave|join <player>
+        description: Lets you manage groups.
+    pet:
+        usage: /pet <mob> <name>
+        description: Creates a abstract pet, which can be spawned later with a spell.

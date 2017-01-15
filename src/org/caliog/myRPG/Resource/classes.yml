@@ -1,0 +1,32 @@
+Warrior:
+  chat-color: '&7'
+  int: 0
+  vit: 10
+  dex: 0
+  str: 10
+  spells:
+    xxx: Speed
+    oxx: SwordSpell
+    oxo: ArmorSpell
+Archer:
+  chat-color: '&9'
+  int: 0
+  vit: 10
+  dex: 10
+  str: 0
+  spells:
+    xxx: Speed
+    xoo: TripleShot
+    xxo: ArrowHail
+    xox: InvisibleSpell
+Mage:
+  chat-color: '&3'
+  int: 10
+  vit: 10
+  dex: 0
+  str: 0
+  spells:
+    xxx: Speed
+    xox: InvisibleSpell
+    oxx: Explosion
+    oxo: BlackArmor
