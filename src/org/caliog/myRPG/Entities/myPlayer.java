@@ -66,7 +66,8 @@ public abstract class myPlayer extends Fighter {
 	public double getDamage() {
 		int damage = 0;
 		if ((Weapon.isWeapon((myClass) this, getPlayer().getInventory().getItemInMainHand()))) {
-			damage += Weapon.getInstance((myClass) this, getPlayer().getInventory().getItemInMainHand()).getRandomDamage();
+			if (Weapon.getInstance((myClass) this, getPlayer().getInventory().getItemInMainHand()) != null)
+				damage += Weapon.getInstance((myClass) this, getPlayer().getInventory().getItemInMainHand()).getRandomDamage();
 		} else if (damage == 0) {
 			damage++;
 		}
