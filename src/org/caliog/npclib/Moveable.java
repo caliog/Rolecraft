@@ -36,7 +36,8 @@ public abstract class Moveable {
 			callback.run(new NPCPath(null, pathList, l));
 		} else {
 			this.path = new NPCPathFinder(getBukkitEntity().getLocation(), l, maxIterations, callback);
-			Bukkit.getScheduler().scheduleSyncDelayedTask(NPCManager.npcManager.getPlugin(), this.path);
+			if (NPCManager.npcManager != null)
+				Bukkit.getScheduler().scheduleSyncDelayedTask(NPCManager.npcManager.getPlugin(), this.path);
 		}
 	}
 
@@ -66,6 +67,8 @@ public abstract class Moveable {
 
 	public void usePath(NPCPath path, Runnable onFail) {
 		final Moveable a = this;
+		if (NPCManager.npcManager == null)
+			return;
 		if (this.taskid == 0) {
 			this.taskid = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(NPCManager.npcManager.getPlugin(), new Runnable() {
 				public void run() {

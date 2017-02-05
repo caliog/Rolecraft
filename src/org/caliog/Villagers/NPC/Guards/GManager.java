@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.caliog.Villagers.Utils.LocationUtil;
+import org.caliog.myRPG.Manager;
 import org.caliog.myRPG.Utils.FilePath;
 import org.caliog.myRPG.Utils.PlayerList;
 import org.caliog.npclib.NPCManager;
@@ -34,6 +35,12 @@ public class GManager {
 			String attacking = values[2];
 			String path = values[3];
 			String eq = values[4];
+			if (NPCManager.npcManager == null) {
+				Manager.plugin.getLogger()
+						.warning("Failed to create guard. ( " + Manager.plugin.getVersion() + " does not support guards.");
+				reader.close();
+				return;
+			}
 			Guard guard = new Guard(name, loc, Integer.parseInt(key), eq);
 			guard.setAttackings(attacking);
 			guard.createPath(path);
@@ -52,7 +59,8 @@ public class GManager {
 		}
 		writer.write(text);
 		writer.close();
-		NPCManager.npcManager.despawnAll();
+		if (NPCManager.npcManager != null)
+			NPCManager.npcManager.despawnAll();
 	}
 
 	public static Guard getGuard(UUID entityId) {
@@ -80,7 +88,7 @@ public class GManager {
 	}
 
 	public static void remove(Guard g) {
-		if (g != null)
+		if (g != null && NPCManager.npcManager != null)
 			NPCManager.npcManager.despawnById(String.valueOf(g.getId()));
 		guards.remove(g);
 
@@ -107,7 +115,10 @@ public class GManager {
 		while (isUsedId(id)) {
 			id++;
 		}
-
+		if (NPCManager.npcManager == null) {
+			Manager.plugin.getLogger().warning("Failed to create guard. ( " + Manager.plugin.getVersion() + " does not support guards.");
+			return;
+		}
 		Guard g = new Guard(name, loc, id, null);
 		guards.add(g);
 		PlayerList.refreshList();

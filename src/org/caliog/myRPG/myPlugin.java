@@ -36,6 +36,9 @@ public class myPlugin extends JavaPlugin {
 	public void onEnable() {
 		String pN = Bukkit.getServer().getClass().getPackage().getName();
 		version = pN.substring(pN.lastIndexOf(".") + 1);
+		if (!version.equalsIgnoreCase("v1_11_R1")) {
+			getLogger().warning("\u001B[31mGuards will not work with your bukkit version. \u001B[0m");
+		}
 		mkdir();
 
 		Manager.plugin = this;
