@@ -1,11 +1,14 @@
 package org.caliog.myRPG.Mobs;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.List;
+import java.util.HashSet;
+import java.util.logging.Level;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.caliog.myRPG.Manager;
 import org.caliog.myRPG.NMS.NMS;
 
 public class NMSMethods {
@@ -13,7 +16,7 @@ public class NMSMethods {
 	public static void setTarget(Entity e, LivingEntity target) {
 		try {
 			Class<?> entityCreature = NMS.getNMSClass("EntityCreature");
-			Class<?> craftEntity = NMS.getNMSClass("CraftEntity");
+			Class<?> craftEntity = NMS.getCraftbukkitNMSClass("entity.CraftEntity");
 			Class<?> entityInsentient = NMS.getNMSClass("EntityInsentient");
 			Class<?> pathfinderGoalSelector = NMS.getNMSClass("PathfinderGoalSelector");
 			Class<?> pathfinderGoal = NMS.getNMSClass("PathfinderGoal");
@@ -37,14 +40,40 @@ public class NMSMethods {
 			// TODO field name "b" is variable
 			Field listField = pathfinderGoalSelector.getDeclaredField("b");
 			listField.setAccessible(true);
-			List<?> list = (List<?>) listField.get(goals);
+			HashSet<?> list = (HashSet<?>) listField.get(goals);
 			list.clear();
 			// TODO field name "c" is variable
 			listField = pathfinderGoalSelector.getDeclaredField("c");
 			listField.setAccessible(true);
 
-			list = (List<?>) listField.get(goals);
+			list = (HashSet<?>) listField.get(goals);
 			list.clear();
+
+			// check which constructor exists:
+			Constructor<?> c = null;
+			Object pathfinderGoalHurtByTargetInstance = null;
+			try {
+				c = pathfinderGoalHurtByTarget.getConstructor(entityCreature, boolean.class);
+				pathfinderGoalHurtByTargetInstance = c.newInstance(entity, true);
+
+			} catch (Exception e1) {
+
+			}
+			if (c == null) {
+				Class<?>[] arrayDummy = {};
+				try {
+					c = pathfinderGoalHurtByTarget.getConstructor(entityCreature, boolean.class, arrayDummy.getClass());
+					pathfinderGoalHurtByTargetInstance = c.newInstance(entity, true, arrayDummy);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+			if (c == null) {
+				Manager.plugin.getLogger().log(Level.SEVERE,
+						"Could not find valid Constructor for PathfinderGoalSelector in NMSMethods.java line 69");
+				return;
+			}
 
 			// TODO method name "a" is variable
 			Method a = pathfinderGoalSelector.getMethod("a", int.class, pathfinderGoal);
@@ -54,7 +83,7 @@ public class NMSMethods {
 					pathfinderGoalMeleeAttack.getConstructor(entityCreature, double.class, boolean.class).newInstance(entity, 1.0D, false));
 			a.invoke(goals, 5, pathfinderGoalMoveTowardsRestriction.getConstructor(entityCreature, double.class).newInstance(entity, 1.0D));
 			a.invoke(goals, 7, pathfinderGoalRandomStroll.getConstructor(entityCreature, double.class).newInstance(entity, 1D));
-			a.invoke(targetSelector, 1, pathfinderGoalHurtByTarget.getConstructor(entityCreature, boolean.class).newInstance(entity, true));
+			a.invoke(targetSelector, 1, pathfinderGoalHurtByTargetInstance);
 			a.invoke(targetSelector, 2, pathfinderGoalNearestAttackableTarget.getConstructor(entityCreature, Class.class, boolean.class)
 					.newInstance(entity, t.getClass(), false));
 		} catch (Exception exc) {

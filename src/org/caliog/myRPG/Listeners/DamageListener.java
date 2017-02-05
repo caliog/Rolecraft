@@ -199,11 +199,15 @@ public class DamageListener implements Listener {
 				Set<Pet> pets = entity.getPets();
 				for (Pet p : pets) {
 					if (p.fightsBack()) {
-						for (Entity en : event.getEntity().getNearbyEntities(12, 5, 12))
+						boolean b = false;
+						for (Entity en : event.getEntity().getNearbyEntities(18, 5, 18)) {
+							if (b)
+								continue;
 							if (en.getUniqueId().equals(p.getId())) {
 								p.setTarget(en, mdamager);
-								break;
+								b = true;
 							}
+						}
 
 					}
 				}
@@ -262,11 +266,15 @@ public class DamageListener implements Listener {
 		Set<Pet> pets = PlayerManager.getPlayer(player.getUniqueId()).getPets();
 		for (Pet p : pets) {
 			if (p.fightsBack()) {
-				for (Entity en : event.getEntity().getNearbyEntities(12, 5, 12))
+				boolean b = false;
+				for (Entity en : event.getEntity().getNearbyEntities(18, 5, 18)) {
+					if (b)
+						continue;
 					if (en.getUniqueId().equals(p.getId())) {
 						p.setTarget(en, e);
-						break;
+						b = true;
 					}
+				}
 
 			}
 		}
