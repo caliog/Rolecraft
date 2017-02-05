@@ -43,15 +43,17 @@ public class myClass extends myPlayer {
 		setHealth(getMaxHealth());
 	}
 
+	@SuppressWarnings("deprecation")
 	public double getMaxHealth() {
 		double h = super.getMaximumHealth();
 		h += (getRVitality() / 100.0F) * 20.0F;
+		if (getPlayer().getMaxHealth() != h)
+			getPlayer().setMaxHealth(h);
 		return h;
 	}
 
 	public void resetHealth() {
-		setHealth(getMaxHealth());
-		getPlayer().setHealth(20.0D);
+		getPlayer().setHealth(getMaxHealth());
 	}
 
 	public void addHealth(double d) {

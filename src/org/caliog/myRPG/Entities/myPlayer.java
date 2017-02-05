@@ -35,9 +35,7 @@ public abstract class myPlayer extends Fighter {
 	}
 
 	public double getMaximumHealth() {
-		int l = getLevel();
-		double h = 4 * Math.round((Math.sqrt(l)));
-		return h;
+		return 20D;
 	}
 
 	public void giveExp(int exp) {
