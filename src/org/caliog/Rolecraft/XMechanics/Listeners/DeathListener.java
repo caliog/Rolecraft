@@ -8,11 +8,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Sound;
-import org.bukkit.entity.Creature;
 import org.bukkit.entity.Firework;
-import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -43,10 +40,6 @@ public class DeathListener implements Listener {
 			return;
 		event.setDroppedExp(0);
 		event.getDrops().clear();
-		if ((!(event.getEntity() instanceof Creature)) && (!(event.getEntity() instanceof Slime))
-				&& (!(event.getEntity() instanceof Ghast))) {
-			return;
-		}
 		final Mob mob = VolatileEntities.getMob(event.getEntity().getUniqueId());
 		if (mob == null) {
 			return;
@@ -114,30 +107,35 @@ public class DeathListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void playerDeathEvent(PlayerDeathEvent event) {
 		if (RolecraftConfig.isWorldDisabled(event.getEntity().getWorld()))
 			return;
-		if (RolecraftConfig.isFireworkEnabled()) {
-			Firework firework = (Firework) event.getEntity().getWorld().spawn(event.getEntity().getLocation(), Firework.class);
-			FireworkMeta data = firework.getFireworkMeta();
-			data.addEffects(new FireworkEffect[] { FireworkEffect.builder().flicker(false).withColor(Color.RED).withFade(Color.FUCHSIA)
-					.with(FireworkEffect.Type.CREEPER).build() });
-			data.setPower(new Random().nextInt(2) + 1);
-			firework.setFireworkMeta(data);
-		}
+		Manager.scheduleTask(new Runnable() {
 
-		float newExp = event.getEntity().getExp() - RolecraftConfig.getExpLoseRate() * event.getEntity().getExp();
-		if (newExp < 0) {
-			newExp = 0F;
-		}
-		event.getEntity().setExp(newExp);
+			@Override
+			public void run() {
+				if (RolecraftConfig.isFireworkEnabled()) {
+					Firework firework = (Firework) event.getEntity().getWorld().spawn(event.getEntity().getLocation(), Firework.class);
+					FireworkMeta data = firework.getFireworkMeta();
+					data.addEffects(new FireworkEffect[] { FireworkEffect.builder().flicker(false).withColor(Color.RED)
+							.withFade(Color.FUCHSIA).with(FireworkEffect.Type.CREEPER).build() });
+					data.setPower(new Random().nextInt(2) + 1);
+					firework.setFireworkMeta(data);
+				}
+
+				float newExp = event.getEntity().getExp() - RolecraftConfig.getExpLoseRate() * event.getEntity().getExp();
+				if (newExp < 0) {
+					newExp = 0F;
+				}
+				event.getEntity().setExp(newExp);
+			}
+		});
 
 		if (Utils.isBukkitMethod("org.bukkit.event.entity.PlayerDeathEvent", "setKeepInventory", Boolean.class))
 			event.setKeepInventory(RolecraftConfig.keepInventory());
 		else if (RolecraftConfig.keepInventory())
 			event.getDrops().clear();
-		Msg.sendMessage(event.getEntity(), "dead-message");
 	}
 
 }
