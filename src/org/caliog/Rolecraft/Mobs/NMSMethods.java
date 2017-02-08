@@ -12,22 +12,41 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.NMS.NMS;
 
 public class NMSMethods {
+	private static Class<?> entityCreature;
+	private static Class<?> craftEntity;
+	private static Class<?> entityInsentient;
+	private static Class<?> pathfinderGoalSelector;
+	private static Class<?> pathfinderGoalRandomStroll;
+	private static Class<?> pathfinderGoal;
+	private static Class<?> pathfinderGoalFloat;
+	private static Class<?> pathfinderGoalMeleeAttack;
+	private static Class<?> pathfinderGoalMoveTowardsRestriction;
+	private static Class<?> pathfinderGoalHurtByTarget;
+	private static Class<?> pathfinderGoalNearestAttackableTarget;
+
+	private static boolean init = false;
+
+	public static void init() throws ClassNotFoundException {
+		init = true;
+		entityCreature = NMS.getNMSClass("EntityCreature");
+		craftEntity = NMS.getCraftbukkitNMSClass("entity.CraftEntity");
+		entityInsentient = NMS.getNMSClass("EntityInsentient");
+		pathfinderGoalSelector = NMS.getNMSClass("PathfinderGoalSelector");
+		pathfinderGoal = NMS.getNMSClass("PathfinderGoal");
+		pathfinderGoalRandomStroll = NMS.getNMSClass("PathfinderGoalRandomStroll");
+		pathfinderGoalFloat = NMS.getNMSClass("PathfinderGoalFloat");
+		pathfinderGoalMeleeAttack = NMS.getNMSClass("PathfinderGoalMeleeAttack");
+		pathfinderGoalMoveTowardsRestriction = NMS.getNMSClass("PathfinderGoalMoveTowardsRestriction");
+		pathfinderGoalHurtByTarget = NMS.getNMSClass("PathfinderGoalHurtByTarget");
+		pathfinderGoalNearestAttackableTarget = NMS.getNMSClass("PathfinderGoalNearestAttackableTarget");
+	}
 
 	public static void setTarget(Entity e, LivingEntity target) {
+
 		if (e != null)
 			try {
-				Class<?> entityCreature = NMS.getNMSClass("EntityCreature");
-				Class<?> craftEntity = NMS.getCraftbukkitNMSClass("entity.CraftEntity");
-				Class<?> entityInsentient = NMS.getNMSClass("EntityInsentient");
-				Class<?> pathfinderGoalSelector = NMS.getNMSClass("PathfinderGoalSelector");
-				Class<?> pathfinderGoal = NMS.getNMSClass("PathfinderGoal");
-				Class<?> pathfinderGoalRandomStroll = NMS.getNMSClass("PathfinderGoalRandomStroll");
-				Class<?> pathfinderGoalFloat = NMS.getNMSClass("PathfinderGoalFloat");
-				Class<?> pathfinderGoalMeleeAttack = NMS.getNMSClass("PathfinderGoalMeleeAttack");
-				Class<?> pathfinderGoalMoveTowardsRestriction = NMS.getNMSClass("PathfinderGoalMoveTowardsRestriction");
-				Class<?> pathfinderGoalHurtByTarget = NMS.getNMSClass("PathfinderGoalHurtByTarget");
-				Class<?> pathfinderGoalNearestAttackableTarget = NMS.getNMSClass("PathfinderGoalNearestAttackableTarget");
-
+				if (!init)
+					init();
 				Object entity = entityCreature.cast(craftEntity.getMethod("getHandle").invoke(e));
 				Object t = entityCreature.cast(craftEntity.getMethod("getHandle").invoke(target));
 				Field goalsField = entityInsentient.getDeclaredField("goalSelector");
