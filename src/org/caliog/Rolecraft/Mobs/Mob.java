@@ -1,11 +1,13 @@
 package org.caliog.Rolecraft.Mobs;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -22,9 +24,9 @@ public abstract class Mob extends Fighter {
 	protected HashMap<ItemStack, Float> drops = new HashMap<ItemStack, Float>();
 	protected HashMap<String, ItemStack> eq = new HashMap<String, ItemStack>();
 	private final Vector spawnZone;
-	private int[] taskId = { -1, -1 };
+	private int taskId = -1;
 	private boolean dead = false;
-	private UUID attack;
+	private Set<UUID> attack = new HashSet<UUID>();
 
 	public Mob(String name, UUID id, Vector m) {
 		this.name = name;
@@ -114,12 +116,9 @@ public abstract class Mob extends Fighter {
 	public abstract boolean isPet();
 
 	private void cancel() {
-		if (taskId[0] != -1)
-			Manager.cancelTask(taskId[0]);
-		if (taskId[1] != -1)
-			Manager.cancelTask(taskId[1]);
-		taskId[0] = -1;
-		taskId[1] = -1;
+		if (taskId != -1)
+			Manager.cancelTask(taskId);
+		taskId = -1;
 	}
 
 	public void die() {
@@ -130,40 +129,58 @@ public abstract class Mob extends Fighter {
 		return dead;
 	}
 
-	public void setTarget(Entity e, LivingEntity target) {
-		if (attack != null)
+	public void setTarget(LivingEntity target) {
+		// only add living entities
+		if (attack.contains(target.getUniqueId()))
 			return;
-		if (!(target instanceof Creature))
-			return;
-		attack = target.getUniqueId();
+		attack.add(target.getUniqueId());
+		if (taskId == -1 || Bukkit.getScheduler().isCurrentlyRunning(taskId))
+			startNewAttackThread();
+	}
+
+	public void startNewAttackThread() {
 		cancel();
-		taskId[1] = Manager.scheduleTask(new Runnable() {
+		if (dead)
+			return;
+		final Entity en = Bukkit.getEntity(getUniqueId());
+		if (en == null)
+			return;
+		taskId = Manager.scheduleRepeatingTask(new Runnable() {
 
 			@Override
 			public void run() {
-				attack = null;
-				Manager.cancelTask(taskId[0]);
-				taskId[0] = -1;
-				taskId[1] = -1;
-			}
-		}, 20L * 30);
+				if (!dead) {
+					UUID target = getFirstAttack();
+					if (target != null) {
+						LivingEntity targetEntity = (LivingEntity) Bukkit.getEntity(target);
+						if (targetEntity == null || targetEntity.isDead()) {
+							attack.remove(target);
+						} else {
+							NMSMethods.setTarget(en, targetEntity);
+						}
+					} else
+						cancel();// cancel if attack is empty
 
-		taskId[0] = Manager.scheduleRepeatingTask(new Runnable() {
+				} else
+					cancel(); // cancel if mob is dead
 
-			@Override
-			public void run() {
-				NMSMethods.setTarget(e, target);
 			}
 		}, 0L, 5L);
 
 	}
 
-	public UUID getAttack() {
+	public Set<UUID> getAttack() {
 		return attack;
 	}
 
-	public void killedAttack() {
-		attack = null;
+	public UUID getFirstAttack() {
+		if (attack.isEmpty())
+			return null;
+		return (UUID) attack.toArray()[0];
+	}
+
+	public void killedAttack(UUID a) {
+		attack.remove(a);
 		cancel();
 	}
 }
