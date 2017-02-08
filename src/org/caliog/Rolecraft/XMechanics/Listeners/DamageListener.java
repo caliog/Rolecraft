@@ -2,7 +2,6 @@ package org.caliog.Rolecraft.XMechanics.Listeners;
 
 import java.util.HashMap;
 import java.util.Set;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
@@ -54,7 +53,7 @@ public class DamageListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void mobTargetMob(EntityTargetEvent event) {
 		Mob mob = VolatileEntities.getMob(event.getEntity().getUniqueId());
 		if ((mob == null) || (event.getTarget() == null)) {
@@ -65,8 +64,7 @@ public class DamageListener implements Listener {
 			return;
 		if (!(mob instanceof Pet) && !(target instanceof Pet))
 			event.setCancelled(true);
-		UUID attack = mob.getAttack();
-		if (attack == null || !attack.equals(target.getUniqueId()))
+		if (!mob.getAttack().contains(target.getUniqueId()))
 			event.setCancelled(true);
 
 	}
@@ -98,31 +96,29 @@ public class DamageListener implements Listener {
 					event.setCancelled(true);
 					return;
 				}
-				if (mob != null)
+				if (mob != null && player == null)
 					onMobDamagedByPlayer((EntityDamageByEntityEvent) event, (RolecraftPlayer) attacker, mob);
-			}
+			} else if (mob != null && player == null && attacker instanceof Mob)
+				onMobDamagedByMob((EntityDamageByEntityEvent) event, mob, (Mob) attacker);
 			// general case attacker could be player or mob
 			if (player != null)
 				onPlayerDamagedByEntity((EntityDamageByEntityEvent) event, player, attacker);
-			if (mob != null && attacker instanceof Mob)
-				onMobDamagedByMob((EntityDamageByEntityEvent) event, mob, (Mob) attacker);
 		}
 
 	}
 
 	private void onMobDamagedByMob(EntityDamageByEntityEvent event, Mob target, Mob attacker) {
-		target.setTarget(event.getEntity(), (LivingEntity) event.getDamager());
+		target.setTarget((LivingEntity) event.getDamager());
 		target.fight();
 		if (target.damage(event.getDamage() - target.getDefense())) {
 			target.setKiller(event.getDamager().getUniqueId());
 			((Damageable) event.getEntity()).setHealth(0.0D);
-			attacker.killedAttack();
+			attacker.killedAttack(target.getUniqueId());
 		}
 		event.setDamage(0D);
 	}
 
 	private void onPlayerDamagedByEntity(EntityDamageByEntityEvent event, RolecraftPlayer target, Fighter attacker) {
-		// player damaged by mob
 		double damage = event.getDamage();
 		damage -= target.getDefense();
 		if (damage < 0)
@@ -136,21 +132,25 @@ public class DamageListener implements Listener {
 
 		// pets
 		Set<Pet> pets = target.getPets();
-		for (Pet p : pets) {
-			if (p.fightsBack()) {
-				Entity en = Bukkit.getEntity(p.getUniqueId());
-				p.setTarget(en, damagerEntity);
-			}
-		}
+		for (Pet p : pets)
+			if (p.fightsBack())
+				p.setTarget(damagerEntity);
+
 		// pets end
 
 		// dealing damage and in case player dies...
 		double health = target.getPlayer().getHealth() - damage;
 		health = health < 0 ? 0 : health;
-		target.getPlayer().setHealth(health);
+		final double h = health;
+		Manager.scheduleTask(new Runnable() {
+
+			@Override
+			public void run() {
+				target.getPlayer().setHealth(h);
+			}
+		});
 		if (target.damage(damage)) {
 			target.setKiller(damagerEntity.getUniqueId());
-			target.getPlayer().setHealth(0D);
 			event.getEntity().setFireTicks(0);
 		}
 		event.setDamage(0D);
@@ -174,14 +174,9 @@ public class DamageListener implements Listener {
 		// pets
 		// if player attacks mob, his pet shall attack the mob too
 		Set<Pet> pets = attacker.getPets();
-		for (Pet p : pets) {
-			if (p.fightsBack()) {
-				Entity en = Bukkit.getEntity(p.getUniqueId());
-				if (en != null)
-					p.setTarget(en, targetEntity);
-			}
-
-		}
+		for (Pet p : pets)
+			if (p.fightsBack())
+				p.setTarget(targetEntity);
 
 		// pets end
 		if (damage < 0)
