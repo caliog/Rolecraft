@@ -1,4 +1,4 @@
 eclipse.preferences.version=1
-encoding//src/org/caliog/myRPG/Entities/Playerface.java=UTF-8
-encoding//src/org/caliog/myRPG/Spells/SpellBarManager.java=UTF-8
-encoding//src/org/caliog/myRPG/Utils/EntityUtils.java=UTF-8
+encoding//src/org/caliog/Rolecraft/Entities/EntityUtils.java=UTF-8
+encoding//src/org/caliog/Rolecraft/Entities/Player/Playerface.java=UTF-8
+encoding//src/org/caliog/Rolecraft/Spells/SpellBarManager.java=UTF-8
