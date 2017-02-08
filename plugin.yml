@@ -1,7 +1,8 @@
 name: Rolecraft
 author: caliog
 website: http://www.caliog.org
-main: org.caliog.myRPG.myPlugin
+main: org.caliog.Rolecraft.RolecraftPlugin
+version: 3.1.28
 softdepend: [Vault]
 
 commands:
@@ -18,7 +19,7 @@ commands:
         description: Set level of a player.
     item:
         usage: /item <name> <level/amount> [tradeable]
-        description: Gives a myrpg custom item!
+        description: Gives a custom item!
     trader:
         usage: /trader create <name>
         description: Creates a trader!
