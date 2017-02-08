@@ -135,7 +135,8 @@ public class PlayerManager {
 
 			double health = clazz.getPlayer().getHealth();
 			double d = -clazz.getHealth() + health;
-			clazz.addHealth(d);
+			if (d > 1e-3)
+				clazz.addHealth(d);
 		}
 	}
 
