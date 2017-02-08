@@ -56,10 +56,6 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		return h;
 	}
 
-	public void resetHealth() {
-		getPlayer().setHealth(getMaxHealth());
-	}
-
 	public void addHealth(double d) {
 		if (getHealth() + d > getMaxHealth()) {
 			setHealth(getMaxHealth());
