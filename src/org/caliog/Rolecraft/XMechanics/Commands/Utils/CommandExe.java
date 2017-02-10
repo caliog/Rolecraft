@@ -6,7 +6,7 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Utils.RolecraftUtils;
+import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class CommandExe {
 
@@ -48,18 +48,18 @@ public class CommandExe {
 				continue;
 
 			if (field.getType().contains("integer")) {
-				if (!RolecraftUtils.isInteger(args[i])) {
+				if (!Utils.isInteger(args[i])) {
 
 					if (player != null)
 						Msg.commandUsageError(field, player);
 					return false;
 				}
-				if (field.getType().contains("positive") && !RolecraftUtils.isPositiveInteger(args[i])) {
+				if (field.getType().contains("positive") && !Utils.isPositiveInteger(args[i])) {
 					if (player != null)
 						Msg.commandUsageError(field, player);
 					return false;
 				}
-				if (field.getType().contains("not-negative") && !RolecraftUtils.isNotNegativeInteger(args[i])) {
+				if (field.getType().contains("not-negative") && !Utils.isNotNegativeInteger(args[i])) {
 					if (player != null)
 						Msg.commandUsageError(field, player);
 					return false;

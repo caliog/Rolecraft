@@ -10,7 +10,7 @@ import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.Items.Books.Book;
-import org.caliog.Rolecraft.XMechanics.Utils.RolecraftUtils;
+import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class QuestBook extends Book {
 
@@ -61,7 +61,7 @@ public class QuestBook extends Book {
 
 									stack.getItemMeta().getDisplayName());
 						else
-							name = RolecraftUtils.readable(stack.getType());
+							name = Utils.readable(stack.getType());
 						page += "&8" + name + ": &0" + stack.getAmount() + "\n";
 					}
 

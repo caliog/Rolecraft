@@ -1,7 +1,7 @@
 package org.caliog.Rolecraft.XMechanics.Commands.Utils;
 
 import org.bukkit.entity.Player;
-import org.caliog.Rolecraft.XMechanics.Utils.RolecraftUtils;
+import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class Command {
 
@@ -59,7 +59,7 @@ public class Command {
 			if (!field.isIdentifier())
 				continue;
 			else
-				ident = (CommandField[]) RolecraftUtils.addElementToArray(ident, field);
+				ident = (CommandField[]) Utils.addElementToArray(ident, field);
 
 		return ident;
 	}
