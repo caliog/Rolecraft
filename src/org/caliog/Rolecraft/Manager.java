@@ -24,7 +24,7 @@ import org.caliog.Rolecraft.Villagers.Quests.QManager;
 import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
 import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
@@ -84,7 +84,7 @@ public class Manager {
 			QuestKill.save();
 			ChatManager.clear();
 
-			LOG.save();
+			Debugger.save();
 
 			DataFolder.backup();
 		} catch (IOException e) {

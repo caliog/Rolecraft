@@ -22,9 +22,8 @@ import org.caliog.Rolecraft.Spells.InvisibleSpell;
 import org.caliog.Rolecraft.Spells.Spell;
 import org.caliog.Rolecraft.Spells.SpellBarManager;
 import org.caliog.Rolecraft.XMechanics.Bars.BottomBar.BottomBar;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG.LogLevel;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG.LogTitle;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class RolecraftPlayer extends RolecraftAbstrPlayer {
@@ -292,14 +291,14 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 			if (id.equals(String.valueOf(spell[0]) + String.valueOf(spell[1]) + String.valueOf(spell[2]))) {
 				Spell spell = spells.get(id);
 				if (spell != null) {
-					LOG.log(LogLevel.INFO, LogTitle.SPELL, getPlayer().getName() + " is casting spell:", spell.getName());
+					Debugger.info(LogTitle.SPELL, "%s is casting spell:", getPlayer().getName(), spell.getName());
 					spell.execute();
 					BottomBar.display(getPlayer(), ChatColor.GOLD + spell.getName());
 					return;
 				}
 			}
-		LOG.log(LogLevel.EXCEPTION, LogTitle.SPELL, getPlayer().getName() + " tried to cast spell:", String.valueOf(spell[0]),
-				String.valueOf(spell[1]), String.valueOf(spell[2]));
+		Debugger.error(LogTitle.SPELL, "%s tried to cast spell:", getPlayer().getName(), String.valueOf(spell[0]), String.valueOf(spell[1]),
+				String.valueOf(spell[2]));
 		BottomBar.display(getPlayer(), ChatColor.RED + "" + ChatColor.MAGIC + "Uups");
 	}
 
@@ -385,10 +384,10 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 
 	public boolean spawnPet(Location loc, String name, String customName) {
 		Pet pet = Pet.spawnPet(name, customName, loc);
-		LOG.log(LogLevel.INFO, LogTitle.PET, getPlayer().getName() + " is trying to spawn his pet: (name=" + name + ")", customName);
+		Debugger.info(LogTitle.PET, "%s is trying to spawn his pet: (name=%s)", getPlayer().getName(), name, customName);
 		if (pet == null)
 			return false;
-		LOG.log(LogLevel.INFO, LogTitle.PET, getPlayer().getName() + " successfully spawned: (name=" + name + ")", customName);
+		Debugger.info(LogTitle.PET, "%s successfully spawned: (name=%s)", getPlayer().getName(), name, customName);
 		pets.add(pet);
 		return true;
 	}

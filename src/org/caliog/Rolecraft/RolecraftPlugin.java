@@ -15,21 +15,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandRegister;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
+import org.caliog.Rolecraft.XMechanics.Listeners.DamageListener;
 import org.caliog.Rolecraft.XMechanics.Listeners.DeathListener;
 import org.caliog.Rolecraft.XMechanics.Listeners.RolecraftListener;
 import org.caliog.Rolecraft.XMechanics.Listeners.VillagerListener;
-import org.caliog.Rolecraft.XMechanics.Listeners.DamageListener;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG.LogLevel;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
-import org.caliog.Rolecraft.XMechanics.Utils.RolecraftUtils;
 import org.caliog.Rolecraft.XMechanics.Utils.Updater;
 import org.caliog.Rolecraft.XMechanics.Utils.Updater.UpdateCallback;
 import org.caliog.Rolecraft.XMechanics.Utils.Updater.UpdateType;
+import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class RolecraftPlugin extends JavaPlugin {
 	public CommandRegister cmdReg;
@@ -52,7 +51,7 @@ public class RolecraftPlugin extends JavaPlugin {
 		cmdReg = new CommandRegister();
 
 		RolecraftConfig.init();
-		LOG.log(LogLevel.INFO, LogTitle.NONE, "Enabled Rolecraft version:", version);
+		Debugger.info(LogTitle.NONE, "Enabled Rolecraft version:", version);
 
 		createMIC();
 		createSpellCollection();
@@ -122,7 +121,7 @@ public class RolecraftPlugin extends JavaPlugin {
 
 			}
 		}
-		return cmdReg.executeCommand(cmd.getName(), RolecraftUtils.removeNull(a), player);
+		return cmdReg.executeCommand(cmd.getName(), Utils.removeNull(a), player);
 
 	}
 
@@ -205,7 +204,7 @@ public class RolecraftPlugin extends JavaPlugin {
 	}
 
 	public void reload() {
-		LOG.log(LogLevel.INFO, LogTitle.NONE, "Reloading Rolecraft version:", version);
+		Debugger.info(LogTitle.NONE, "Reloading Rolecraft version:", version);
 		RolecraftConfig.config = YamlConfiguration.loadConfiguration(new File(FilePath.config));
 		Msg.file = YamlConfiguration.loadConfiguration(new File(FilePath.messages));
 		ClazzLoader.classes = YamlConfiguration.loadConfiguration(new File(FilePath.classes));

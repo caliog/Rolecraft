@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.Logging;
+package org.caliog.Rolecraft.XMechanics.Debug;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,7 +14,7 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
-public class LOG {
+public class Debugger {
 
 	public enum LogLevel {
 		INFO, WARNING, ERROR, EXCEPTION;
@@ -53,7 +53,39 @@ public class LOG {
 		}
 	}
 
-	public static void log(LogLevel level, LogTitle title, String msg) {
+	public static void exception(LogTitle title, String msg) {
+		log(LogLevel.EXCEPTION, title, msg);
+	}
+
+	public static void error(LogTitle title, String msg) {
+		log(LogLevel.ERROR, title, msg);
+	}
+
+	public static void warning(LogTitle title, String msg) {
+		log(LogLevel.WARNING, title, msg);
+	}
+
+	public static void info(LogTitle title, String msg) {
+		log(LogLevel.INFO, title, msg);
+	}
+
+	public static void exception(LogTitle title, String msg, String... args) {
+		log(LogLevel.EXCEPTION, title, msg, args);
+	}
+
+	public static void error(LogTitle title, String msg, String... args) {
+		log(LogLevel.ERROR, title, msg, args);
+	}
+
+	public static void warning(LogTitle title, String msg, String... args) {
+		log(LogLevel.WARNING, title, msg, args);
+	}
+
+	public static void info(LogTitle title, String msg, String... args) {
+		log(LogLevel.INFO, title, msg, args);
+	}
+
+	private static void log(LogLevel level, LogTitle title, String msg) {
 		if (!RolecraftConfig.isLOGEnabled())
 			return;
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -70,9 +102,14 @@ public class LOG {
 			});
 	}
 
-	public static void log(LogLevel info, LogTitle cmd, String string, String... args) {
-		for (String a : args)
-			string += " " + a;
-		log(info, cmd, string);
+	private static void log(LogLevel info, LogTitle cmd, String msg, String... args) {
+		int c = 0;
+		while (c < args.length && msg.contains("%s")) {
+			msg.replaceFirst("%s", args[c]);
+			c++;
+		}
+		for (int i = c; i < args.length; i++)
+			msg += args[i];
+		log(info, cmd, msg);
 	}
 }

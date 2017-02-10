@@ -9,9 +9,8 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG.LogLevel;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG.LogTitle;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 
 public class CommandRegister {
 
@@ -26,7 +25,7 @@ public class CommandRegister {
 		if (obj instanceof Command) {
 			Command cmd = (Command) obj;
 			// LOG
-			LOG.log(LogLevel.INFO, LogTitle.CMD, player.getName() + " executed: " + name, args);
+			Debugger.info(LogTitle.CMD, player.getName() + " executed: " + name, args);
 
 			if (args.length >= cmd.getMin() && args.length <= cmd.getMax())
 				new CommandExe((Command) obj, args, player);

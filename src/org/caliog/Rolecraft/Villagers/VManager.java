@@ -32,9 +32,8 @@ import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.Villagers.Utils.LocationUtil;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG.LogLevel;
-import org.caliog.Rolecraft.XMechanics.Logging.LOG.LogTitle;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
@@ -73,7 +72,7 @@ public class VManager {
 		villagers.add(villager);
 
 		// LOG
-		LOG.log(LogLevel.INFO, LogTitle.SPAWN, "Spawning villager (name=" + name + ") at:", new Vector(location).toString());
+		Debugger.info(LogTitle.SPAWN, "Spawning villager (name=%s) at:", name, new Vector(location).toString());
 
 		return villager;
 
@@ -99,7 +98,7 @@ public class VManager {
 		villagers.add(trader);
 
 		// LOG
-		LOG.log(LogLevel.INFO, LogTitle.SPAWN, "Spawning villager (trader) (name=" + name + ") at:", new Vector(location).toString());
+		Debugger.info(LogTitle.SPAWN, "Spawning villager (trader) (name=%s) at:", name, new Vector(location).toString());
 
 		return trader;
 	}
@@ -115,9 +114,7 @@ public class VManager {
 					villager = v;
 				}
 			}
-
 		}
-
 		return villager;
 	}
 
@@ -134,7 +131,6 @@ public class VManager {
 					villager = (Trader) v;
 				}
 			}
-
 		}
 		return villager;
 	}
