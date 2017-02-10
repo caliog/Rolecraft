@@ -37,12 +37,13 @@ public class CenterBar {
 
 	public static void broadcast(String title, String subtitle, World world, int time, boolean t) {
 		Collection<? extends Player> players = new ArrayList<Player>();
-		players = Utils.getBukkitPlayers();
 		if (world != null)
 			players = world.getPlayers();
+		else
+			players = Utils.getBukkitPlayers();
+
 		for (Player player : players)
 			display(player, title, subtitle, time, t);
-
 	}
 
 	public static void broadcast(String title, String subtitle, World world) {
