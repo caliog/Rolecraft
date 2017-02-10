@@ -148,14 +148,17 @@ public class Playerface {
 
 	public static void dropItem(Player player, Location loc, List<ItemStack> stacks) {
 		if ((stacks == null) || (player == null) || (loc == null)) {
-			return;
+			throw new IllegalArgumentException(
+					(stacks == null) ? "stacks" : ((player == null) ? "player" : "loc") + " is not allowed to be null");
 		}
 		if (RolecraftConfig.isLootChestEnabled())
 			if (ChestHelper.dropItem(player, loc, stacks))
 				return;
 
-		for (ItemStack s : stacks)
-			dropItem(player, loc, loc.getWorld().dropItemNaturally(loc, s));
+		for (ItemStack s : stacks) {
+			if (s != null)
+				dropItem(player, loc, loc.getWorld().dropItemNaturally(loc, s));
+		}
 	}
 
 	public static void dropItem(Player player, Location location, final Item item) {

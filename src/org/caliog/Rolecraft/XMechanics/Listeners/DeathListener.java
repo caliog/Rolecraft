@@ -84,7 +84,8 @@ public class DeathListener implements Listener {
 		List<ItemStack> stacks = new ArrayList<ItemStack>();
 		for (ItemStack stack : mob.drops().keySet()) {
 			if (Math.random() * diff < ((Float) mob.drops().get(stack)).floatValue()) {
-				stacks.add(stack);
+				if (stack != null)
+					stacks.add(stack);
 			}
 		}
 		Playerface.dropItem(player.getPlayer(), event.getEntity().getLocation(), stacks);
