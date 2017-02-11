@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Guards.GManager;
 import org.caliog.Rolecraft.Guards.Guard;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.NMS.NMS;;
 
 public class PlayerList {
@@ -36,6 +37,7 @@ public class PlayerList {
 				NMS.sendPacket(p, packet);
 			}
 		} catch (Exception e) {
+			Debugger.exception("PlayerList.refreshList() threw an exception: ", e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -59,6 +61,7 @@ public class PlayerList {
 
 			NMS.sendPacket(p, packet);
 		} catch (Exception e) {
+			Debugger.exception("PlayerList.refreshList(Player p) threw an exception:", e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -82,6 +85,7 @@ public class PlayerList {
 
 			NMS.sendPacket(p, packet);
 		} catch (Exception e) {
+			Debugger.exception("PlayerList.restoreList threw an exception:", e.getMessage());
 			e.printStackTrace();
 		}
 	}

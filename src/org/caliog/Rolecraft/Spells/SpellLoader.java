@@ -16,6 +16,7 @@ import java.util.jar.JarFile;
 
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class SpellLoader {
@@ -76,6 +77,7 @@ public class SpellLoader {
 			return spell;
 		} catch (Exception e) {
 			Manager.plugin.getLogger().warning("Failed to load Spell: " + name);
+			Debugger.exception("Failed to load Spell:", name);
 			e.printStackTrace();
 
 		}

@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.logging.Level;
 
 import org.caliog.Rolecraft.Manager;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 
 public class NMS {
 
@@ -15,8 +16,10 @@ public class NMS {
 			Constructor<? extends NMSUtil> constructor = util.getConstructor();
 			return (NMSUtil) constructor.newInstance();
 		} catch (ClassNotFoundException ex) {
+			Debugger.exception("NMSUtil threw ClassNotFoundException (unsupported bukkit version).");
 			Manager.plugin.getLogger().log(Level.WARNING, "Unsupported bukkit version! (" + version + ")");
 		} catch (Exception e) {
+			Debugger.exception("NMSUtil threw exception:", e.getMessage());
 			e.printStackTrace();
 		}
 		return null;

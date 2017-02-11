@@ -7,6 +7,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -23,6 +24,7 @@ public class GroupManager {
 				permission = permissionProvider.getProvider();
 			}
 		} catch (Exception e) {
+			Debugger.exception("Could not find Vault class Permission in GroupManager.init");
 			Manager.plugin.getLogger().warning("Could not find Vault!");
 		}
 		return (permission != null);

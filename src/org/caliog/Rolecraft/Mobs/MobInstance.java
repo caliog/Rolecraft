@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Items.ItemUtils;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
@@ -68,6 +69,7 @@ public class MobInstance extends Mob {
 			} else
 				throw new Exception();
 		} catch (Exception exc) {
+			Debugger.exception("Error in %s.yml! Experience expression is incorrect.", getName());
 			Manager.plugin.getLogger().warning("Error in " + getName() + "+.yml! Experience expression is incorrect.");
 			return 0;
 		}

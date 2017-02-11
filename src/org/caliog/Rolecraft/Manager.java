@@ -25,6 +25,7 @@ import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
 import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
@@ -47,22 +48,27 @@ public class Manager {
 
 		return new Runnable() {
 			public void run() {
-				Manager.timer += 1L;
-				if (timer >= 72000)
-					timer = 0;
-				if (Manager.timer % 4 == 0L)
-					GManager.doLogics();
-				if (Manager.timer % 5L == 0L) {
-					Manager.scheduleTask(MobSpawner.getTask());
-					if (Manager.timer % 20L == 0L) {
-						VManager.doLogics(timer);
-						PetController.controll();
+				try {
+					Manager.timer += 1L;
+					if (timer >= 72000)
+						timer = 0;
+					if (Manager.timer % 4 == 0L)
+						GManager.doLogics();
+					if (Manager.timer % 5L == 0L) {
+						Manager.scheduleTask(MobSpawner.getTask());
+						if (Manager.timer % 20L == 0L) {
+							VManager.doLogics(timer);
+							PetController.controll();
+						}
+
 					}
 
+					PlayerManager.task(timer);
+
+				} catch (Exception e) {
+					Debugger.exception("Manager task gave Exception:", e.getMessage());
+					e.printStackTrace();
 				}
-
-				PlayerManager.task(timer);
-
 			}
 		};
 	}
@@ -88,6 +94,7 @@ public class Manager {
 
 			DataFolder.backup();
 		} catch (IOException e) {
+			Debugger.exception(LogTitle.NONE, "Manager save method gave exception:" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -120,6 +127,7 @@ public class Manager {
 
 			DataSaver.clean();// this has to be the last thing to do
 		} catch (Exception e) {
+			Debugger.exception("Manager load method gave exception:", e.getMessage());
 			e.printStackTrace();
 		}
 	}

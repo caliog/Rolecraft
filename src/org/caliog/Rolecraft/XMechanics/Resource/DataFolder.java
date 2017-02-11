@@ -13,6 +13,7 @@ import java.util.logging.Level;
 
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 
 public class DataFolder {
 
@@ -82,7 +83,7 @@ public class DataFolder {
 					DataFolder.backup();
 				} catch (IOException e) {
 					Manager.plugin.getLogger().log(Level.WARNING, "Backup failed!");
-
+					Debugger.exception("DataFolder threw an exception: ", e.getMessage());
 				}
 			}
 		};

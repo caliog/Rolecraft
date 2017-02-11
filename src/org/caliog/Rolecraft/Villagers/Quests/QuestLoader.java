@@ -16,6 +16,7 @@ import java.util.jar.JarFile;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class QuestLoader {
@@ -70,6 +71,7 @@ public class QuestLoader {
 			Quest quest = questC.getConstructor("".getClass()).newInstance(name);
 			return quest;
 		} catch (Exception e) {
+			Debugger.exception("Failed to load Quest in QuestLoader.java (name=%s)", name);
 			Manager.plugin.getLogger().warning("Failed to load Quest: " + name);
 			e.printStackTrace();
 

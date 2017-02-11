@@ -54,4 +54,4 @@ comment15: '#Automatically backup after this time (in minutes)#'
 comment16: '#Set to zero if you do not want automatic backups#'
 backup-time: 60
 comment17: '#Allows custom error logging which may help improving the plugin#'
-enable-logging: true
+enable-debugging: true

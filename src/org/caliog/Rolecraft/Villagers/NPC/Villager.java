@@ -11,6 +11,7 @@ import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 import org.caliog.Rolecraft.Villagers.Quests.QManager;
 import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.Villagers.Utils.LocationUtil;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 
 public class Villager extends VillagerNPC {
 
@@ -55,6 +56,7 @@ public class Villager extends VillagerNPC {
 					+ DataSaver.save(quests) + "&" + getProfession().name() + "&" + this.getPathName()
 					+ ((type.equals(VillagerType.TRADER)) ? "&" : "\r"));
 		} catch (Exception e) {
+			Debugger.exception("Villager in save threw exception:", e.getMessage());
 			e.printStackTrace();
 		}
 		return writer;

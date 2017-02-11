@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class PlayerManager {
@@ -60,6 +61,7 @@ public class PlayerManager {
 			register(p);
 			return true;
 		} catch (Exception e) {
+			Debugger.exception("Player login of %s gave exception:", player.getName(), e.getMessage());
 			e.printStackTrace();
 		}
 		return false;
@@ -74,6 +76,7 @@ public class PlayerManager {
 		try {
 			save(p);
 		} catch (IOException e) {
+			Debugger.exception("Player logout of %s gave exception:", player.getName(), e.getMessage());
 			e.printStackTrace();
 		}
 		players.remove(player.getUniqueId());

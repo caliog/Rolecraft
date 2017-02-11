@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.NMS.NMS;
 
 public class NMSMethods {
@@ -47,6 +48,7 @@ public class NMSMethods {
 					.newInstance(entityInsentient.cast(entity), entityHuman, 8F));
 
 		} catch (Exception e) {
+			Debugger.exception("NPC.NMSMethods in initVillager threw exception:", e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -101,6 +103,7 @@ public class NMSMethods {
 
 			return true;
 		} catch (Exception e) {
+			Debugger.exception("NPC.NMSMethods in openInventory threw exception:", e.getMessage());
 			e.printStackTrace();
 		}
 		return false;
@@ -122,6 +125,7 @@ public class NMSMethods {
 			maxUsesField.setAccessible(true);
 			maxUsesField.set(recipe, Integer.valueOf(99999));
 		} catch (Exception e) {
+			Debugger.exception("NPC.NMSMethods in createRecipe threw exception:", e.getMessage());
 			e.printStackTrace();
 		}
 		return recipe;

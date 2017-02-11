@@ -35,7 +35,7 @@ public class Debugger {
 	private static List<String> log = new ArrayList<String>();
 
 	public static void save() {
-		if (!RolecraftConfig.isLOGEnabled())
+		if (!RolecraftConfig.isDebugging())
 			return;
 		log.add("Saving...");
 		String text = "";
@@ -51,6 +51,10 @@ public class Debugger {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void exception(String msg) {
+		exception(LogTitle.NONE, msg);
 	}
 
 	public static void exception(LogTitle title, String msg) {
@@ -69,8 +73,8 @@ public class Debugger {
 		log(LogLevel.INFO, title, msg);
 	}
 
-	public static void exception(LogTitle title, String msg, String... args) {
-		log(LogLevel.EXCEPTION, title, msg, args);
+	public static void exception(String msg, String... args) {
+		log(LogLevel.EXCEPTION, LogTitle.NONE, msg, args);
 	}
 
 	public static void error(LogTitle title, String msg, String... args) {
@@ -86,7 +90,7 @@ public class Debugger {
 	}
 
 	private static void log(LogLevel level, LogTitle title, String msg) {
-		if (!RolecraftConfig.isLOGEnabled())
+		if (!RolecraftConfig.isDebugging())
 			return;
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
@@ -105,11 +109,16 @@ public class Debugger {
 	private static void log(LogLevel info, LogTitle cmd, String msg, String... args) {
 		int c = 0;
 		while (c < args.length && msg.contains("%s")) {
+			if (args[c] == null)
+				args[c] = "";
 			msg.replaceFirst("%s", args[c]);
 			c++;
 		}
-		for (int i = c; i < args.length; i++)
+		for (int i = c; i < args.length; i++) {
+			if (args[c] == null)
+				args[c] = "";
 			msg += args[i];
+		}
 		log(info, cmd, msg);
 	}
 }

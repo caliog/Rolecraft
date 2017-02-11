@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Items.ItemEffect.ItemEffectType;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class CustomItemInstance extends CustomItem {
@@ -39,6 +41,7 @@ public class CustomItemInstance extends CustomItem {
 		try {
 			return this.config.getString("class-type");
 		} catch (Exception e) {
+			Debugger.exception(LogTitle.NONE, "CustomItemInstance gave exception in getClazz: " + e.getMessage());
 		}
 		return null;
 	}

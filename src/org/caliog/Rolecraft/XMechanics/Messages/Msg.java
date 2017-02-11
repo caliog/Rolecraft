@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
@@ -42,6 +43,7 @@ public class Msg {
 			bf.write(str);
 			bf.close();
 		} catch (IOException e) {
+			Debugger.exception("Msg threw an exception in init: ", e.getMessage());
 			e.printStackTrace();
 		}
 		file = YamlConfiguration.loadConfiguration(new File(FilePath.messages));

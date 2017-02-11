@@ -13,8 +13,9 @@ import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
-import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField.FieldProperty;
+import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
@@ -113,6 +114,7 @@ public class Commandrc extends Commands {
 				try {
 					DataFolder.backup();
 				} catch (IOException e) {
+					Debugger.exception("Commandrc threw an exception. Failed to create backup! ", e.getMessage());
 					player.sendMessage(ChatColor.RED + "Failed to create backup!");
 				}
 				player.sendMessage(ChatColor.GOLD + "Made a backup in " + FilePath.backup + "!");

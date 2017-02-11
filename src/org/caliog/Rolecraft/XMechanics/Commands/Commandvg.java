@@ -15,6 +15,7 @@ import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField.FieldProperty;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Messages.CmdMessage;
 
 public class Commandvg extends Commands {
@@ -82,8 +83,9 @@ public class Commandvg extends Commands {
 					text += "#" + (args.length >= 5 ? args[4] : (Integer.parseInt(args[1]) + 1));
 
 					v.addText(Integer.parseInt(args[1]), text);
-					player.sendMessage(ChatColor.GOLD + "You set message " + args[1] + "!");
+					player.sendMessage(ChatColor.GOLD + "You set/edited message " + args[1] + "!");
 				} catch (Exception e) {
+					Debugger.exception("Commandvg threw an exception: ", e.getMessage());
 					player.sendMessage(ChatColor.RED + "/vg talk <id> <message> <type> [target]");
 					player.sendMessage(ChatColor.RED + "Visit Rolecraft wiki to get some information about this command!");
 				}

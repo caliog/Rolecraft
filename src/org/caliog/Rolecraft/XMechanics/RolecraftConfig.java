@@ -16,6 +16,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
@@ -44,6 +45,7 @@ public class RolecraftConfig {
 			bf.write(str);
 			bf.close();
 		} catch (IOException e) {
+			Debugger.exception("RolecraftConfig.init threw an exception:", e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -53,6 +55,7 @@ public class RolecraftConfig {
 		try {
 			return Material.valueOf(config.getString("currency"));
 		} catch (Exception e) {
+			Debugger.exception("RolecraftConfig.getCurrency threw an exception:", e.getMessage());
 			Manager.plugin.getLogger().warning("Could not load currency in config.yml!");
 			Manager.plugin.getLogger().warning("Using default currency: Emeralds!");
 			return Material.EMERALD;
@@ -174,8 +177,8 @@ public class RolecraftConfig {
 		return config.getBoolean("enable-loot-chest");
 	}
 
-	public static boolean isLOGEnabled() {
-		return config.getBoolean("enable-logging", false);
+	public static boolean isDebugging() {
+		return config.getBoolean("enable-debugging", false);
 	}
 
 }
