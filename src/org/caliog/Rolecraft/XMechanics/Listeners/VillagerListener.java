@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.caliog.Rolecraft.Entities.VolatileEntities;
@@ -201,10 +202,27 @@ public class VillagerListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void inventoryClick(final InventoryClickEvent event) {
-		if (event.getView() instanceof QuestInventory) {
+		if (event.getView() instanceof QuestInventory && event.getWhoClicked() instanceof Player) {
 			boolean cancel = ((QuestInventory) event.getView()).inventoryClick(event);
 			if (cancel)
 				event.setCancelled(cancel);
+		}
+	}
+
+	/*
+	 * @Name: InventoryClose
+	 * 
+	 * @Listen TO: Inventory
+	 * 
+	 * @Cancel: false
+	 * 
+	 * @Category: Quest
+	 * 
+	 */
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void inventoryClose(final InventoryCloseEvent event) {
+		if (event.getView() instanceof QuestInventory) {
+			((QuestInventory) event.getView()).closed();
 		}
 	}
 }
