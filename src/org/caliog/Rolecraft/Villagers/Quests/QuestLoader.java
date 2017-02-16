@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
@@ -91,11 +90,6 @@ public class QuestLoader {
 	}
 
 	public static Quest loadYMLQuest(String name) {
-		File file = new File(FilePath.quests + name + ".yml");
-		if (file.exists()) {
-			YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-			return new YmlQuest(name, config);
-		}
-		return null;
+		return new YmlQuest(name);
 	}
 }

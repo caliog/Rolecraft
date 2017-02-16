@@ -1,6 +1,7 @@
 package org.caliog.Rolecraft.Villagers.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -14,19 +15,20 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.caliog.Rolecraft.Villagers.Quests.SimpleQuest;
+import org.caliog.Rolecraft.Villagers.Quests.YmlQuest;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class QuestInventory extends InventoryView {
 
 	private final Player player;
-	private final SimpleQuest quest;
+	private final YmlQuest quest;
 	private final Inventory top;
+	private String questVillager;
 
 	public QuestInventory(Player player, String name) {
 		this.player = player;
-		quest = new SimpleQuest(name);
+		quest = new YmlQuest(name);
 		top = initTop();
 	}
 
@@ -176,6 +178,10 @@ public class QuestInventory extends InventoryView {
 		return InventoryType.CHEST;
 	}
 
+	public void closed() {
+		// TODO save edited quest to file
+	}
+
 	public boolean inventoryClick(InventoryClickEvent event) {
 		boolean cancel = false;
 		if (!event.getClickedInventory().getTitle().equals("Quest Editor"))
@@ -188,13 +194,56 @@ public class QuestInventory extends InventoryView {
 		}
 		if (!avSlots.contains(event.getSlot()))
 			cancel = true;
+		int slot = event.getSlot();
+		if (slot == 0)
+			questVillager = QuestInventoryConsole.chooseQuestVillager((Player) event.getWhoClicked());
 
 		return cancel;
 
 	}
 
-	public SimpleQuest getQuest() {
+	public YmlQuest getQuest() {
 		return quest;
+	}
+
+	public HashMap<String, Integer> getMobMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getReceiveItem() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getClazz() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getTargetVillager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getMinLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getExp() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public List<String> getRewardList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<String> getCollectList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

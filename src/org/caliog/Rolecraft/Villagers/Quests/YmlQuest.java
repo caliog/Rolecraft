@@ -1,5 +1,7 @@
 package org.caliog.Rolecraft.Villagers.Quests;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,14 +19,25 @@ import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 import org.caliog.Rolecraft.Villagers.Chat.ChatTask;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
+import org.caliog.Rolecraft.Villagers.Utils.QuestInventory;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
+import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class YmlQuest extends Quest {
 
 	protected YamlConfiguration config;
 
-	public YmlQuest(String name, YamlConfiguration config) {
+	private boolean loaded;
+
+	public YmlQuest(String name) {
 		super(name);
-		this.config = config;
+		File file = new File(FilePath.quests + name + ".yml");
+		if (file.exists()) {
+			config = YamlConfiguration.loadConfiguration(file);
+			setLoaded(true);
+		} else
+			setLoaded(false);
 	}
 
 	@Override
@@ -78,6 +91,7 @@ public class YmlQuest extends Quest {
 							}
 
 						}
+
 					});
 
 				map.put(Integer.parseInt(id), msg);
@@ -179,6 +193,38 @@ public class YmlQuest extends Quest {
 	@Override
 	public String getChainQuest() {
 		return config.getString("required-quest");
+	}
+
+	public boolean isLoaded() {
+		return loaded;
+	}
+
+	public void setLoaded(boolean loaded) {
+		this.loaded = loaded;
+	}
+
+	public YamlConfiguration getConfig() {
+		return config;
+	}
+
+	public static void editedQuest(QuestInventory view, YmlQuest quest) throws IOException {
+		// TODO read values from view
+		String clazz = view.getClazz();
+		String targetVillager = view.getTargetVillager();
+		int minLevel = view.getMinLevel();
+		int exp = view.getExp();
+		List<String> rewards = view.getRewardList();
+		List<String> collect = view.getCollectList();
+		String receive = view.getReceiveItem();
+		HashMap<String, Integer> mobs = view.getMobMap();
+
+		YamlConfiguration config = quest.getConfig();
+		if (config == null) {
+			Debugger.error(LogTitle.QUEST, "Failed to edit quest (name=%s). YamlConfiguration is null!", quest.getName());
+			return;
+		}
+
+		config.save(new File(FilePath.quests + quest.getName() + ".yml"));
 	}
 
 }

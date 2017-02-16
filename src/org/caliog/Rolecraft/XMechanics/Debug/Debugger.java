@@ -21,7 +21,7 @@ public class Debugger {
 	}
 
 	public enum LogTitle {
-		CMD, NONE, SPELL, PET, SPAWN;
+		CMD, NONE, SPELL, PET, SPAWN, QUEST;
 
 		@Override
 		public String toString() {
