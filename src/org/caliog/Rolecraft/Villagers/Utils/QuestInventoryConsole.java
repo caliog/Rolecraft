@@ -17,14 +17,14 @@ public class QuestInventoryConsole {
 		Manager.plugin.getServer().getPluginManager().registerEvents(reader, Manager.plugin);
 		ConsoleStoppable cs = new ConsoleStoppable() {
 
-			private String lastLine = null;
+			private String lastLine = "";
 
 			@Override
 			public void run() {
 				if (!super.check())
 					return;
-				if (lastLine == null)
-					player.sendMessage(ChatColor.GRAY + "Enter the name of the quest villager: (q to quit)");
+				// TODO not exactly what we need
+				player.sendMessage(ChatColor.GRAY + "Enter the name of the quest villager: (q to quit)");
 				String cLine = reader.getLine();
 				if (!cLine.equals(lastLine))
 					lastLine = cLine;
@@ -39,7 +39,6 @@ public class QuestInventoryConsole {
 					stop();
 				} else {
 					player.sendMessage(ChatColor.BLACK + lastLine + ChatColor.GRAY + " is not a villager.");
-					player.sendMessage(ChatColor.GRAY + "Enter the name of the quest villager: (q to quit)");
 				}
 			}
 		};
