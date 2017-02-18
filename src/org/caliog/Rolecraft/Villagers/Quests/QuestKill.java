@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Mobs.Mob;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.MobAmount;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class QuestKill {

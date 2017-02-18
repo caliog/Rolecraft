@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Villagers.Quests;
+package org.caliog.Rolecraft.Villagers.Quests.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
