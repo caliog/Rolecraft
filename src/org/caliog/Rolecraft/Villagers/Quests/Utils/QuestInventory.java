@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Villagers.Utils;
+package org.caliog.Rolecraft.Villagers.Quests.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,15 +29,19 @@ public class QuestInventory extends InventoryView {
 	public QuestInventory(Player player, String name) {
 		this.player = player;
 		quest = new YmlQuest(name);
-		top = initTop();
+		top = Bukkit.createInventory(null, 45, "Quest Editor");
+		reloadTop();
 	}
 
-	private Inventory initTop() {
-		Inventory top = Bukkit.createInventory(null, 45, "Quest Editor");
+	private void reloadTop() {
+		top.clear();
 
 		ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
-		meta.setDisplayName("Quest-Villager");
+		if (questVillager != null)
+			meta.setDisplayName(ChatColor.GOLD + questVillager);
+		else
+			meta.setDisplayName("Quest-Villager *");
 		List<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.GRAY + "<click> - and type");
 		lore.add(ChatColor.GRAY + "the name of the");
@@ -154,8 +158,6 @@ public class QuestInventory extends InventoryView {
 				top.setItem(i + 3, stack);
 
 		}
-
-		return top;
 	}
 
 	@Override
@@ -195,8 +197,9 @@ public class QuestInventory extends InventoryView {
 		if (!avSlots.contains(event.getSlot()))
 			cancel = true;
 		int slot = event.getSlot();
-		if (slot == 0)
-			questVillager = QuestInventoryConsole.chooseQuestVillager((Player) event.getWhoClicked());
+		if (slot == 0) {
+			QuestInventoryConsole.chooseQuestVillager(this, (Player) event.getWhoClicked());
+		}
 
 		return cancel;
 
@@ -244,6 +247,12 @@ public class QuestInventory extends InventoryView {
 	public List<String> getCollectList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void setQuestVillager(String name) {
+		this.questVillager = name;
+		if (name != null)
+			reloadTop();
 	}
 
 }

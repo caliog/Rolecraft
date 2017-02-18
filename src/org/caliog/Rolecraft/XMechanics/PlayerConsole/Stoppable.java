@@ -4,24 +4,16 @@ import org.caliog.Rolecraft.Manager;
 
 public abstract class Stoppable implements Runnable {
 
-	private boolean stop = true;
+	private boolean stop = false;
 	private int taskID;
 
-	public boolean check() {
-		if (stop) {
-			Manager.cancelTask(taskID);
-			return false;
-		} else
-			return true;
-
+	protected boolean check() {
+		return !stop;
 	}
 
-	public void stop() {
-		stop = false;
-	}
-
-	public int getTaskID() {
-		return taskID;
+	protected void stop() {
+		Manager.cancelTask(taskID);
+		stop = true;
 	}
 
 	public int setTaskID(final int taskID) {

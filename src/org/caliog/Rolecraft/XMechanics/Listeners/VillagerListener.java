@@ -27,7 +27,7 @@ import org.caliog.Rolecraft.Villagers.NPC.Villager.VillagerType;
 import org.caliog.Rolecraft.Villagers.Quests.QManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
 import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
-import org.caliog.Rolecraft.Villagers.Utils.QuestInventory;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInventory;
 
 public class VillagerListener implements Listener {
 

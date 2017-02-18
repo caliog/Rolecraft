@@ -8,7 +8,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class PlayerChatReader implements Listener {
 
-	private String line;
+	private String line = null;
 	private Player player;
 
 	public PlayerChatReader(Player player) {
@@ -19,11 +19,14 @@ public class PlayerChatReader implements Listener {
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		if (player != null && event.getPlayer().equals(player)) {
 			line = event.getMessage();
+			event.setCancelled(true);
 		}
 	}
 
 	public String getLine() {
-		return line;
+		String tmp = line;
+		line = null;
+		return tmp;
 	}
 
 }
