@@ -213,9 +213,9 @@ public class YmlQuest extends Quest {
 		String targetVillager = view.getTargetVillager();
 		int minLevel = view.getMinLevel();
 		int exp = view.getExp();
-		List<String> rewards = view.getRewardList();
-		List<String> collect = view.getCollectList();
-		String receive = view.getReceiveItem();
+		List<ItemStack> rewards = view.getRewardList();
+		List<ItemStack> collect = view.getCollectList();
+		ItemStack receive = view.getReceiveItem();
 		HashMap<String, Integer> mobs = view.getMobMap();
 
 		YamlConfiguration config = quest.getConfig();

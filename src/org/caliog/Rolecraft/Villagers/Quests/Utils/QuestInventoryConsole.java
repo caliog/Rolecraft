@@ -3,12 +3,13 @@ package org.caliog.Rolecraft.Villagers.Quests.Utils;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityUtils;
+import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class QuestInventoryConsole {
 
@@ -113,6 +114,36 @@ public class QuestInventoryConsole {
 			}
 		};
 		cr.setTaskID(Manager.scheduleRepeatingTask(cr, 0L, 4L));
+	}
+
+	public static void chooseClazz(QuestInventory questInventory, Player player) {
+		player.closeInventory();
+		ConsoleReader cr = new ConsoleReader(player) {
+
+			@Override
+			public void doWork(String lastLine) {
+				// lastLine is only null if it is the first time the method is called
+				if (lastLine == null)
+					player.sendMessage(ChatColor.GRAY + "Enter the required class: (q to quit)");
+				else {
+					if (ClazzLoader.isClass(lastLine)) {
+						questInventory.setClazz(lastLine);
+						quit();
+					} else {
+						player.sendMessage(ChatColor.BOLD + lastLine + ChatColor.GRAY + " is not a class.");
+						player.sendMessage(ChatColor.GRAY + "Enter the required class: (q to quit)");
+					}
+				}
+			}
+
+			@Override
+			public void quit() {
+				super.stop();
+				player.openInventory(questInventory);
+			}
+		};
+		cr.setTaskID(Manager.scheduleRepeatingTask(cr, 0L, 4L));
+
 	}
 
 }

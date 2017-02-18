@@ -19,6 +19,21 @@ public class Commandquest extends Commands {
 		 * 
 		 * Permission: rc.quest.create
 		 * 
+		 * Usage: /quest
+		 */
+		cmds.add(new Command("quest", "rc.quest.edit", new CommandExecutable() {
+
+			@Override
+			public void execute(String[] args, Player player) {
+				player.openInventory(new QuestInventory(player, args[0]));
+			}
+		}, new CommandField("name", FieldProperty.REQUIRED)));
+
+		/*
+		 * Name: quest SubName: edit
+		 * 
+		 * Permission: rc.quest.edit
+		 * 
 		 * Usage: /quest edit
 		 */
 		cmds.add(new Command("quest", "rc.quest.edit", new CommandExecutable() {

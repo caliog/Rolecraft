@@ -18,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Villagers.Quests.YmlQuest;
 import org.caliog.Rolecraft.XMechanics.Utils.Pair;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class QuestInventory extends InventoryView {
 
@@ -28,23 +28,41 @@ public class QuestInventory extends InventoryView {
 	private String questVillager;
 	private String targetVillager;
 	private HashMap<Integer, Pair<String, Integer>> mobs = new HashMap<Integer, Pair<String, Integer>>();
+	private String clazz;
+	private int minLvl = 0;
+	private int exp = 0;
+	private List<ItemStack> rewards = new ArrayList<ItemStack>();
+	private List<ItemStack> collects = new ArrayList<ItemStack>();
+	private ItemStack receive;
 
 	public QuestInventory(Player player, String name) {
 		this.player = player;
 		quest = new YmlQuest(name);
+		if (quest.isLoaded())
+			loadQuest();
+
 		top = Bukkit.createInventory(null, 45, "Quest Editor");
 		reloadTop();
 	}
 
+	private void loadQuest() {
+		targetVillager = quest.getConfig().getString("target-villager");
+		clazz = quest.getClazz();
+		minLvl = quest.getMinLevel();
+		exp = quest.getExp();
+		rewards = quest.getRewards();
+		collects = quest.getCollects();
+		receive = quest.getReceive();
+	}
+
 	private void reloadTop() {
-		top.clear();
 
 		ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
 		if (questVillager != null)
 			meta.setDisplayName(ChatColor.GOLD + questVillager);
 		else
-			meta.setDisplayName("Quest-Villager *");
+			meta.setDisplayName("Quest-Villager");
 		List<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.GRAY + "<click> - and type");
 		lore.add(ChatColor.GRAY + "the name of the");
@@ -130,10 +148,10 @@ public class QuestInventory extends InventoryView {
 		meta = Bukkit.getItemFactory().getItemMeta(Material.EXP_BOTTLE);
 		meta.setDisplayName("Experience");
 		lore = new ArrayList<String>();
-		lore.add(ChatColor.GOLD + "0%");
+		lore.add(ChatColor.GOLD + "" + exp + "%");
 		lore.add(ChatColor.GRAY + "<left click> - to increase");
 		lore.add(ChatColor.GRAY + "<right click> - to decrease");
-		lore.add(ChatColor.GRAY + "reward-experience.");
+		lore.add(ChatColor.GRAY + "the reward-experience.");
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
 		top.setItem(6, stack);
@@ -142,10 +160,10 @@ public class QuestInventory extends InventoryView {
 		meta = Bukkit.getItemFactory().getItemMeta(Material.LADDER);
 		meta.setDisplayName("Level");
 		lore = new ArrayList<String>();
-		lore.add(ChatColor.GOLD + "min-level: 0");
+		lore.add(ChatColor.GOLD + "min-level: " + minLvl);
 		lore.add(ChatColor.GRAY + "<left click> - to increase");
 		lore.add(ChatColor.GRAY + "<right click> - to decrease");
-		lore.add(ChatColor.GRAY + "minimum level.");
+		lore.add(ChatColor.GRAY + "the minimum level.");
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
 		top.setItem(7, stack);
@@ -155,7 +173,10 @@ public class QuestInventory extends InventoryView {
 		meta.setDisplayName("Class");
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		lore = new ArrayList<String>();
-		lore.add(ChatColor.GOLD + "none");
+		if (clazz == null)
+			lore.add(ChatColor.GOLD + "none");
+		else
+			lore.add(ChatColor.GOLD + clazz);
 		lore.add(ChatColor.GRAY + "<click> to choose");
 		lore.add(ChatColor.GRAY + "a required class.");
 		meta.setLore(lore);
@@ -164,7 +185,7 @@ public class QuestInventory extends InventoryView {
 
 		stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
 		meta = Bukkit.getItemFactory().getItemMeta(Material.STAINED_GLASS_PANE);
-		meta.setDisplayName(" ");
+		meta.setDisplayName("-");
 		stack.setItemMeta(meta);
 		for (int i = 9; i < 37; i += 9) {
 			top.setItem(i, stack);
@@ -199,13 +220,15 @@ public class QuestInventory extends InventoryView {
 	}
 
 	public void closed() {
-		// TODO save edited quest to file
+		this.getCollectList();
+		this.getRewardList();
+		this.getReceiveItem();
 	}
 
-	// TODO handle shift clicks which should delete the stored data
 	public boolean inventoryClick(InventoryClickEvent event) {
 		boolean cancel = false;
-		if (!event.getClickedInventory().getTitle().equals("Quest Editor"))
+		if (event.getClickedInventory() == null || event.getClickedInventory().getTitle() == null
+				|| !event.getClickedInventory().getTitle().equals("Quest Editor"))
 			return cancel;
 		List<Integer> avSlots = new ArrayList<Integer>();
 		avSlots.add(12);
@@ -217,20 +240,51 @@ public class QuestInventory extends InventoryView {
 			cancel = true;
 		int slot = event.getSlot();
 		Player p = (Player) event.getWhoClicked();
-		if (slot == 0)
-			QuestInventoryConsole.chooseQuestVillager(this, p);
-		else if (slot == 1)
-			QuestInventoryConsole.chooseTargetVillager(this, p);
-		else if (slot % 9 == 2) {
-			String mobName = null;
-			if (mobs.containsKey(slot))
-				mobName = mobs.get(slot).first;
-			if (event.isLeftClick() || mobName != null)
-				QuestInventoryConsole.chooseMob(this, p, slot, mobName, event.isLeftClick()); // its only right click if mobName is already set
 
+		if (event.isShiftClick()) {
+			if (slot == 0)
+				this.questVillager = null;
+			else if (slot == 1)
+				this.targetVillager = null;
+			else if (slot % 9 == 2)
+				mobs.remove(slot);
+			else if (slot == 8)
+				this.clazz = null;
+
+		} else {
+			if (slot == 0)
+				QuestInventoryConsole.chooseQuestVillager(this, p);
+			else if (slot == 1)
+				QuestInventoryConsole.chooseTargetVillager(this, p);
+			else if (slot % 9 == 2) {
+				String mobName = null;
+				if (mobs.containsKey(slot))
+					mobName = mobs.get(slot).first;
+				if (event.isLeftClick() || mobName != null)
+					QuestInventoryConsole.chooseMob(this, p, slot, mobName, event.isLeftClick()); // its only right click if mobName is already set
+			} else if (slot == 6) {
+				if (event.isLeftClick()) {
+					this.exp += 2;
+				} else if (event.isRightClick()) {
+					this.exp -= 2;
+					if (this.exp < 0)
+						this.exp = 0;
+				}
+				reloadTop();
+			} else if (slot == 7) {
+				if (event.isLeftClick()) {
+					this.minLvl++;
+				} else if (event.isRightClick()) {
+					this.minLvl--;
+					if (this.minLvl < 0)
+						this.minLvl = 0;
+				}
+				reloadTop();
+			} else if (slot == 8) {
+				QuestInventoryConsole.chooseClazz(this, p);
+			}
 		}
 		return cancel;
-
 	}
 
 	public YmlQuest getQuest() {
@@ -245,14 +299,12 @@ public class QuestInventory extends InventoryView {
 		return map;
 	}
 
-	public String getReceiveItem() {
-		// TODO Auto-generated method stub
-		return null;
+	public ItemStack getReceiveItem() {
+		return receive = top.getItem(12);
 	}
 
 	public String getClazz() {
-		// TODO Auto-generated method stub
-		return null;
+		return clazz;
 	}
 
 	public String getQuestVillager() {
@@ -264,23 +316,27 @@ public class QuestInventory extends InventoryView {
 	}
 
 	public int getMinLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return minLvl;
 	}
 
 	public int getExp() {
-		// TODO Auto-generated method stub
-		return 0;
+		return exp;
 	}
 
-	public List<String> getRewardList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ItemStack> getRewardList() {
+		rewards.clear();
+		for (int i = 14; i <= 41; i += 9) {
+			rewards.add(top.getItem(i));
+		}
+		return rewards;
 	}
 
-	public List<String> getCollectList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ItemStack> getCollectList() {
+		collects.clear();
+		for (int i = 13; i <= 40; i += 9) {
+			collects.add(top.getItem(i));
+		}
+		return collects;
 	}
 
 	public void setQuestVillager(String name) {
@@ -311,6 +367,13 @@ public class QuestInventory extends InventoryView {
 				return;
 			Pair<String, Integer> np = new Pair<String, Integer>(p.first, amount > 0 ? amount : 1);
 			mobs.put(slot, np);
+			reloadTop();
+		}
+	}
+
+	public void setClazz(String clazz) {
+		if (clazz != null) {
+			this.clazz = clazz;
 			reloadTop();
 		}
 	}
