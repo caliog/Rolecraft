@@ -111,7 +111,7 @@ public class Debugger {
 		while (c < args.length && msg.contains("%s")) {
 			if (args[c] == null)
 				args[c] = "";
-			msg.replaceFirst("%s", args[c]);
+			msg = msg.replaceFirst("%s", args[c]);
 			c++;
 		}
 		for (int i = c; i < args.length; i++) {
