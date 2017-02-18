@@ -22,7 +22,7 @@ import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class Pet extends MobInstance {
 
