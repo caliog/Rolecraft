@@ -117,7 +117,7 @@ public class Debugger {
 		for (int i = c; i < args.length; i++) {
 			if (args[c] == null)
 				args[c] = "";
-			msg += args[i];
+			msg += " " + args[i];
 		}
 		log(info, cmd, msg);
 	}
