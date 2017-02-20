@@ -20,24 +20,23 @@ import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 import org.caliog.Rolecraft.Villagers.Chat.ChatTask;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInventory;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class YmlQuest extends Quest {
 
 	protected YamlConfiguration config;
 
-	private boolean loaded;
+	private final boolean loaded;
 
+	// TODO optimization: load quest completely from config to fields, then only return field on get to improve performance
 	public YmlQuest(String name) {
 		super(name);
 		File file = new File(FilePath.quests + name + ".yml");
 		if (file.exists()) {
 			config = YamlConfiguration.loadConfiguration(file);
-			setLoaded(true);
+			loaded = true;
 		} else
-			setLoaded(false);
+			loaded = false;
 	}
 
 	@Override
@@ -123,6 +122,14 @@ public class YmlQuest extends Quest {
 		if (config.isList("rewards")) {
 			for (String l : config.getStringList("rewards"))
 				list.add(ItemUtils.getItem(l));
+		} else {
+			int c = 0;
+			for (int i = 0; config.isItemStack("rewards." + i + 1); i++) {
+				list.add(config.getItemStack("rewards." + (i + 1)));
+				c++;
+				if (c >= 4)
+					break;
+			}
 		}
 		return list;
 	}
@@ -133,6 +140,14 @@ public class YmlQuest extends Quest {
 		if (config.isList("collects")) {
 			for (String l : config.getStringList("collects"))
 				list.add(ItemUtils.getItem(l));
+		} else {
+			int c = 0;
+			for (int i = 0; config.isItemStack("collects." + i + 1); i++) {
+				list.add(config.getItemStack("collects." + (i + 1)));
+				c++;
+				if (c >= 4)
+					break;
+			}
 		}
 		return list;
 	}
@@ -199,16 +214,11 @@ public class YmlQuest extends Quest {
 		return loaded;
 	}
 
-	public void setLoaded(boolean loaded) {
-		this.loaded = loaded;
-	}
-
 	public YamlConfiguration getConfig() {
 		return config;
 	}
 
-	public static void editedQuest(QuestInventory view, YmlQuest quest) throws IOException {
-		// TODO read values from view
+	public void editedQuest(QuestInventory view) throws IOException {
 		String clazz = view.getClazz();
 		String targetVillager = view.getTargetVillager();
 		int minLevel = view.getMinLevel();
@@ -218,13 +228,32 @@ public class YmlQuest extends Quest {
 		ItemStack receive = view.getReceiveItem();
 		HashMap<String, Integer> mobs = view.getMobMap();
 
-		YamlConfiguration config = quest.getConfig();
+		YamlConfiguration config = getConfig();
+		File f = new File(FilePath.quests + getName() + ".yml");
 		if (config == null) {
-			Debugger.error(LogTitle.QUEST, "Failed to edit quest (name=%s). YamlConfiguration is null!", quest.getName());
-			return;
+			if (!f.exists())
+				f.createNewFile();
+			config = YamlConfiguration.loadConfiguration(f);
 		}
 
-		config.save(new File(FilePath.quests + quest.getName() + ".yml"));
+		config.set("class", clazz);
+		config.set("exp-reward", exp);
+		config.set("min-level", minLevel);
+		config.set("target-villager", targetVillager);
+		for (int i = 0; i < collect.size(); i++)
+			config.set("collects." + (i + 1), collect.get(i));
+		for (int i = 0; i < rewards.size(); i++)
+			config.set("rewards." + (i + 1), rewards.get(i));
+		config.set("receive-item", receive);
+		for (String k : mobs.keySet())
+			config.set("mobs." + k, mobs.get(k));
+
+		config.save(f);
+
+		String vName = view.getQuestVillager();
+		Villager v = VManager.getVillager(vName);
+		if (v != null)
+			v.addQuest(getName());
 	}
 
 }

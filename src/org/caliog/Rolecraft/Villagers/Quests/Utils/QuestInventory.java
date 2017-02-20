@@ -1,10 +1,12 @@
 package org.caliog.Rolecraft.Villagers.Quests.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -16,9 +18,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Villagers.Quests.YmlQuest;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Utils.Pair;
-
-import org.bukkit.ChatColor;
 
 public class QuestInventory extends InventoryView {
 
@@ -53,6 +54,14 @@ public class QuestInventory extends InventoryView {
 		rewards = quest.getRewards();
 		collects = quest.getCollects();
 		receive = quest.getReceive();
+		HashMap<String, Integer> map = quest.getMobs();
+		int i = -1;
+		for (String k : map.keySet()) {
+			i++;
+			if (i < 5) {
+				mobs.put(i * 9 + 2, new Pair<String, Integer>(k, map.get(k)));
+			}
+		}
 	}
 
 	private void reloadTop() {
@@ -67,6 +76,8 @@ public class QuestInventory extends InventoryView {
 		lore.add(ChatColor.GRAY + "<click> - and type");
 		lore.add(ChatColor.GRAY + "the name of the");
 		lore.add(ChatColor.GRAY + "quest-villager.");
+		lore.add(ChatColor.GRAY + "Note that this quest");
+		lore.add(ChatColor.GRAY + "could already be assigned.");
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
 		top.setItem(0, stack);
@@ -101,7 +112,7 @@ public class QuestInventory extends InventoryView {
 			if (mobName == null)
 				lore.add(ChatColor.GOLD + "none");
 			else
-				lore.add(ChatColor.GOLD + mobName + ChatColor.WHITE + ":" + ChatColor.AQUA + amount);
+				lore.add(ChatColor.GOLD + mobName + ChatColor.WHITE + ": " + ChatColor.AQUA + amount);
 			lore.add(ChatColor.GRAY + "<left click> - monster");
 			lore.add(ChatColor.GRAY + "<right click> - amount");
 			meta.setLore(lore);
@@ -121,6 +132,8 @@ public class QuestInventory extends InventoryView {
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
 		top.setItem(3, stack);
+		if (receive != null)
+			top.setItem(3 + 9, receive);
 
 		stack = new ItemStack(Material.CHEST, 1);
 		meta = Bukkit.getItemFactory().getItemMeta(Material.CHEST);
@@ -132,6 +145,8 @@ public class QuestInventory extends InventoryView {
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
 		top.setItem(4, stack);
+		for (int i = 0; i < collects.size() && i <= 3; i++)
+			top.setItem((i + 1) * 9 + 4, collects.get(i));
 
 		stack = new ItemStack(Material.GOLD_NUGGET, 1);
 		meta = Bukkit.getItemFactory().getItemMeta(Material.GOLD_NUGGET);
@@ -143,6 +158,8 @@ public class QuestInventory extends InventoryView {
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
 		top.setItem(5, stack);
+		for (int i = 0; i < rewards.size() && i <= 3; i++)
+			top.setItem((i + 1) * 9 + 5, rewards.get(i));
 
 		stack = new ItemStack(Material.EXP_BOTTLE, 1);
 		meta = Bukkit.getItemFactory().getItemMeta(Material.EXP_BOTTLE);
@@ -197,6 +214,11 @@ public class QuestInventory extends InventoryView {
 				top.setItem(i + 3, stack);
 
 		}
+		stack = new ItemStack(Material.STAINED_GLASS, 1, (short) 13);
+		meta = Bukkit.getItemFactory().getItemMeta(Material.STAINED_GLASS_PANE);
+		meta.setDisplayName("Save Quest!");
+		stack.setItemMeta(meta);
+		top.setItem(44, stack);
 	}
 
 	@Override
@@ -250,7 +272,7 @@ public class QuestInventory extends InventoryView {
 				mobs.remove(slot);
 			else if (slot == 8)
 				this.clazz = null;
-
+			reloadTop();
 		} else {
 			if (slot == 0)
 				QuestInventoryConsole.chooseQuestVillager(this, p);
@@ -282,6 +304,17 @@ public class QuestInventory extends InventoryView {
 				reloadTop();
 			} else if (slot == 8) {
 				QuestInventoryConsole.chooseClazz(this, p);
+			} else if (slot == 44) {
+				try {
+					this.quest.editedQuest(this);
+				} catch (IOException e) {
+					Debugger.exception("Failed saving quest to .yml file. quest-name=", quest.getName());
+					player.sendMessage(
+							ChatColor.RED + "Failed saving your quest. See server log or Rolecraft/Data/log.yml for more information.");
+					e.printStackTrace();
+				}
+				player.closeInventory();
+				player.sendMessage(ChatColor.GOLD + "Saved your quest!");
 			}
 		}
 		return cancel;
