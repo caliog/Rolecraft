@@ -44,3 +44,4 @@ commands:
         description: Creates a abstract pet, which can be spawned later with a spell.
     quest:
         usage: /quest create
+        aliases: q
