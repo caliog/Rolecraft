@@ -28,7 +28,6 @@ public class YmlQuest extends Quest {
 
 	private final boolean loaded;
 
-	// TODO optimization: load quest completely from config to fields, then only return field on get to improve performance
 	public YmlQuest(String name) {
 		super(name);
 		File file = new File(FilePath.quests + name + ".yml");

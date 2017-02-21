@@ -16,7 +16,7 @@ import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Slime;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityUtils;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
@@ -63,13 +63,13 @@ public class MobSpawner {
 		for (MobSpawnZone z : zones) {
 			text = text + z.getM().toString() + "/" + z.getMob() + "/" + z.getRadius() + "/" + z.getAmount() + "\r";
 		}
-		VolatileEntities.killAllMobs();
+		EntityManager.killAllMobs();
 		writer.write(text);
 		writer.close();
 	}
 
 	public static boolean isNearSpawnZone(Entity e) {
-		Mob m = VolatileEntities.getMob(e.getUniqueId());
+		Mob m = EntityManager.getMob(e.getUniqueId());
 		if (m != null) {
 			for (MobSpawnZone zone : zones) {
 				if (zone.getM().equals(m.getSpawnZone())) {
@@ -104,8 +104,8 @@ public class MobSpawner {
 					Mob m;
 					for (Entity e : w.getEntities()) {
 						if (((e instanceof Creature)) || ((e instanceof Slime)) || ((e instanceof Ghast))) {
-							m = VolatileEntities.getMob(e.getUniqueId());
-							if (!VolatileEntities.isRegistered(e.getUniqueId())) {
+							m = EntityManager.getMob(e.getUniqueId());
+							if (!EntityManager.isRegistered(e.getUniqueId())) {
 								if (RolecraftConfig.isNaturalSpawnDisabled(w.getName()))
 									e.remove();
 							} else if (m != null) {
@@ -115,13 +115,13 @@ public class MobSpawner {
 					}
 
 				}
-				for (Mob mob : VolatileEntities.getMobs()) {
+				for (Mob mob : EntityManager.getMobs()) {
 					if (!ids.contains(mob.getUniqueId())) {
 						remove.add(mob.getUniqueId());
 					}
 				}
 				for (UUID id : remove) {
-					VolatileEntities.remove(id);
+					EntityManager.remove(id);
 				}
 			}
 		};

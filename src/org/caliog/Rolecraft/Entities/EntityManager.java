@@ -20,7 +20,7 @@ import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
-public class VolatileEntities {
+public class EntityManager {
 	private static List<Mob> mobs = new ArrayList<Mob>();
 	private static Set<UUID> register = new HashSet<UUID>();
 
@@ -116,7 +116,7 @@ public class VolatileEntities {
 	}
 
 	public static void setMobs(List<Mob> mobs) {
-		VolatileEntities.mobs = mobs;
+		EntityManager.mobs = mobs;
 	}
 
 	public static void killAllMobs() {

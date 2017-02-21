@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
@@ -95,7 +95,7 @@ public class MobSpawnZone {
 	protected int countMobs() {
 		int counter = 0;
 
-		for (Mob m : VolatileEntities.getMobs()) {
+		for (Mob m : EntityManager.getMobs()) {
 			if (!m.isDead() && !m.getSpawnZone().isNull())
 				if ((m != null) && (m.getSpawnZone().equals(this.m))) {
 					counter++;

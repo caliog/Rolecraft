@@ -17,7 +17,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager.Profession;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Guards.CheckpointPath;
@@ -67,7 +67,7 @@ public class VManager {
 		else
 			villager = new Villager((org.bukkit.entity.Villager) entity, type, location, name);
 
-		VolatileEntities.register(villager.getUniqueId());
+		EntityManager.register(villager.getUniqueId());
 
 		villagers.add(villager);
 
@@ -93,7 +93,7 @@ public class VManager {
 
 		trader.setRecipe(recipe);
 
-		VolatileEntities.register(trader.getUniqueId());
+		EntityManager.register(trader.getUniqueId());
 
 		villagers.add(trader);
 
@@ -196,7 +196,7 @@ public class VManager {
 		for (Villager v : villagers) {
 			if (v.getUniqueId().equals(entityid)) {
 				villagers.remove(v);
-				VolatileEntities.unregister(v.getUniqueId());
+				EntityManager.unregister(v.getUniqueId());
 				v.despawn();
 				break;
 			}

@@ -13,7 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Guards.GManager;
@@ -144,7 +144,7 @@ public class VillagerListener implements Listener {
 	public void death(EntityDeathEvent event) {
 		if (event.getEntity() instanceof Player)
 			return;
-		Mob m = VolatileEntities.getMob(event.getEntity().getUniqueId());
+		Mob m = EntityManager.getMob(event.getEntity().getUniqueId());
 		if (m != null)
 			if (m.getKillerId() != null)
 				if (m != null) {
@@ -179,7 +179,7 @@ public class VillagerListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void entityTargetVillager(final EntityTargetLivingEntityEvent event) {
-		Mob mob = VolatileEntities.getMob(event.getEntity().getUniqueId());
+		Mob mob = EntityManager.getMob(event.getEntity().getUniqueId());
 		if (mob == null)
 			return;
 		if (event == null || event.getTarget() == null)

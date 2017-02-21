@@ -18,7 +18,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
@@ -27,6 +27,7 @@ import org.caliog.Rolecraft.Mobs.Mob;
 import org.caliog.Rolecraft.Mobs.MobSpawnZone;
 import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
+import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -36,18 +37,18 @@ public class DeathListener implements Listener {
 	public void onMobDeath(final EntityDeathEvent event) {
 		if (RolecraftConfig.isWorldDisabled(event.getEntity().getWorld()))
 			return;
-		if (!(event.getEntity() instanceof Player) && !VolatileEntities.isRegistered(event.getEntity().getUniqueId()))
+		if (!(event.getEntity() instanceof Player) && !EntityManager.isRegistered(event.getEntity().getUniqueId()))
 			return;
 		event.setDroppedExp(0);
 		event.getDrops().clear();
-		final Mob mob = VolatileEntities.getMob(event.getEntity().getUniqueId());
+		final Mob mob = EntityManager.getMob(event.getEntity().getUniqueId());
 		if (mob == null) {
 			return;
 		}
 		mob.die();
 		Manager.scheduleTask(new Runnable() {
 			public void run() {
-				VolatileEntities.remove(event.getEntity().getUniqueId());
+				EntityManager.remove(event.getEntity().getUniqueId());
 				for (MobSpawnZone z : MobSpawner.zones) {
 					if (z.getM().equals(mob.getSpawnZone())) {
 						z.askForSpawn(mob.getExtraTime());
@@ -101,7 +102,7 @@ public class DeathListener implements Listener {
 			if ((current == max) && (w.getLevel() != 9)) {
 				w.raiseLevel(player.getPlayer());
 				String[] a = { Msg.WEAPON, Msg.LEVEL }, b = { w.getName(), String.valueOf(w.getLevel()) };
-				Msg.sendMessage(player.getPlayer(), "level-weapon", a, b);
+				Msg.sendMessage(player.getPlayer(), MessageKey.WEAPON_LEVEL, a, b);
 			} else {
 				w.kill(player.getPlayer());
 			}

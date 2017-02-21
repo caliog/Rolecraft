@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
@@ -45,7 +45,7 @@ public class Pet extends MobInstance {
 
 	public void die(RolecraftPlayer player, boolean t) {
 		super.die();
-		VolatileEntities.remove(getUniqueId());
+		EntityManager.remove(getUniqueId());
 		Pet.givePetEgg(player.getPlayer(), getName(), getCustomName());
 		if (t)
 			player.getPets().remove(this);
@@ -85,7 +85,7 @@ public class Pet extends MobInstance {
 				e.getEquipment().setBoots((ItemStack) mob.eq().get("BOOTS"));
 				e.getEquipment().setBootsDropChance(0.0F);
 			}
-			VolatileEntities.register(mob);
+			EntityManager.register(mob);
 
 			return mob;
 		}

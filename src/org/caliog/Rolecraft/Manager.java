@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
@@ -77,7 +77,7 @@ public class Manager {
 
 		try {
 			MobSpawner.saveZones();
-			VolatileEntities.save();
+			EntityManager.save();
 			PlayerManager.save();
 			Playerface.clear();
 
@@ -120,7 +120,7 @@ public class Manager {
 			SpellLoader.init();
 
 			MobSpawner.loadZones();
-			VolatileEntities.load();
+			EntityManager.load();
 
 			PlayerManager.load();
 			PlayerList.refreshList();

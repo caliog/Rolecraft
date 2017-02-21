@@ -14,7 +14,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Fighter;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
@@ -68,7 +68,7 @@ public abstract class Mob extends Fighter {
 				e.getEquipment().setBoots((ItemStack) mob.eq().get("BOOTS"));
 				e.getEquipment().setBootsDropChance(0.0F);
 			}
-			VolatileEntities.register(mob);
+			EntityManager.register(mob);
 
 			return e;
 		}

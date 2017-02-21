@@ -19,7 +19,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityUtils;
 import org.caliog.Rolecraft.Entities.Fighter;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.CustomItem;
@@ -34,7 +34,7 @@ public class DamageListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void entityTargetPlayer(EntityTargetEvent event) {
-		Mob mob = VolatileEntities.getMob(event.getEntity().getUniqueId());
+		Mob mob = EntityManager.getMob(event.getEntity().getUniqueId());
 		if ((mob == null) || (event.getTarget() == null)) {
 			return;
 		}
@@ -55,11 +55,11 @@ public class DamageListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void mobTargetMob(EntityTargetEvent event) {
-		Mob mob = VolatileEntities.getMob(event.getEntity().getUniqueId());
+		Mob mob = EntityManager.getMob(event.getEntity().getUniqueId());
 		if ((mob == null) || (event.getTarget() == null)) {
 			return;
 		}
-		Mob target = VolatileEntities.getMob(event.getTarget().getUniqueId());
+		Mob target = EntityManager.getMob(event.getTarget().getUniqueId());
 		if (target == null)
 			return;
 		if (!(mob instanceof Pet) && !(target instanceof Pet))
@@ -73,12 +73,12 @@ public class DamageListener implements Listener {
 	public void onDamage(EntityDamageEvent event) {
 		if (RolecraftConfig.isWorldDisabled(event.getEntity().getWorld()))
 			return;
-		if (!(event.getEntity() instanceof Player) && !VolatileEntities.isRegistered(event.getEntity().getUniqueId()))
+		if (!(event.getEntity() instanceof Player) && !EntityManager.isRegistered(event.getEntity().getUniqueId()))
 			return;
 		if (event.isCancelled())
 			return;
 		RolecraftPlayer player = PlayerManager.getPlayer(event.getEntity().getUniqueId());
-		Mob mob = VolatileEntities.getMob(event.getEntity().getUniqueId());
+		Mob mob = EntityManager.getMob(event.getEntity().getUniqueId());
 		// prevent custom mobs from fire damage
 		if ((mob != null) && ((event.getCause().equals(EntityDamageEvent.DamageCause.FIRE))
 				|| (event.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)))) {
@@ -222,7 +222,7 @@ public class DamageListener implements Listener {
 
 		Fighter d = PlayerManager.getPlayer(damagerEntity.getUniqueId());
 		if (d == null) {
-			d = VolatileEntities.getMob(damagerEntity.getUniqueId());
+			d = EntityManager.getMob(damagerEntity.getUniqueId());
 		}
 		return d;
 	}

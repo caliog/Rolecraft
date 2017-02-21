@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityUtils;
-import org.caliog.Rolecraft.Entities.VolatileEntities;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Mobs.MobSpawnZone;
 import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
@@ -87,7 +87,7 @@ public class Commandmsz extends Commands {
 
 			@Override
 			public void execute(final String[] args, final Player player) {
-				VolatileEntities.killAllMobs();
+				EntityManager.killAllMobs();
 				player.sendMessage(ChatColor.GOLD + "Reset all mob spawn zones!");
 			}
 		}, new CommandField("reset", FieldProperty.IDENTIFIER)));
