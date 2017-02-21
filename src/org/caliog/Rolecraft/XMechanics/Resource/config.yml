@@ -1,6 +1,8 @@
 comment_0: '#Decide if the plugin should search for new updates.#'
 comment_0a: '#There will be no auto-download of new updates.#'
 enable-update-check: true
+comment_0b: '#Choose a language (en, de, ru, etc)#'
+lang: en
 comment1: '#You can choose every material you like (e.g. GOLD_NUGGETS, IRON_INGOT)#'
 currency: EMERALD
 comment2: '#Set the default class, players are assigned on first join#'
@@ -36,8 +38,8 @@ disable-natural-spawn:
   world: false
   world_nether: false
   world_the_end: false
-comment17: '#Player with mtaching level will be moved into these groups#'
-comment18: '#ignore: names of the players who should not be moved#'
+comment11b: '#Player with mtaching level will be moved into these groups#'
+comment11c: '#ignore: names of the players who should not be moved#'
 group-assignment:
   ignore: caliog,DrBaron,Syrios
   Default: 1

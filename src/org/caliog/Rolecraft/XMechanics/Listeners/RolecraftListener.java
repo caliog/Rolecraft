@@ -53,6 +53,7 @@ import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Utils.SkillInventoryView;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Bars.CenterBar.CenterBar;
+import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
@@ -110,7 +111,7 @@ public class RolecraftListener implements Listener {
 
 				CenterBar.display(player.getPlayer(), "", ChatColor.GOLD + "Level " + event.getNewLevel());
 				Playerface.giveItem(player.getPlayer(), new Skillstar(3));
-				Msg.sendMessage(event.getPlayer(), "level-reached", Msg.LEVEL, String.valueOf(event.getNewLevel()));
+				Msg.sendMessage(event.getPlayer(), MessageKey.LEVEL_REACHED, Msg.LEVEL, String.valueOf(event.getNewLevel()));
 			}
 		} else
 			PlayerManager.changedClass.remove(player.getPlayer().getUniqueId());
@@ -272,25 +273,25 @@ public class RolecraftListener implements Listener {
 						if (player.skillStrength(event.getCursor().getAmount())) {
 							event.setCursor(null);
 						} else {
-							Msg.sendMessage(player.getPlayer(), "str-full");
+							Msg.sendMessage(player.getPlayer(), MessageKey.FULL_STR);
 						}
 					} else if (event.getRawSlot() == 1) {
 						if (player.skillDexterity(event.getCursor().getAmount())) {
 							event.setCursor(null);
 						} else {
-							Msg.sendMessage(player.getPlayer(), "dex-full");
+							Msg.sendMessage(player.getPlayer(), MessageKey.FULL_DEX);
 						}
 					} else if (event.getRawSlot() == 2) {
 						if (player.skillIntelligence(event.getCursor().getAmount())) {
 							event.setCursor(null);
 						} else {
-							Msg.sendMessage(player.getPlayer(), "int-full");
+							Msg.sendMessage(player.getPlayer(), MessageKey.FULL_INT);
 						}
 					} else if (event.getRawSlot() == 3) {
 						if (player.skillVitality(event.getCursor().getAmount())) {
 							event.setCursor(null);
 						} else {
-							Msg.sendMessage(player.getPlayer(), "vit-full");
+							Msg.sendMessage(player.getPlayer(), MessageKey.FULL_VIT);
 						}
 					}
 				}
@@ -320,12 +321,19 @@ public class RolecraftListener implements Listener {
 	/*
 	 * @EventHandler(priority = EventPriority.NORMAL)
 	 * 
-	 * public void onBowShoot(EntityShootBowEvent event) { if (myConfig.isWorldDisabled(event.getEntity().getWorld())) return; if ((!(event.getEntity()
-	 * instanceof Player)) || (PlayerManager.getPlayer(event.getEntity().getUniqueId()) == null)) { return; } final Player player = (Player) event.getEntity();
-	 * ItemStack stack = event.getBow(); myClass clazz = PlayerManager.getPlayer(player.getUniqueId()); if (clazz == null) { return; } if
-	 * (Weapon.isWeapon(clazz, stack)) { Weapon weapon = Weapon.getInstance(clazz, stack); if (weapon.getType().equals(Material.BOW)) { final short d = (short)
-	 * (stack.getDurability()); Manager.scheduleTask(new Runnable() { public void run() { player.getInventory().getItemInMainHand().setDurability(d); } }); } }
-	 * }
+	 * public void onBowShoot(EntityShootBowEvent event) { if
+	 * (myConfig.isWorldDisabled(event.getEntity().getWorld())) return; if
+	 * ((!(event.getEntity() instanceof Player)) ||
+	 * (PlayerManager.getPlayer(event.getEntity().getUniqueId()) == null)) {
+	 * return; } final Player player = (Player) event.getEntity(); ItemStack
+	 * stack = event.getBow(); myClass clazz =
+	 * PlayerManager.getPlayer(player.getUniqueId()); if (clazz == null) {
+	 * return; } if (Weapon.isWeapon(clazz, stack)) { Weapon weapon =
+	 * Weapon.getInstance(clazz, stack); if
+	 * (weapon.getType().equals(Material.BOW)) { final short d = (short)
+	 * (stack.getDurability()); Manager.scheduleTask(new Runnable() { public
+	 * void run() { player.getInventory().getItemInMainHand().setDurability(d);
+	 * } }); } } }
 	 */
 
 	@EventHandler(priority = EventPriority.NORMAL)

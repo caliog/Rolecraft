@@ -1,8 +1,9 @@
 package org.caliog.Rolecraft.Spells;
 
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Entities.Player.RolecraftAbstrPlayer;
+import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
+import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 
 public abstract class Spell {
@@ -32,7 +33,8 @@ public abstract class Spell {
 	/**
 	 * This is an optional method to use in the execute override.<br>
 	 * It will tell the plugin that the spell is still active,<br>
-	 * while it is active {@link getDamage()},{@link getDefense()} will be added to player's damage,defense.<br>
+	 * while it is active {@link getDamage()},{@link getDefense()} will be added
+	 * to player's damage,defense.<br>
 	 * 
 	 * @param time
 	 *            The time (in ticks = 20 * seconds) the spell will be active
@@ -72,17 +74,17 @@ public abstract class Spell {
 	 */
 	public boolean execute() {
 		if (this.player.getLevel() < getMinLevel()) {
-			Msg.sendMessage(this.player.getPlayer(), "need-level-skill");
+			Msg.sendMessage(this.player.getPlayer(), MessageKey.SKILL_NEED_LEVEL);
 			return false;
 		}
 		if (this.player.getPlayer().getFoodLevel() - getFood() >= 0) {
 			this.player.getPlayer().setFoodLevel(this.player.getPlayer().getFoodLevel() - getFood());
 		} else {
-			Msg.sendMessage(this.player.getPlayer(), "need-mana-skill");
+			Msg.sendMessage(this.player.getPlayer(), MessageKey.SKILL_NEED_MANA);
 			return false;
 		}
 		if (isActive()) {
-			Msg.sendMessage(this.player.getPlayer(), "skill-active");
+			Msg.sendMessage(this.player.getPlayer(), MessageKey.SKILL_ACTIVE);
 			return false;
 		}
 		return true;

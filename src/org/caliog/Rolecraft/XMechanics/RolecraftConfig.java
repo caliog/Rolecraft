@@ -17,6 +17,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
@@ -49,6 +50,16 @@ public class RolecraftConfig {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static String getLangCode() {
+		String l = config.getString("lang", "en");
+		if (l.length() != 2) {
+			Debugger.info(LogTitle.NONE, "Could not identify lang code in config.yml.");
+			Manager.plugin.getLogger().warning("Could not identify lang code in config.yml. en is default.");
+			return "en";
+		}
+		return l;
 	}
 
 	public static Material getCurrency() {

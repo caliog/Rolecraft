@@ -126,39 +126,38 @@ public class RolecraftPlugin extends JavaPlugin {
 	}
 
 	private void mkdir() {
-		File tmp = new File("plugins/myRPG");
-		File target = new File(FilePath.main);
-		try {
-			if (tmp.exists() && tmp.isDirectory()) {
-				if (!target.exists()) {
-					target.mkdir();
-					DataFolder.copyFolder(tmp, target);
+
+		for (Field f : FilePath.class.getFields()) {
+			String value;
+			try {
+				value = (String) f.get(this);
+			} catch (IllegalArgumentException | IllegalAccessException e1) {
+				e1.printStackTrace();
+				continue;
+			}
+			if (value.equals(FilePath.mic))
+				continue;
+			if (value.equals(FilePath.spellCollection))
+				continue;
+			if (value.equals(FilePath.messages))
+				continue;
+			String[] split = value.split("/");
+			String name = split[split.length - 1];
+			File file = new File(value);
+			if (!file.exists()) {
+				try {
+					if (value.endsWith("/")) {
+						file.mkdir();
+					} else {
+						file.createNewFile();
+						fc.copyFile(value, name);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
-			for (Field f : FilePath.class.getFields()) {
-
-				String value = (String) f.get(this);
-				String[] split = value.split("/");
-				String name = split[split.length - 1];
-				File file = new File(value);
-				if (!value.equals(FilePath.mic))
-					if (!file.exists()) {
-						if (value.endsWith("/")) {
-							file.mkdir();
-						} else {
-							if (value.equals(FilePath.mic))
-								continue;
-							if (value.equals(FilePath.spellCollection))
-								continue;
-							file.createNewFile();
-							fc.copyFile(value, name);
-						}
-					}
-
-			}
-		} catch (IllegalArgumentException | IllegalAccessException | IOException e) {
-			e.printStackTrace();
 		}
+
 	}
 
 	public String getVersion() {
