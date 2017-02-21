@@ -13,10 +13,12 @@ import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 
 public abstract class Quest {
 
+	protected HashMap<Integer, CMessage> messages = new HashMap<Integer, CMessage>();
 	protected List<ItemStack> rewards = new ArrayList<ItemStack>();
 	protected List<ItemStack> collects = new ArrayList<ItemStack>();
 	protected HashMap<String, Integer> mobs = new HashMap<String, Integer>();
 	protected final String name;
+	protected ItemStack receive;
 
 	public Quest(String name) {
 		this.name = name;
@@ -24,17 +26,27 @@ public abstract class Quest {
 
 	public abstract Location getTargetLocation(RolecraftPlayer player);
 
-	public abstract HashMap<Integer, CMessage> getMessages();
+	public HashMap<Integer, CMessage> getMessages() {
+		return messages;
+	}
 
 	public abstract int getMessageStart(RolecraftPlayer p);
 
-	public abstract List<ItemStack> getRewards();
+	public List<ItemStack> getRewards() {
+		return rewards;
+	}
 
-	public abstract List<ItemStack> getCollects();
+	public List<ItemStack> getCollects() {
+		return collects;
+	}
 
-	public abstract ItemStack getReceive();
+	public ItemStack getReceive() {
+		return receive;
+	}
 
-	public abstract HashMap<String, Integer> getMobs();
+	public HashMap<String, Integer> getMobs() {
+		return mobs;
+	}
 
 	public abstract int getExp();
 

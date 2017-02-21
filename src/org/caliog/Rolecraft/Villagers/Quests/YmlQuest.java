@@ -27,12 +27,14 @@ public class YmlQuest extends Quest {
 	protected YamlConfiguration config;
 
 	private final boolean loaded;
+	private Villager v;
 
 	public YmlQuest(String name) {
 		super(name);
 		File file = new File(FilePath.quests + name + ".yml");
 		if (file.exists()) {
 			config = YamlConfiguration.loadConfiguration(file);
+			loadQuest();
 			loaded = true;
 		} else
 			loaded = false;
@@ -41,22 +43,28 @@ public class YmlQuest extends Quest {
 	@Override
 	public Location getTargetLocation(RolecraftPlayer player) {
 		if (player.getQuestStatus(getName()).equals(QuestStatus.FIRST))
-			if (config.isString("target-villager")) {
-				String name = config.getString("target-villager");
-				Villager v = VManager.getVillager(name);
-
-				if (v != null) {
-					return v.getEntityLocation();
-				}
-			}
+			if (v != null)
+				return v.getEntityLocation();
 
 		return null;
 	}
 
-	@Override
-	public HashMap<Integer, CMessage> getMessages() {
-		HashMap<Integer, CMessage> map = new HashMap<Integer, CMessage>();
+	private void loadQuest() {
+		if (config.isString("target-villager")) {
+			String name = config.getString("target-villager");
+			Villager v = VManager.getVillager(name);
+			this.v = v;
+		}
 
+		loadMessages();
+		loadRewards();
+		loadCollects();
+		this.receive = ItemUtils.getItem(config.getString("receive-item"));
+		loadMobs();
+
+	}
+
+	private void loadMessages() {
 		for (String id : config.getConfigurationSection("messages").getKeys(false)) {
 			CMessage msg = CMessage.fromString(config.getConfigurationSection("messages").getString(id), Integer.parseInt(id));
 			if (msg != null) {
@@ -92,11 +100,10 @@ public class YmlQuest extends Quest {
 
 					});
 
-				map.put(Integer.parseInt(id), msg);
+				messages.put(Integer.parseInt(id), msg);
 			}
 		}
 
-		return map;
 	}
 
 	@Override
@@ -115,8 +122,7 @@ public class YmlQuest extends Quest {
 		}
 	}
 
-	@Override
-	public List<ItemStack> getRewards() {
+	private void loadRewards() {
 		List<ItemStack> list = new ArrayList<ItemStack>();
 		if (config.isList("rewards")) {
 			for (String l : config.getStringList("rewards"))
@@ -130,11 +136,11 @@ public class YmlQuest extends Quest {
 					break;
 			}
 		}
-		return list;
+
+		this.rewards = list;
 	}
 
-	@Override
-	public List<ItemStack> getCollects() {
+	private void loadCollects() {
 		List<ItemStack> list = new ArrayList<ItemStack>();
 		if (config.isList("collects")) {
 			for (String l : config.getStringList("collects"))
@@ -148,26 +154,18 @@ public class YmlQuest extends Quest {
 					break;
 			}
 		}
-		return list;
+		this.collects = list;
 	}
 
-	@Override
-	public ItemStack getReceive() {
-		return ItemUtils.getItem(config.getString("receive-item"));
-	}
-
-	@Override
-	public HashMap<String, Integer> getMobs() {
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
+	private void loadMobs() {
 		if (config.isConfigurationSection("mobs")) {
 			ConfigurationSection sec = config.getConfigurationSection("mobs");
 			for (String id : sec.getKeys(false)) {
 				if (sec.isInt(id)) {
-					map.put(id, sec.getInt(id));
+					mobs.put(id, sec.getInt(id));
 				}
 			}
 		}
-		return map;
 	}
 
 	@Override
