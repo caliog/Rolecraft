@@ -65,44 +65,46 @@ public class YmlQuest extends Quest {
 	}
 
 	private void loadMessages() {
-		for (String id : config.getConfigurationSection("messages").getKeys(false)) {
-			CMessage msg = CMessage.fromString(config.getConfigurationSection("messages").getString(id), Integer.parseInt(id));
-			if (msg != null) {
-				if (id.equals("1")) {// id:1 is reserved for the "accept-quest"
-										// message; default start with id:0
+		if (config.isConfigurationSection("messages"))
+			for (String id : config.getConfigurationSection("messages").getKeys(false)) {
+				CMessage msg = CMessage.fromString(config.getConfigurationSection("messages").getString(id), Integer.parseInt(id));
+				if (msg != null) {
+					if (id.equals("1")) {// id:1 is reserved for the
+											// "accept-quest"
+											// message; default start with id:0
 
-					msg.setTask(new ChatTask(this) {
+						msg.setTask(new ChatTask(this) {
 
-						@Override
-						public void execute(RolecraftPlayer player, Villager villager) {
-							player.newQuest(quest.getName());
-							QManager.updateQuestBook(player);
-							ItemStack stack = getReceive();
-							if (!config.getBoolean("target-villager-give"))
-								if (stack != null)
-									Playerface.giveItem(player.getPlayer(), stack);
-						}
-
-					});
-				} else if (id.equals(config.getString("target-villager-message")))
-					msg.setTask(new ChatTask(this) {
-
-						@Override
-						public void execute(RolecraftPlayer player, Villager villager) {
-							player.raiseQuestStatus(this.quest.getName());
-							if (config.getBoolean("target-villager-take"))
-								Playerface.takeItem(player.getPlayer(), getCollects());
-							else if (config.getBoolean("target-villager-give")) {
-								Playerface.giveItem(player.getPlayer(), getReceive());
+							@Override
+							public void execute(RolecraftPlayer player, Villager villager) {
+								player.newQuest(quest.getName());
+								QManager.updateQuestBook(player);
+								ItemStack stack = getReceive();
+								if (!config.getBoolean("target-villager-give"))
+									if (stack != null)
+										Playerface.giveItem(player.getPlayer(), stack);
 							}
 
-						}
+						});
+					} else if (id.equals(config.getString("target-villager-message")))
+						msg.setTask(new ChatTask(this) {
 
-					});
+							@Override
+							public void execute(RolecraftPlayer player, Villager villager) {
+								player.raiseQuestStatus(this.quest.getName());
+								if (config.getBoolean("target-villager-take"))
+									Playerface.takeItem(player.getPlayer(), getCollects());
+								else if (config.getBoolean("target-villager-give")) {
+									Playerface.giveItem(player.getPlayer(), getReceive());
+								}
 
-				messages.put(Integer.parseInt(id), msg);
+							}
+
+						});
+
+					messages.put(Integer.parseInt(id), msg);
+				}
 			}
-		}
 
 	}
 
@@ -168,6 +170,7 @@ public class YmlQuest extends Quest {
 		}
 	}
 
+	// TODO transform exp back to minecraft exp ?!
 	@Override
 	public int getExp() {
 		String expr = config.getString("exp-reward");
