@@ -119,23 +119,14 @@ public class PlayerManager {
 		for (RolecraftPlayer clazz : players.values()) {
 			if (RolecraftConfig.isWorldDisabled(clazz.getPlayer().getWorld()))
 				continue;
-			int i = clazz.getIntelligence();
-			int s = 1;
-			if (i < 20) {
-				s = 5;
-			} else if (i < 45) {
-				s = 4;
-			} else if (i < 60) {
-				s = 3;
-			} else if (i <= 80) {
-				s = 2;
-			}
-			s *= 20;
-
-			if (time % s == 0.0F) {
-				clazz.regainFood();
-			}
-
+			// TODO think about mana usage
+			/*
+			 * int i = clazz.getIntelligence(); int s = 1; if (i < 20) { s = 5;
+			 * } else if (i < 45) { s = 4; } else if (i < 60) { s = 3; } else if
+			 * (i <= 80) { s = 2; } s *= 20;
+			 * 
+			 * if (time % s == 0.0F) { clazz.regainFood(); }
+			 */
 			double health = clazz.getPlayer().getHealth();
 			double d = -clazz.getHealth() + health;
 			if (d > 1e-3)
