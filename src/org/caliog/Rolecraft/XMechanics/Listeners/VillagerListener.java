@@ -7,7 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -44,12 +43,12 @@ public class VillagerListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void interactEvent(PlayerInteractEntityEvent event) {
 		if (event.getRightClicked() instanceof org.bukkit.entity.Villager) {
-			event.setCancelled(true);
 			org.bukkit.entity.Villager v = (org.bukkit.entity.Villager) event.getRightClicked();
 			Villager vil = VManager.getVillager(v.getUniqueId());
 
 			if (vil == null)
 				return;
+			event.setCancelled(true);
 			ChatManager.interaction(event.getPlayer(), vil, false);
 			if (vil.getType().equals(VillagerType.TRADER)) {
 				Trader trader = (Trader) vil;
@@ -79,22 +78,6 @@ public class VillagerListener implements Listener {
 			ChatManager.interaction((Player) event.getDamager(), vil, true);
 
 		}
-	}
-
-	/*
-	 * @Name: InteractEvent
-	 * 
-	 * @Listen TO: Villager
-	 * 
-	 * @Cancel: true
-	 * 
-	 * @Category: Villager protection
-	 * 
-	 */
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void interactEvent(EntityTargetEvent event) {
-		if (event.getTarget() instanceof org.bukkit.entity.Villager)
-			event.setCancelled(true);
 	}
 
 	/*
