@@ -2,7 +2,7 @@ name: Rolecraft
 author: caliog
 website: http://www.caliog.org
 main: org.caliog.Rolecraft.RolecraftPlugin
-version: 3.1.29
+version: 3.1.30
 softdepend: [Vault]
 
 commands:
@@ -42,6 +42,3 @@ commands:
     pet:
         usage: /pet <mob> <name>
         description: Creates a abstract pet, which can be spawned later with a spell.
-    quest:
-        usage: /quest create
-        aliases: q
