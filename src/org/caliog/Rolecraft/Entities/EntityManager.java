@@ -54,7 +54,7 @@ public class EntityManager {
 			if (EntityUtils.isMobClass(m)) {
 				UUID uuid = UUID.fromString(line.split("=")[1]);
 
-				getMobs().add(new MobInstance(m, uuid, Vector.fromString(line.split("=")[2])));
+				mobs.add(new MobInstance(m, uuid, Vector.fromString(line.split("=")[2])));
 				register(uuid);
 				for (World w : Manager.getWorlds())
 					if (w != null)
