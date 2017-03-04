@@ -8,8 +8,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.caliog.Rolecraft.Entities.EntityManager;
@@ -26,7 +24,6 @@ import org.caliog.Rolecraft.Villagers.NPC.Villager.VillagerType;
 import org.caliog.Rolecraft.Villagers.Quests.QManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
 import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
-import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInventory;
 
 public class VillagerListener implements Listener {
 
@@ -162,50 +159,19 @@ public class VillagerListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void entityTargetVillager(final EntityTargetLivingEntityEvent event) {
+		if (event == null || event.getTarget() == null)
+			return;
+		if (VManager.getVillager(event.getTarget().getUniqueId()) != null) {
+			event.setCancelled(true);
+			return;
+		}
 		Mob mob = EntityManager.getMob(event.getEntity().getUniqueId());
 		if (mob == null)
 			return;
-		if (event == null || event.getTarget() == null)
-			return;
-		if (GManager.isGuard(event.getTarget()) || VManager.getVillager(event.getTarget().getUniqueId()) != null) {
+		if (GManager.isGuard(event.getTarget())) {
 			event.setCancelled(true);
 		}
 
 	}
 
-	/*
-	 * @Name: InventoryClick
-	 * 
-	 * @Listen TO: Inventory
-	 * 
-	 * @Cancel: true
-	 * 
-	 * @Category: Quest
-	 * 
-	 */
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void inventoryClick(final InventoryClickEvent event) {
-		if (event.getView() instanceof QuestInventory && event.getWhoClicked() instanceof Player) {
-			boolean cancel = ((QuestInventory) event.getView()).inventoryClick(event);
-			if (cancel)
-				event.setCancelled(cancel);
-		}
-	}
-
-	/*
-	 * @Name: InventoryClose
-	 * 
-	 * @Listen TO: Inventory
-	 * 
-	 * @Cancel: false
-	 * 
-	 * @Category: Quest
-	 * 
-	 */
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void inventoryClose(final InventoryCloseEvent event) {
-		if (event.getView() instanceof QuestInventory) {
-			((QuestInventory) event.getView()).closed();
-		}
-	}
 }
