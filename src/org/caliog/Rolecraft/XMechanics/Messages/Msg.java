@@ -82,13 +82,20 @@ public class Msg {
 		return getMessage(msgKey, a, b);
 	}
 
+	public static String getMessage(MessageKey msgKey) {
+		String t = null;
+		return getMessage(msgKey, t, t);
+	}
+
 	private static String getMessage(MessageKey msgKey, String[] key, String[] replace) {
 		String msg = msgKey.getMessage();
 		if (msg == null || (key != null && replace != null && replace.length != key.length))
 			return null;
 		if (key != null)
 			for (int i = 0; i < key.length; i++)
-				msg = msg.replace(key[i], replace[i]);
+				if (key[i] != null && replace[i] != null)
+					msg = msg.replace(key[i], replace[i]);
+
 		msg = ChatColor.translateAlternateColorCodes('&', msg);
 		return msg;
 	}
