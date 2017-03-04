@@ -1,20 +1,11 @@
 package org.caliog.Rolecraft.Villagers.Quests.Utils;
 
-import org.bukkit.entity.Player;
-import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.EntityUtils;
-import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
-import org.caliog.Rolecraft.Villagers.VManager;
-import org.caliog.Rolecraft.Villagers.NPC.Villager;
-import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
-import org.caliog.Rolecraft.XMechanics.Utils.Utils;
-
-import org.bukkit.ChatColor;
-
 public class QuestInventoryConsole {
 
+	// @formatter:off
+/*
 	// Let the player choose a quest villager
-	public static void chooseQuestVillager(final QuestInventory questInventory, final Player player) {
+	public static void chooseQuestVillager(final QuestEditorMenu questInventory, final Player player) {
 		player.closeInventory();
 		ConsoleReader cr = new ConsoleReader(player) {
 
@@ -27,7 +18,7 @@ public class QuestInventoryConsole {
 
 					Villager v;
 					if ((v = VManager.getVillager(lastLine)) != null) {
-						questInventory.setQuestVillager(v.getName());
+						//questInventory.setQuestVillager(v.getName());
 						quit();
 					} else {
 						player.sendMessage(ChatColor.BOLD + lastLine + ChatColor.GRAY + " is not a villager.");
@@ -45,7 +36,7 @@ public class QuestInventoryConsole {
 		cr.setTaskID(Manager.scheduleRepeatingTask(cr, 0L, 4L));
 	}
 
-	public static void chooseTargetVillager(QuestInventory questInventory, Player player) {
+	public static void chooseTargetVillager(QuestEditorMenu questInventory, Player player) {
 		player.closeInventory();
 		ConsoleReader cr = new ConsoleReader(player) {
 
@@ -76,7 +67,7 @@ public class QuestInventoryConsole {
 		cr.setTaskID(Manager.scheduleRepeatingTask(cr, 0L, 4L));
 	}
 
-	public static void chooseMob(QuestInventory questInventory, Player player, int slot, String mobName, boolean isLeftClick) {
+	public static void chooseMob(QuestEditorMenu questInventory, Player player, int slot, String mobName, boolean isLeftClick) {
 		String askMsg = isLeftClick ? "Enter the name of a mob: (q to quit)"
 				: "Enter the amount of " + mobName + "s, one has to kill: (q to quit)";
 		player.closeInventory();
@@ -116,7 +107,7 @@ public class QuestInventoryConsole {
 		cr.setTaskID(Manager.scheduleRepeatingTask(cr, 0L, 4L));
 	}
 
-	public static void chooseClazz(QuestInventory questInventory, Player player) {
+	public static void chooseClazz(QuestEditorMenu questInventory, Player player) {
 		player.closeInventory();
 		ConsoleReader cr = new ConsoleReader(player) {
 
@@ -144,6 +135,7 @@ public class QuestInventoryConsole {
 		};
 		cr.setTaskID(Manager.scheduleRepeatingTask(cr, 0L, 4L));
 
-	}
+	}*/
+	// @formatter:on
 
 }

@@ -74,4 +74,15 @@ public class ClazzLoader {
 	public static String getClassColor(String name) {
 		return classes.getString(name + ".chat-color");
 	}
+
+	public static String[] getClassesAsArray() {
+		Set<String> keys = classes.getKeys(false);
+		String[] r = new String[keys.size()];
+		int c = 0;
+		for (String k : keys) {
+			r[c] = k;
+			c++;
+		}
+		return r;
+	}
 }

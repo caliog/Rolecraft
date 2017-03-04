@@ -19,12 +19,14 @@ import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Listeners.DamageListener;
 import org.caliog.Rolecraft.XMechanics.Listeners.DeathListener;
+import org.caliog.Rolecraft.XMechanics.Listeners.MenuListener;
 import org.caliog.Rolecraft.XMechanics.Listeners.RolecraftListener;
 import org.caliog.Rolecraft.XMechanics.Listeners.VillagerListener;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.Metrics;
 import org.caliog.Rolecraft.XMechanics.Utils.Updater;
 import org.caliog.Rolecraft.XMechanics.Utils.Updater.UpdateCallback;
 import org.caliog.Rolecraft.XMechanics.Utils.Updater.UpdateType;
@@ -62,6 +64,7 @@ public class RolecraftPlugin extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DamageListener(), this);
 		getServer().getPluginManager().registerEvents(new DeathListener(), this);
 		getServer().getPluginManager().registerEvents(new VillagerListener(), this);
+		getServer().getPluginManager().registerEvents(new MenuListener(), this);
 
 		Manager.scheduleRepeatingTask(Manager.getTask(), 20L, 1L);
 
@@ -69,6 +72,11 @@ public class RolecraftPlugin extends JavaPlugin {
 			backupTask = Manager.scheduleRepeatingTask(DataFolder.backupTask(), 20L * 60L * RolecraftConfig.getBackupTime(),
 					20L * 60L * RolecraftConfig.getBackupTime());
 
+		try {
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+		} catch (IOException e) {
+		}
 		searchForNewVersion();
 		getLogger().info(getDescription().getFullName() + " enabled!");
 	}

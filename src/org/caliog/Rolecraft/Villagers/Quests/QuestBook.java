@@ -57,9 +57,7 @@ public class QuestBook extends Book {
 					for (ItemStack stack : q.getCollects()) {
 						String name;
 						if (stack instanceof CustomItem)
-							name = ChatColor.stripColor(
-
-									stack.getItemMeta().getDisplayName());
+							name = ChatColor.stripColor(stack.getItemMeta().getDisplayName());
 						else
 							name = Utils.readable(stack.getType());
 						page += "&8" + name + ": &0" + stack.getAmount() + "\n";

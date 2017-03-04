@@ -19,7 +19,8 @@ import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 import org.caliog.Rolecraft.Villagers.Chat.ChatTask;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
-import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInventory;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestEditorMenu;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class YmlQuest extends Quest {
@@ -59,7 +60,7 @@ public class YmlQuest extends Quest {
 		loadMessages();
 		loadRewards();
 		loadCollects();
-		this.receive = ItemUtils.getItem(config.getString("receive-item"));
+		loadReceives();
 		loadMobs();
 
 	}
@@ -79,10 +80,8 @@ public class YmlQuest extends Quest {
 							public void execute(RolecraftPlayer player, Villager villager) {
 								player.newQuest(quest.getName());
 								QManager.updateQuestBook(player);
-								ItemStack stack = getReceive();
 								if (!config.getBoolean("target-villager-give"))
-									if (stack != null)
-										Playerface.giveItem(player.getPlayer(), stack);
+									Playerface.giveItem(player.getPlayer(), getReceives());
 							}
 
 						});
@@ -95,7 +94,7 @@ public class YmlQuest extends Quest {
 								if (config.getBoolean("target-villager-take"))
 									Playerface.takeItem(player.getPlayer(), getCollects());
 								else if (config.getBoolean("target-villager-give")) {
-									Playerface.giveItem(player.getPlayer(), getReceive());
+									Playerface.giveItem(player.getPlayer(), getReceives());
 								}
 
 							}
@@ -130,15 +129,12 @@ public class YmlQuest extends Quest {
 			for (String l : config.getStringList("rewards"))
 				list.add(ItemUtils.getItem(l));
 		} else {
-			int c = 0;
-			for (int i = 0; config.isItemStack("rewards." + i + 1); i++) {
-				list.add(config.getItemStack("rewards." + (i + 1)));
-				c++;
-				if (c >= 4)
-					break;
+			for (int i = 0; i < 7; i++) {
+				if (config.isItemStack("rewards." + (i + 1))) {
+					list.add(config.getItemStack("rewards." + (i + 1)));
+				}
 			}
 		}
-
 		this.rewards = list;
 	}
 
@@ -148,15 +144,28 @@ public class YmlQuest extends Quest {
 			for (String l : config.getStringList("collects"))
 				list.add(ItemUtils.getItem(l));
 		} else {
-			int c = 0;
-			for (int i = 0; config.isItemStack("collects." + i + 1); i++) {
-				list.add(config.getItemStack("collects." + (i + 1)));
-				c++;
-				if (c >= 4)
-					break;
+			for (int i = 0; i < 7; i++) {
+				if (config.isItemStack("collects." + (i + 1))) {
+					list.add(config.getItemStack("collects." + (i + 1)));
+				}
 			}
 		}
 		this.collects = list;
+	}
+
+	private void loadReceives() {
+		List<ItemStack> list = new ArrayList<ItemStack>();
+		if (config.isList("receives")) {
+			for (String l : config.getStringList("receives"))
+				list.add(ItemUtils.getItem(l));
+		} else {
+			for (int i = 0; i < 7; i++) {
+				if (config.isItemStack("receives." + (i + 1))) {
+					list.add(config.getItemStack("receives." + (i + 1)));
+				}
+			}
+		}
+		this.receives = list;
 	}
 
 	private void loadMobs() {
@@ -210,6 +219,10 @@ public class YmlQuest extends Quest {
 		return config.getString("required-quest");
 	}
 
+	public String getTargetVillager() {
+		return config.getString("target-villager");
+	}
+
 	public boolean isLoaded() {
 		return loaded;
 	}
@@ -218,42 +231,44 @@ public class YmlQuest extends Quest {
 		return config;
 	}
 
-	public void editedQuest(QuestInventory view) throws IOException {
-		String clazz = view.getClazz();
-		String targetVillager = view.getTargetVillager();
-		int minLevel = view.getMinLevel();
-		int exp = view.getExp();
-		List<ItemStack> rewards = view.getRewardList();
-		List<ItemStack> collect = view.getCollectList();
-		ItemStack receive = view.getReceiveItem();
-		HashMap<String, Integer> mobs = view.getMobMap();
+	public void editedQuest(QuestEditorMenu menu) {
+		String clazz = menu.getClazz();
+		String targetVillager = menu.getTargetVillager();
+		int minLevel = menu.getMinLevel();
+		int exp = menu.getExp();
+		List<ItemStack> rewards = menu.getRewards();
+		List<ItemStack> collects = menu.getCollects();
+		List<ItemStack> receives = menu.getReceives();
+		HashMap<String, Integer> mobs = menu.getMobMap();
+		try {
+			YamlConfiguration config = getConfig();
+			File f = new File(FilePath.quests + getName() + ".yml");
+			if (config == null) {
+				if (!f.exists())
+					f.createNewFile();
+				config = YamlConfiguration.loadConfiguration(f);
+			}
 
-		YamlConfiguration config = getConfig();
-		File f = new File(FilePath.quests + getName() + ".yml");
-		if (config == null) {
-			if (!f.exists())
-				f.createNewFile();
-			config = YamlConfiguration.loadConfiguration(f);
+			config.set("class", clazz);
+			config.set("exp-reward", exp);
+			config.set("min-level", minLevel);
+			config.set("target-villager", targetVillager);
+			for (int i = 0; i < collects.size(); i++)
+				config.set("collects." + (i + 1), collects.get(i));
+			for (int i = 0; i < rewards.size(); i++)
+				config.set("rewards." + (i + 1), rewards.get(i));
+			for (int i = 0; i < receives.size(); i++)
+				config.set("receives." + (i + 1), receives.get(i));
+			for (String k : mobs.keySet())
+				config.set("mobs." + k, mobs.get(k));
+
+			config.save(f);
+			QManager.addYmlQuest(this);
+		} catch (IOException e) {
+			Debugger.exception("YmlQuest.editedQuest threw an IOException : ", e.getMessage());
+			e.printStackTrace();
 		}
 
-		config.set("class", clazz);
-		config.set("exp-reward", exp);
-		config.set("min-level", minLevel);
-		config.set("target-villager", targetVillager);
-		for (int i = 0; i < collect.size(); i++)
-			config.set("collects." + (i + 1), collect.get(i));
-		for (int i = 0; i < rewards.size(); i++)
-			config.set("rewards." + (i + 1), rewards.get(i));
-		config.set("receive-item", receive);
-		for (String k : mobs.keySet())
-			config.set("mobs." + k, mobs.get(k));
-
-		config.save(f);
-
-		String vName = view.getQuestVillager();
-		Villager v = VManager.getVillager(vName);
-		if (v != null)
-			v.addQuest(getName());
 	}
 
 }

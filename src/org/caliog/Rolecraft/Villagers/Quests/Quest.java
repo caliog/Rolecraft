@@ -18,7 +18,7 @@ public abstract class Quest {
 	protected List<ItemStack> collects = new ArrayList<ItemStack>();
 	protected HashMap<String, Integer> mobs = new HashMap<String, Integer>();
 	protected final String name;
-	protected ItemStack receive;
+	protected List<ItemStack> receives = new ArrayList<ItemStack>();
 
 	public Quest(String name) {
 		this.name = name;
@@ -40,8 +40,8 @@ public abstract class Quest {
 		return collects;
 	}
 
-	public ItemStack getReceive() {
-		return receive;
+	public List<ItemStack> getReceives() {
+		return receives;
 	}
 
 	public HashMap<String, Integer> getMobs() {
@@ -99,4 +99,5 @@ public abstract class Quest {
 
 		return true;
 	}
+
 }

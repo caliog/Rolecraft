@@ -88,4 +88,16 @@ public class QManager {
 		}
 		Playerface.giveItem(player.getPlayer(), new QuestBook(player));
 	}
+
+	public static void addYmlQuest(YmlQuest quest) {
+		if (quest != null) {
+			for (Quest q : quests) {
+				if (q.getName().equals(quest.getName())) {
+					quests.remove(q);
+					break;
+				}
+			}
+			quests.add(quest);
+		}
+	}
 }
