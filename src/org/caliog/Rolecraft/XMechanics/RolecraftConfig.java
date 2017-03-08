@@ -101,10 +101,6 @@ public class RolecraftConfig {
 		return Manager.isWorldDisabled(world);
 	}
 
-	public static boolean isLevelLinear() {
-		return config.getBoolean("linear-experience", false);
-	}
-
 	public static int getRemoveItemTime() {
 		return config.getInt("remove-item-delay", 120);
 	}

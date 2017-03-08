@@ -7,10 +7,6 @@ comment1: '#You can choose every material you like (e.g. GOLD_NUGGETS, IRON_INGO
 currency: EMERALD
 comment2: '#Set the default class, players are assigned on first join#'
 default-class: Warrior
-comment3: '#Linear means that the amount of experience you need#'
-comment4: '#to reach the next level, stays constant! If its false#'
-comment4a: '#the higher your level the more exp you need until next level!#'
-linear-experience: false
 comment4b: '#Chat format: %PLAYER%, %MESSAGE%, %GROUP%, %CLASS%, %LEVEL%#'
 comment4c: '#Leave it blank or set to none if you dont want to use it#'
 chat-format: '&9[&9%CLASS%&9]&8[&2%PLAYER% &6%LEVEL%&8]&f: %MESSAGE%'
