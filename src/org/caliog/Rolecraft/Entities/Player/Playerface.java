@@ -21,12 +21,9 @@ public class Playerface {
 	private static HashMap<UUID, UUID> playerDrops = new HashMap<UUID, UUID>();
 
 	public static int getExp(int level) {
-		int exp = 0;
-		if (RolecraftConfig.isLevelLinear()) {
-			exp = level * 100 - 100;
-		} else
-			exp = 50 * level * (level - 1);
-		return exp;
+		double exact_value = -3 / 114608F * level * level * level * level + 22989 / 573040F * level * level * level
+				- 19087 / 286520F * level * level + 95331 / 7163F * level - 45000 / 7163F;
+		return (int) Math.round(exact_value);
 	}
 
 	public static int getExpDifference(int l1, int l2) {
