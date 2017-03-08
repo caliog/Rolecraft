@@ -17,9 +17,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.caliog.Rolecraft.Manager;
+import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.EntityUtils;
 import org.caliog.Rolecraft.Entities.Fighter;
-import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.CustomItem;
@@ -161,7 +161,7 @@ public class DamageListener implements Listener {
 		Player player = attacker.getPlayer();
 		attacker.fight();
 		// b = true, if player bears usual minecraft weapon
-		boolean b = !CustomItem.isCustomItem(((Player) event.getDamager()).getInventory().getItemInMainHand());
+		boolean b = !CustomItem.isCustomItem(player.getInventory().getItemInMainHand());
 		// allow usual minecraft damage (in case b=true)
 		if (!b)
 			damage = attacker.getDamage();
@@ -233,10 +233,12 @@ public class DamageListener implements Listener {
 		// dont destroy weapons !?
 
 		/*
-		 * final Player p = attacker.getPlayer(); final short d = p.getInventory().getItemInMainHand().getDurability(); if
+		 * final Player p = attacker.getPlayer(); final short d =
+		 * p.getInventory().getItemInMainHand().getDurability(); if
 		 * (CustomItem.isCustomItem(p.getInventory().getItemInMainHand())) {
 		 * 
-		 * Manager.scheduleTask(new Runnable() { public void run() { p.getInventory().getItemInMainHand().setDurability(d); } }); }
+		 * Manager.scheduleTask(new Runnable() { public void run() {
+		 * p.getInventory().getItemInMainHand().setDurability(d); } }); }
 		 * 
 		 * }
 		 */
