@@ -39,6 +39,7 @@ public class EntityManager {
 
 		writer.write(text);
 		writer.close();
+		killAllMobs();
 		register.clear();
 	}
 
