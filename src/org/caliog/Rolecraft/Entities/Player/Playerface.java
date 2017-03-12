@@ -119,7 +119,7 @@ public class Playerface {
 			return;
 		}
 		for (ItemStack s : stack) {
-			p.getInventory().removeItem(new ItemStack[] { s });
+			p.getInventory().removeItem(s);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class Playerface {
 		if (stack == null) {
 			return;
 		}
-		p.getInventory().removeItem(new ItemStack[] { stack });
+		p.getInventory().removeItem(stack);
 	}
 
 	public static boolean hasItem(Player p, ItemStack stack) {
