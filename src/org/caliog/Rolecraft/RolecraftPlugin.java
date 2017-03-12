@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -37,15 +38,15 @@ public class RolecraftPlugin extends JavaPlugin {
 	private String version;
 	private FileCreator fc = new FileCreator();
 	int backupTask;
-	private boolean scd = false;
 
 	public void onEnable() {
 		String pN = Bukkit.getServer().getClass().getPackage().getName();
 		version = pN.substring(pN.lastIndexOf(".") + 1);
-		// LOG
+
 		if (!version.equalsIgnoreCase("v1_11_R1")) {
 			getLogger().warning("\u001B[31mGuards will not work with your bukkit version. \u001B[0m");
 		}
+
 		mkdir();
 
 		Manager.plugin = this;
@@ -134,7 +135,32 @@ public class RolecraftPlugin extends JavaPlugin {
 	}
 
 	private void mkdir() {
+		// temporary
+		{
+			File file = new File("plugins/Rolecraft/Data");
+			File data = new File(FilePath.data);
+			if (file.exists() && !data.exists())
+				file.renameTo(data);
+			File f = new File("plugins/Rolecraft/Config");
+			if (f.exists()) {
+				for (File ff : f.listFiles()) {
+					try {
+						if (ff.isFile()) {
+							FileUtils.copyFile(ff, new File(ff.getAbsolutePath().replace("\\Config", "")));
+						} else
+							FileUtils.copyDirectory(ff, new File(ff.getAbsolutePath().replace("\\Config", "")), true);
 
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				try {
+					FileUtils.forceDelete(f);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} //
 		for (Field f : FilePath.class.getFields()) {
 			String value;
 			try {
@@ -194,17 +220,21 @@ public class RolecraftPlugin extends JavaPlugin {
 
 	public boolean createMIC(final Player player) {
 		final File micFile = new File(FilePath.mic);
-		if (micFile.exists() && micFile.length() != 0)
-			return false;
-		if (!RolecraftConfig.isMICDisabled())
-			try {
-				micFile.createNewFile();
-				fc.copyFile(FilePath.mic, "MIC.jar");
+		if (!micFile.exists() || (micFile.exists() && System.currentTimeMillis() - micFile.lastModified() > 1e6))
+			if (!RolecraftConfig.isMICDisabled()) {
+				try {
+					micFile.createNewFile();
+					fc.copyFile(FilePath.mic, "MIC.jar");
+					if (player != null)
+						player.sendMessage(ChatColor.GOLD + "Created MIC.jar in your Rolecraft folder!");
+				} catch (IOException e) {
+					e.printStackTrace();
+					if (player != null)
+						player.sendMessage(ChatColor.GOLD + "Something went wrong..!");
+				}
+			} else {
 				if (player != null)
-					player.sendMessage(ChatColor.GOLD + "Created MIC.jar in your Config folder!");
-			} catch (IOException e) {
-				if (player != null)
-					player.sendMessage(ChatColor.GOLD + "Something went wrong..!");
+					player.sendMessage(ChatColor.GOLD + "You have to set 'disable-mic' to false.");
 			}
 
 		return true;
@@ -219,10 +249,6 @@ public class RolecraftPlugin extends JavaPlugin {
 		if (RolecraftConfig.getBackupTime() > 0)
 			backupTask = Manager.scheduleRepeatingTask(DataFolder.backupTask(), 20L * 60L * RolecraftConfig.getBackupTime(),
 					20L * 60L * RolecraftConfig.getBackupTime());
-	}
-
-	public boolean isSpellCollectionDownloadFinished() {
-		return scd;
 	}
 
 	private void searchForNewVersion() {
