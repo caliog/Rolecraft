@@ -424,7 +424,11 @@ public class RolecraftListener implements Listener {
 		if (egg.getItemMeta() == null)
 			return;
 		String eggName = egg.getItemMeta().getDisplayName();
+		if (eggName == null)
+			return;
 		String[] s = eggName.split("\\(");
+		if (s.length < 2)
+			return;
 		String name = Utils.cleanString(s[0]);
 		String mob = Utils.cleanString(s[1].substring(0, s[1].length() - 1));
 		String[] a = { mob, name };
@@ -434,7 +438,6 @@ public class RolecraftListener implements Listener {
 			@Override
 			public void run() {
 				petMap.remove(event.getPlayer().getUniqueId());
-
 			}
 		}, 20L);
 
