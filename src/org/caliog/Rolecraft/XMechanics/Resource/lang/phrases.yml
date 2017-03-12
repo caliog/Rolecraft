@@ -1,0 +1,36 @@
+AMOUNT:
+  en: Amount
+  de: Anzahl
+MOB:
+  en: Mob
+  de: Monster
+REQUIRED_CLASS:
+  en: Required Class
+  de: Benötigte Klasse
+MINIMUM_LEVEL:
+  en: Minimum Level
+  de: Mindest Level
+EXPERIENCE:
+  en: Experience
+  de: Erfahrung
+ACCEPT:
+  en: Accept
+  de: Akzeptieren
+BACK:
+  en: Back
+  de: Zurück
+ITEMS:
+  en: Items
+  de: Items
+START:
+  en: Start
+  de: Start
+REWARD:
+  en: Reward
+  de: Belohnung
+COLLECT:
+  en: Collect
+  de: Sammel
+WANTED_MOBS:
+  en: Wanted Mobs
+  de: Töte Monster

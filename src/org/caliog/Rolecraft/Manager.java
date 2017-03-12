@@ -27,6 +27,7 @@ import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Messages.Translator;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
@@ -101,6 +102,7 @@ public class Manager {
 
 	public static void load() {
 		ClazzLoader.classes = YamlConfiguration.loadConfiguration(new File(FilePath.classes));
+		Translator.init();
 
 		try {
 			loadWorlds();
