@@ -65,7 +65,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 
 	public double getDefense() {
 		double defense = super.getDefense();
-		double p = 1.0D + (getRStrength() + getRDexterity()) / 200.0D;
+		double p = 1.0D + (getRStrength() + 0.8F * getRDexterity()) / 200.0D;
 		for (Spell s : this.spells.values()) {
 			if (s.isActive()) {
 				defense += s.getDefense();
