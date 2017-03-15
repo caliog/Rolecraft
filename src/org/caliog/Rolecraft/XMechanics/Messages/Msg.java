@@ -21,6 +21,8 @@ public class Msg {
 	public static final String LEVEL = "%LEVEL%";
 	public static final String CLASS = "%CLASS%";
 	public static final String PLAYER = "%PLAYER%";
+	public static final String QUEST = "%QUEST%";
+
 	public static YamlConfiguration file;
 
 	@SuppressWarnings("deprecation")
