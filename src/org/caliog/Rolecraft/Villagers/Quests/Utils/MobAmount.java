@@ -55,7 +55,6 @@ public class MobAmount {
 		killed.remove(questName);
 	}
 
-	// TODO working?
 	public void toSection(ConfigurationSection section) {
 		for (String quest : killed.keySet()) {
 			for (String m : killed.get(quest).keySet()) {
