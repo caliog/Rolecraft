@@ -65,6 +65,8 @@ public class CMessage {
 
 	public long getTime() {
 		long time = 40L;
+		if (message == null)
+			return time;
 		time += 3 * (getMessage().length() - getMessage().replaceAll(" ", "").length());
 		return time;
 	}
