@@ -87,13 +87,9 @@ public class RolecraftListener implements Listener {
 		if (player == null) {
 			return;
 		}
-		System.out.println("level up");
 		if (!PlayerManager.changedClass.contains(player.getPlayer().getUniqueId())) {
-			System.out.println("test!?");
 			if (event.getOldLevel() + 1 == event.getNewLevel()) {
-				System.out.println("test1");
 				if (RolecraftConfig.isFireworkEnabled()) {
-					System.out.println("firework");
 					Location loc = player.getPlayer().getLocation();
 					Firework firework = (Firework) player.getPlayer().getWorld().spawn(loc, Firework.class);
 					FireworkMeta data = firework.getFireworkMeta();
@@ -113,9 +109,7 @@ public class RolecraftListener implements Listener {
 					firework.setFireworkMeta(data);
 				}
 
-				System.out.println("giving skillstars");
 				Playerface.giveItem(player.getPlayer(), new Skillstar(3));
-				System.out.println("test?!");
 				Msg.sendMessage(event.getPlayer(), MessageKey.LEVEL_REACHED, Msg.LEVEL, String.valueOf(event.getNewLevel()));
 			}
 		} else
