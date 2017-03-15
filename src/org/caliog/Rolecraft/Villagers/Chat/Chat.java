@@ -31,7 +31,6 @@ public class Chat {
 			messages = q.getMessages();
 
 			current = q.getMessageStart(player) - 1;
-
 		} else
 			messages = villager.getMessages();
 		if (messages.isEmpty())
@@ -48,9 +47,9 @@ public class Chat {
 		if (name == null || name.equals("null")) {
 			name = "Villager";
 		}
-
-		player.getPlayer().sendMessage(ChatColor.GOLD + name + ChatColor.WHITE + ": " + ChatColor.BOLD + "" + ChatColor.GOLD + '"'
-				+ getCurrent().getMessage() + ChatColor.GOLD + '"');
+		if (getCurrent().getMessage() != null)
+			player.getPlayer().sendMessage(ChatColor.GOLD + name + ChatColor.WHITE + ": " + ChatColor.BOLD + "" + ChatColor.GOLD + '"'
+					+ getCurrent().getMessage() + ChatColor.GOLD + '"');
 
 		Manager.scheduleTask(new Runnable() {
 
