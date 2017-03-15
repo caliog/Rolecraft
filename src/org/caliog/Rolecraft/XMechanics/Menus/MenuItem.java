@@ -86,7 +86,7 @@ public class MenuItem {
 	public ItemStack createItemStack() {
 		ItemStack stack = new ItemStack(material, amount, data);
 		if (this.stack != null)
-			stack = this.stack;
+			stack = this.stack.clone();
 
 		if (stack.getType().equals(Material.AIR))
 			return stack;
@@ -193,8 +193,8 @@ public class MenuItem {
 
 	public class ExitButton extends MenuItem {
 
-		public ExitButton(Menu menu) {
-			super("Save", Material.STAINED_GLASS_PANE, (short) 13, 1);
+		public ExitButton(Menu menu, String title) {
+			super(title, Material.STAINED_GLASS_PANE, (short) 13, 1);
 			this.setButtonClickHandler(this.new ButtonClickHandler(menu) {
 
 				@Override

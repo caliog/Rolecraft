@@ -1,57 +1,79 @@
 package org.caliog.Rolecraft.Villagers.Quests.Utils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import org.caliog.Rolecraft.Entities.EntityUtils;
-import org.caliog.Rolecraft.Mobs.Mob;
+import org.bukkit.configuration.ConfigurationSection;
+import org.caliog.Rolecraft.Villagers.Quests.Quest;
 
 public class MobAmount {
 
-	private HashMap<String, Integer> killed = new HashMap<String, Integer>();
+	private HashMap<String, HashMap<String, Integer>> killed = new HashMap<String, HashMap<String, Integer>>(); // countdown
 
-	public MobAmount(Mob m) {
-		killed.put(m.getName(), 1);
+	@SuppressWarnings("unchecked")
+	public MobAmount(Quest q) {
+		killed.put(q.getName(), (HashMap<String, Integer>) q.getMobs().clone());
 	}
 
-	public MobAmount() {
-
+	@SuppressWarnings("unchecked")
+	public MobAmount(HashMap<String, HashMap<String, Integer>> map) {
+		this.killed = (HashMap<String, HashMap<String, Integer>>) map.clone();
 	}
 
-	public void killed(Mob m) {
-		int a = getKilled(m.getName());
-		a++;
-		killed.put(m.getName(), a);
+	@SuppressWarnings("unchecked")
+	public void addQuest(Quest q) {
+		killed.put(q.getName(), (HashMap<String, Integer>) q.getMobs().clone());
 	}
 
-	public int getKilled(String m) {
-		if (killed.containsKey(m)) {
-			return killed.get(m);
-		} else
-			return 0;
+	public int getKilled(String q, String m) {
+		if (killed.containsKey(q))
+			if (killed.get(q).containsKey(m))
+				return killed.get(q).get(m);
+		return -1;
 	}
 
-	public void delete(String m) {
-		if (killed.containsKey(m)) {
-			killed.remove(m);
-		}
-
+	public boolean isFinished(String q) {
+		if (killed.containsKey(q))
+			for (String m : killed.get(q).keySet()) {
+				if (killed.get(q).get(m) > 0)
+					return false;
+			}
+		return true;
 	}
 
-	public List<String> toStringList() {
-		List<String> list = new ArrayList<String>();
-		for (String m : killed.keySet())
-			list.add(m + "," + killed.get(m));
-		return list;
-	}
-
-	public void fromStringList(List<String> list) {
-		for (String l : list) {
-			String c = (l.split(",")[0]);
-			if (!EntityUtils.isMobClass(c))
-				continue;
-			killed.put(c, Integer.parseInt(l.split(",")[1]));
+	public void killed(String mob) {
+		for (String quest : killed.keySet()) {
+			if (killed.get(quest).containsKey(mob)) {
+				int a = killed.get(quest).get(mob);
+				a--;
+				a = a > 0 ? a : 0;
+				killed.get(quest).put(mob, a);
+			}
 		}
 	}
+
+	public void delete(String questName) {
+		killed.remove(questName);
+	}
+
+	// TODO working?
+	public void toSection(ConfigurationSection section) {
+		for (String quest : killed.keySet()) {
+			for (String m : killed.get(quest).keySet()) {
+				section.set(quest + "." + m, killed.get(quest).get(m));
+			}
+		}
+	}
+
+	public static MobAmount fromSection(ConfigurationSection section) {
+		HashMap<String, HashMap<String, Integer>> bigMap = new HashMap<String, HashMap<String, Integer>>();
+		for (String quest : section.getKeys(false)) {
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			for (String m : section.getConfigurationSection(quest).getKeys(false)) {
+				map.put(m, section.getConfigurationSection(quest).getInt(m));
+			}
+			bigMap.put(quest, map);
+		}
+		return new MobAmount(bigMap);
+	}
+
 }

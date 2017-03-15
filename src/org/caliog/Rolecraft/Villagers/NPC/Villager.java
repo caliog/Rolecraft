@@ -75,7 +75,6 @@ public class Villager extends VillagerNPC {
 	}
 
 	public boolean addQuest(String q) {
-
 		if (QManager.getQuest(q) != null) {
 			quests.add(q);
 			return true;

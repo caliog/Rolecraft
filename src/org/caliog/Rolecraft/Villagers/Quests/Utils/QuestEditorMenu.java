@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -13,14 +14,13 @@ import org.caliog.Rolecraft.Entities.EntityUtils;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
+import org.caliog.Rolecraft.Villagers.Quests.Quest;
 import org.caliog.Rolecraft.Villagers.Quests.YmlQuest;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class QuestEditorMenu extends Menu {
 
@@ -33,6 +33,7 @@ public class QuestEditorMenu extends Menu {
 	private int minLevel = 0;
 	private String clazz = "none";
 	private String targetVillager;
+	private String requiredQuest;
 
 	public QuestEditorMenu(Player player, String name) {
 		super(1, name);
@@ -260,7 +261,7 @@ public class QuestEditorMenu extends Menu {
 				MenuManager.exitMenu(player);
 			}
 		});
-		this.setItem(8, item);
+		this.setItem(height * 9 - 1, item);
 
 	}
 
@@ -312,6 +313,14 @@ public class QuestEditorMenu extends Menu {
 		return quest;
 	}
 
+	public String getRequiredQuest() {
+		return requiredQuest;
+	}
+
+	public void setRequiredQuest(Quest q) {
+		this.requiredQuest = q == null ? null : q.getName();
+	}
+
 	class MobSelectorMenu extends Menu {
 
 		public final QuestEditorMenu upperMenu;
@@ -352,6 +361,8 @@ public class QuestEditorMenu extends Menu {
 										n = 0;
 									item.getLore().set(i, l.replace(String.valueOf(a), String.valueOf(n)));
 									upperMenu.mobs.put(name, n);
+									if (n == 0)
+										upperMenu.mobs.remove(name);
 								} catch (NumberFormatException e) {
 
 								}
@@ -365,7 +376,7 @@ public class QuestEditorMenu extends Menu {
 				c++;
 			}
 
-			this.setItem(height * 9 - 1, new MenuItem().new ExitButton(this));
+			this.setItem(height * 9 - 1, new MenuItem().new ExitButton(this, "Save"));
 
 		}
 

@@ -9,7 +9,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
@@ -21,8 +23,7 @@ import org.caliog.Rolecraft.Villagers.Chat.ChatManager;
 import org.caliog.Rolecraft.Villagers.NPC.Trader;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.Villagers.NPC.Villager.VillagerType;
-import org.caliog.Rolecraft.Villagers.Quests.QManager;
-import org.caliog.Rolecraft.Villagers.Quests.Quest;
+import org.caliog.Rolecraft.Villagers.Quests.QuestBook;
 import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
 
 public class VillagerListener implements Listener {
@@ -125,26 +126,12 @@ public class VillagerListener implements Listener {
 		if (event.getEntity() instanceof Player)
 			return;
 		Mob m = EntityManager.getMob(event.getEntity().getUniqueId());
-		if (m != null)
-			if (m.getKillerId() != null)
-				if (m != null) {
-					RolecraftPlayer p = PlayerManager.getPlayer(m.getKillerId());
-					if (p != null) {
-						for (String i : p.getUnCompletedQuests()) {
-							Quest q = QManager.getQuest(i);
-							if (q != null && q.getMobs() != null && !q.getMobs().isEmpty()) {
-								if (q.getMobs().containsKey(m.getName())
-										&& q.getMobs().get(m.getName()) > QuestKill.getKilled(p.getPlayer(), m.getName())) {
-									QuestKill.killed(p.getPlayer(), m);
-									QManager.updateQuestBook(p);
-									break;
-								}
-							}
-						}
-
-					}
-				}
-
+		if (m != null && m.getKillerId() != null) {
+			RolecraftPlayer p = PlayerManager.getPlayer(m.getKillerId());
+			if (p != null) {
+				QuestKill.killed(p.getPlayer(), m);
+			}
+		}
 	}
 
 	/*
@@ -172,6 +159,26 @@ public class VillagerListener implements Listener {
 			event.setCancelled(true);
 		}
 
+	}
+
+	/*
+	 * @Name: InteractEvent
+	 * 
+	 * @Listen TO: Player
+	 * 
+	 * @Cancel: true
+	 * 
+	 * @Category: Quest Book
+	 * 
+	 */
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void playerInteract(PlayerInteractEvent event) {
+		ItemStack item = event.getItem();
+		QuestBook dummy = new QuestBook(event.getPlayer());
+		if (item != null && item.hasItemMeta() && item.getItemMeta().hasDisplayName()
+				&& item.getItemMeta().getDisplayName().equals(dummy.getItemMeta().getDisplayName())) {
+			dummy.clicked();
+		}
 	}
 
 }

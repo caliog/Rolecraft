@@ -13,7 +13,7 @@ import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 public class MenuListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
-	public void onInventoryClick(InventoryCloseEvent event) {
+	public void onInventoryClose(InventoryCloseEvent event) {
 		if (event.getPlayer() instanceof Player)
 			if (event.getView() instanceof MenuInventoryView) {
 				MenuManager.closing((MenuInventoryView) event.getView());

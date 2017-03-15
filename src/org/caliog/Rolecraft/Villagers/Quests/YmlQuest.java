@@ -11,16 +11,23 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.ItemUtils;
 import org.caliog.Rolecraft.Utils.QuestStatus;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
+import org.caliog.Rolecraft.Villagers.Chat.CMessage.MessageType;
 import org.caliog.Rolecraft.Villagers.Chat.ChatTask;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestEditorMenu;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInfoMenu;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
+import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.PlayerConsole.Stoppable;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class YmlQuest extends Quest {
@@ -44,25 +51,35 @@ public class YmlQuest extends Quest {
 	@Override
 	public Location getTargetLocation(RolecraftPlayer player) {
 		if (player.getQuestStatus(getName()).equals(QuestStatus.FIRST))
-			if (v != null)
+			if (v != null) {
 				return v.getEntityLocation();
-
+			}
 		return null;
 	}
 
 	private void loadQuest() {
-		if (config.isString("target-villager")) {
-			String name = config.getString("target-villager");
-			Villager v = VManager.getVillager(name);
-			this.v = v;
-		}
-
 		loadMessages();
 		loadRewards();
 		loadCollects();
 		loadReceives();
 		loadMobs();
 
+		Stoppable s = new Stoppable() {
+
+			@Override
+			public void run() {
+				if (VManager.isLoaded()) {
+					if (config.isString("target-villager")) {
+						String name = config.getString("target-villager");
+						Villager vl = VManager.getVillager(name);
+						v = vl;
+					}
+					stop();
+				}
+
+			}
+		};
+		s.setTaskID(Manager.scheduleRepeatingTask(s, 10L, 10L, 600L));
 	}
 
 	private void loadMessages() {
@@ -79,7 +96,6 @@ public class YmlQuest extends Quest {
 							@Override
 							public void execute(RolecraftPlayer player, Villager villager) {
 								player.newQuest(quest.getName());
-								QManager.updateQuestBook(player);
 								if (!config.getBoolean("target-villager-give"))
 									Playerface.giveItem(player.getPlayer(), getReceives());
 							}
@@ -104,7 +120,38 @@ public class YmlQuest extends Quest {
 					messages.put(Integer.parseInt(id), msg);
 				}
 			}
+		else {
+			CMessage msg = new CMessage(null, MessageType.END);
+			msg.setTask(new ChatTask(this) {
 
+				@Override
+				public void execute(RolecraftPlayer player, Villager villager) {
+					MenuManager.openMenu(player.getPlayer(), new QuestInfoMenu((YmlQuest) quest, true));
+				}
+			});
+			messages.put(0, msg);
+
+			msg = new CMessage(null, MessageType.END);
+			msg.setTask(new ChatTask(this) {
+
+				@Override
+				public void execute(RolecraftPlayer player, Villager villager) {
+					if (Playerface.hasItem(player.getPlayer(), getCollects())) {
+						Playerface.takeItem(player.getPlayer(), getCollects());
+						player.raiseQuestStatus(quest.getName());
+						if (quest.couldComplete(player)) {
+							player.completeQuest(quest.getName());
+						} else {
+							Msg.sendMessage(player.getPlayer(), MessageKey.QUEST_DELIVERED_ITEM);
+						}
+					} else {
+						Msg.sendMessage(player.getPlayer(), MessageKey.QUEST_MISSING_COLLECT);
+					}
+				}
+
+			});
+			messages.put(1, msg);
+		}
 	}
 
 	@Override
@@ -112,15 +159,11 @@ public class YmlQuest extends Quest {
 		if (getTargetLocation(p) != null) {
 			return config.getInt("target-villager-message");
 		} else if (this.couldComplete(p)) {
-			p.completeQuest(getName());
 			return config.getInt("completed-message");
-		} else if (!p.getQuestStatus(getName()).equals(QuestStatus.UNACCEPTED)
-				&& p.getQuestStatus(this.getName()).isLowerThan(QuestStatus.COMPLETED)) {
-			return config.getInt("uncompleted-message");
-		} else {
-
-			return 0;// default start with id 0
 		}
+
+		return 0;// default start with id 0
+
 	}
 
 	private void loadRewards() {
@@ -179,7 +222,6 @@ public class YmlQuest extends Quest {
 		}
 	}
 
-	// TODO transform exp back to minecraft exp ?!
 	@Override
 	public int getExp() {
 		String expr = config.getString("exp-reward");
@@ -211,7 +253,7 @@ public class YmlQuest extends Quest {
 
 	@Override
 	public QuestStatus hasToReach() {
-		return QuestStatus.FIRST;
+		return (v != null) ? QuestStatus.SECOND : QuestStatus.FIRST;
 	}
 
 	@Override
@@ -220,7 +262,7 @@ public class YmlQuest extends Quest {
 	}
 
 	public String getTargetVillager() {
-		return config.getString("target-villager");
+		return config.getString("target-villager", null);
 	}
 
 	public boolean isLoaded() {
@@ -236,6 +278,7 @@ public class YmlQuest extends Quest {
 		String targetVillager = menu.getTargetVillager();
 		int minLevel = menu.getMinLevel();
 		int exp = menu.getExp();
+		String requiredQuest = menu.getRequiredQuest();
 		List<ItemStack> rewards = menu.getRewards();
 		List<ItemStack> collects = menu.getCollects();
 		List<ItemStack> receives = menu.getReceives();
@@ -253,6 +296,7 @@ public class YmlQuest extends Quest {
 			config.set("exp-reward", exp);
 			config.set("min-level", minLevel);
 			config.set("target-villager", targetVillager);
+			config.set("required-quest", requiredQuest);
 			for (int i = 0; i < collects.size(); i++)
 				config.set("collects." + (i + 1), collects.get(i));
 			for (int i = 0; i < rewards.size(); i++)
@@ -262,8 +306,12 @@ public class YmlQuest extends Quest {
 			for (String k : mobs.keySet())
 				config.set("mobs." + k, mobs.get(k));
 
+			// static
+			config.set("target-villager-message", 1);
+			config.set("completed-message", 1);
+
 			config.save(f);
-			QManager.addYmlQuest(this);
+			QManager.addYmlQuest(new YmlQuest(this.getName()));
 		} catch (IOException e) {
 			Debugger.exception("YmlQuest.editedQuest threw an IOException : ", e.getMessage());
 			e.printStackTrace();

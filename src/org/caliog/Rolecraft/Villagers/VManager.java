@@ -41,6 +41,7 @@ import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 public class VManager {
 
 	private static List<Villager> villagers = new ArrayList<Villager>();
+	private static boolean loaded = false;
 
 	public static Villager getVillager(UUID entityId) {
 		for (Villager v : villagers)
@@ -178,6 +179,7 @@ public class VManager {
 		}
 
 		reader.close();
+		loaded = true;
 	}
 
 	public static void save() throws IOException {
@@ -216,10 +218,13 @@ public class VManager {
 								l = v.getEntityLocation();
 							else
 								continue;
+						} else {
+							// got target villager
+							if (!player.getQuestStatus(q.getName()).equals(QuestStatus.FIRST))
+								continue;
 						}
 						l.setY(l.getY() + 2.65);
 						ParticleEffect.VILLAGER_HAPPY.display(0.1F, 0.35F, 0.1F, 0.3F, 7, l, (Player) e);
-
 					}
 				}
 			}
@@ -229,15 +234,14 @@ public class VManager {
 
 	public static void doLogics(long timer) {
 		searchQuests();
-
 		// Destroy possible bug copies
 		if (timer % 100 == 0) {
 			for (Villager v : villagers) {
 				if (!RolecraftConfig.isNaturalSpawnDisabled(v.getBukkitEntity().getWorld().getName()))
 					for (Entity e : v.getBukkitEntity().getNearbyEntities(10, 4, 10)) {
-						if (e instanceof org.bukkit.entity.Villager) {
-							e.getName().equals(v.getName());
-							e.remove();
+						if (e instanceof org.bukkit.entity.Villager && !EntityManager.isRegistered(e.getUniqueId())) {
+							if (e.getName().equals(v.getName()))
+								e.remove();
 						}
 					}
 			}
@@ -276,6 +280,10 @@ public class VManager {
 			}
 		return null;
 
+	}
+
+	public static boolean isLoaded() {
+		return loaded;
 	}
 
 }

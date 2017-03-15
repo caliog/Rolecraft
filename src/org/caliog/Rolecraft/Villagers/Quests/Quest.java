@@ -7,6 +7,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
+import org.caliog.Rolecraft.Entities.Player.RolecraftAbstrPlayer;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Utils.QuestStatus;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
@@ -76,25 +77,26 @@ public abstract class Quest {
 
 	public abstract QuestStatus hasToReach();
 
-	public boolean couldComplete(RolecraftPlayer player) {
+	public boolean couldComplete(RolecraftAbstrPlayer player) {
 		if (!player.getUnCompletedQuests().contains(getName()))
 			return false;
 		if (player.getQuestStatus(getName()).isLowerThan(hasToReach()))
 			return false;
 
-		if (getCollects() != null && !getCollects().isEmpty()) {
-			for (ItemStack stack : getCollects()) {
-				if (!player.getPlayer().getInventory().containsAtLeast(stack, stack.getAmount())) {
-					return false;
+		// Attention! QuestStatus SECOND means the player visited the target
+		// villager which already took the collect items
+		if (!(this instanceof YmlQuest && player.getQuestStatus(getName()).equals(QuestStatus.SECOND)))
+			if (getCollects() != null && !getCollects().isEmpty()) {
+				for (ItemStack stack : getCollects()) {
+					if (!player.getPlayer().getInventory().containsAtLeast(stack, stack.getAmount())) {
+						return false;
+					}
 				}
 			}
-		}
 
 		if (getMobs() != null && !getMobs().isEmpty())
-			for (String c : getMobs().keySet()) {
-				if (QuestKill.getKilled(player.getPlayer(), c) < getMobs().get(c)) {
-					return false;
-				}
+			if (!QuestKill.isFinished(player.getPlayer(), getName())) {
+				return false;
 			}
 
 		return true;

@@ -42,3 +42,5 @@ commands:
     pet:
         usage: /pet <mob> <name>
         description: Creates a abstract pet, which can be spawned later with a spell.
+    quest:
+        aliases: q

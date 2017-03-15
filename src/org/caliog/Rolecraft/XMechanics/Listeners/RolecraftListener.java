@@ -33,6 +33,7 @@ import org.bukkit.event.player.PlayerLevelChangeEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -52,7 +53,6 @@ import org.caliog.Rolecraft.Items.Custom.Skillstar;
 import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Utils.SkillInventoryView;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Bars.CenterBar.CenterBar;
 import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
@@ -87,9 +87,13 @@ public class RolecraftListener implements Listener {
 		if (player == null) {
 			return;
 		}
+		System.out.println("level up");
 		if (!PlayerManager.changedClass.contains(player.getPlayer().getUniqueId())) {
+			System.out.println("test!?");
 			if (event.getOldLevel() + 1 == event.getNewLevel()) {
+				System.out.println("test1");
 				if (RolecraftConfig.isFireworkEnabled()) {
+					System.out.println("firework");
 					Location loc = player.getPlayer().getLocation();
 					Firework firework = (Firework) player.getPlayer().getWorld().spawn(loc, Firework.class);
 					FireworkMeta data = firework.getFireworkMeta();
@@ -109,8 +113,9 @@ public class RolecraftListener implements Listener {
 					firework.setFireworkMeta(data);
 				}
 
-				CenterBar.display(player.getPlayer(), "", ChatColor.GOLD + "Level " + event.getNewLevel());
+				System.out.println("giving skillstars");
 				Playerface.giveItem(player.getPlayer(), new Skillstar(3));
+				System.out.println("test?!");
 				Msg.sendMessage(event.getPlayer(), MessageKey.LEVEL_REACHED, Msg.LEVEL, String.valueOf(event.getNewLevel()));
 			}
 		} else
@@ -510,5 +515,20 @@ public class RolecraftListener implements Listener {
 			}
 		}, 20L);
 
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onSkillstartCraft(final InventoryClickEvent event) {
+		if (event.isCancelled())
+			return;
+		Inventory inv = event.getClickedInventory();
+		if (inv == null)
+			return;
+		if (inv.getType().equals(InventoryType.CRAFTING) || inv.getType().equals(InventoryType.WORKBENCH)) {
+			ItemStack stack = event.getCursor();
+			if (stack != null && Skillstar.isSkillstar(stack)) {
+				event.setCancelled(true);
+			}
+		}
 	}
 }

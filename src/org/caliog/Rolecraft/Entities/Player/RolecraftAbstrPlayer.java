@@ -16,7 +16,11 @@ import org.caliog.Rolecraft.Items.Weapon;
 import org.caliog.Rolecraft.Utils.QuestStatus;
 import org.caliog.Rolecraft.Villagers.Quests.QManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
+import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
+import org.caliog.Rolecraft.XMechanics.Bars.CenterBar.CenterBar;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Permissions;
+import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 
 public abstract class RolecraftAbstrPlayer extends Fighter {
 	private final Player player;
@@ -98,18 +102,35 @@ public abstract class RolecraftAbstrPlayer extends Fighter {
 	}
 
 	public void newQuest(String name) {
+		QuestKill.addNew(getPlayer(), QManager.getQuest(name));
 		this.quests.put(name, QuestStatus.FIRST);
 	}
 
 	public void completeQuest(String name) {
 		Quest q = QManager.getQuest(name);
-		QManager.updateQuestBook(PlayerManager.getPlayer(this.getPlayer().getUniqueId()));
 		if (q == null)
 			return;
-		Playerface.takeItem(getPlayer(), q.getCollects());
 		giveExp(q.getExp());
 		Playerface.giveItem(getPlayer(), q.getRewards());
+		CenterBar.display(getPlayer(), "", Msg.getMessage(MessageKey.QUEST_COMPLETED, Msg.QUEST, name));
 		this.quests.put(name, QuestStatus.COMPLETED);
+		QuestKill.delete(getPlayer(), name);
+	}
+
+	public void checkQuests() {
+		String remove = null;
+		for (String q : quests.keySet()) {
+			Quest quest = QManager.getQuest(q);
+			if (quest != null) {
+				if (quest.couldComplete(this)) {
+					completeQuest(q);
+				}
+			} else {
+				remove = q;
+			}
+		}
+		if (remove != null)
+			quests.remove(remove);
 	}
 
 	public void raiseQuestStatus(String name) {
