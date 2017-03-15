@@ -3,7 +3,6 @@ package org.caliog.Rolecraft.XMechanics.Commands;
 import java.util.List;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
@@ -62,8 +61,6 @@ public class Commandquest extends Commands {
 			@Override
 			public void execute(String[] args, Player player) {
 				QuestBook book = new QuestBook(player);
-				// TODO remove
-				Playerface.takeItem(player, new ItemStack(Material.LOG, 1));
 				for (ItemStack stack : player.getInventory())
 					if (stack != null)
 						if (stack.getType().equals(book.getType())) {
