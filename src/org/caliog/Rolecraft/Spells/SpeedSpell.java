@@ -47,11 +47,6 @@ public class SpeedSpell extends Spell {
 		return (int) (10.0F * (getPower() / 500.0F)) - 1;
 	}
 
-	public float getPower() {
-		int p = Math.round(getPlayer().getLevel() / 40.0F * 200.0F);
-		return p + 300;
-	}
-
 	public double getDamage() {
 		return 0;
 	}

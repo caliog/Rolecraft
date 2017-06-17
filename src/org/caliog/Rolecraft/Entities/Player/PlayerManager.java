@@ -21,10 +21,14 @@ public class PlayerManager {
 	private static File f = new File(FilePath.players);
 	public static Set<UUID> changedClass = new HashSet<UUID>();
 
-	public static void save() throws IOException {
+	public static void save() {
 		f.mkdir();
 		for (UUID id : players.keySet()) {
-			save((RolecraftAbstrPlayer) players.get(id));
+			try {
+				save((RolecraftAbstrPlayer) players.get(id));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -119,18 +123,31 @@ public class PlayerManager {
 		for (RolecraftPlayer clazz : players.values()) {
 			if (RolecraftConfig.isWorldDisabled(clazz.getPlayer().getWorld()))
 				continue;
-			// TODO think about mana usage
-			/*
-			 * int i = clazz.getIntelligence(); int s = 1; if (i < 20) { s = 5;
-			 * } else if (i < 45) { s = 4; } else if (i < 60) { s = 3; } else if
-			 * (i <= 80) { s = 2; } s *= 20;
-			 * 
-			 * if (time % s == 0.0F) { clazz.regainFood(); }
-			 */
+
+			int i = clazz.getIntelligence();
+			int s = 1;
+			if (i < 20) {
+				s = 5;
+			} else if (i < 45) {
+				s = 4;
+			} else if (i < 60) {
+				s = 3;
+			} else if (i <= 80) {
+				s = 2;
+			}
+			s *= 20;
+
+			if (time % s == 0.0F) {
+				int foodLevel = clazz.getPlayer().getFoodLevel() + 1;
+				if (foodLevel > 25)
+					foodLevel = 20;
+				clazz.getPlayer().setFoodLevel(foodLevel);
+			}
+
 			double health = clazz.getPlayer().getHealth();
 			double d = -clazz.getHealth() + health;
 			if (d > 1e-3)
-				clazz.addHealth(d);
+				clazz.addHealth(d, false);
 		}
 	}
 

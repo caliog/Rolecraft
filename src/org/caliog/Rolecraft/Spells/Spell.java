@@ -1,30 +1,83 @@
 package org.caliog.Rolecraft.Spells;
 
+import java.io.File;
+import java.util.HashMap;
+
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftAbstrPlayer;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public abstract class Spell {
-	private final RolecraftAbstrPlayer player;
+	private final RolecraftPlayer player;
 	private boolean active = false;
 	private String name;
+	private int power = 0;
+	private YamlConfiguration config;
+	private HashMap<Integer, Double> damageMap = new HashMap<Integer, Double>();
+	private HashMap<Integer, Double> defenseMap = new HashMap<Integer, Double>();
 
 	public Spell(RolecraftPlayer player, String name) {
 		this.player = player;
 		this.setName(name);
+		this.config = YamlConfiguration.loadConfiguration(new File(FilePath.spells + name + ".yml"));
+		if (config != null) {
+			if (config.isConfigurationSection("damage")) {
+				for (String k : config.getConfigurationSection("damage").getKeys(false)) {
+					if (Utils.isInteger(k)) {
+						damageMap.put(Integer.parseInt(k), config.getDouble("damage." + k));
+					}
+				}
+			}
+			if (config.isConfigurationSection("defense")) {
+				for (String k : config.getConfigurationSection("defense").getKeys(false)) {
+					if (Utils.isInteger(k)) {
+						defenseMap.put(Integer.parseInt(k), config.getDouble("defense." + k));
+					}
+				}
+			}
+		}
 	}
 
-	public abstract int getMinLevel();
+	public int getMinLevel() {
+		if (config != null)
+			return config.getInt("min-level", 0);
+		return 0;
+	}
 
-	public abstract int getFood();
+	public int getFood() {
+		return (int) Math.round(Math.sqrt(getPower()) + 1);
+	}
 
-	public abstract float getPower();
+	public final int getPower() {
+		return power;
+	}
 
-	public abstract double getDamage();
+	public double getDamage() {
+		double damage = 0;
+		int lastPower = -1;
+		for (int power : damageMap.keySet())
+			if (power <= getPower() && power > lastPower) {
+				damage = damageMap.get(power);
+				lastPower = power;
+			}
+		return damage;
+	}
 
-	public abstract double getDefense();
+	public double getDefense() {
+		double defense = 0;
+		int lastPower = -1;
+		for (int power : defenseMap.keySet())
+			if (power <= getPower() && power > lastPower) {
+				defense = defenseMap.get(power);
+				lastPower = power;
+			}
+		return defense;
+	}
 
 	public boolean isActive() {
 		return this.active;
@@ -88,6 +141,10 @@ public abstract class Spell {
 			return false;
 		}
 		return true;
+	}
+
+	public void reloadPower() {
+		this.power = player.getSpellPower(getName());
 	}
 
 	public RolecraftAbstrPlayer getPlayer() {

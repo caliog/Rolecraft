@@ -13,18 +13,22 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.Items.ItemEffect.ItemEffectType;
+import org.caliog.Rolecraft.Items.Custom.Spellbook;
 import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Spells.InvisibleSpell;
 import org.caliog.Rolecraft.Spells.Spell;
 import org.caliog.Rolecraft.Spells.SpellBarManager;
+import org.caliog.Rolecraft.Spells.SpellLoader;
 import org.caliog.Rolecraft.XMechanics.Bars.BottomBar.BottomBar;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.Pair;
 
 public class RolecraftPlayer extends RolecraftAbstrPlayer {
 
@@ -33,7 +37,8 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 	private int dexterity;
 	private int vitality;
 	protected int[] spell = { -1, -1, -1 };
-	private HashMap<String, Spell> spells = new HashMap<String, Spell>();
+	private HashMap<String, Pair<Spell, Integer>> spells = new HashMap<String, Pair<Spell, Integer>>();
+	private int spellPoints;
 	private final String type;
 	private int spellTask = -1;
 	private Set<Pet> pets = new HashSet<Pet>();
@@ -55,20 +60,22 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		return h;
 	}
 
-	public void addHealth(double d) {
+	public void addHealth(double d, boolean b) {
 		if (getHealth() + d > getMaxHealth()) {
 			setHealth(getMaxHealth());
 		} else {
 			setHealth(d + getHealth());
 		}
+		if (b)
+			getPlayer().setHealth(getHealth());
 	}
 
 	public double getDefense() {
 		double defense = super.getDefense();
 		double p = 1.0D + (getRStrength() + 0.8F * getRDexterity()) / 200.0D;
-		for (Spell s : this.spells.values()) {
-			if (s.isActive()) {
-				defense += s.getDefense();
+		for (Pair<Spell, Integer> value : this.spells.values()) {
+			if (value.first.isActive()) {
+				defense += value.first.getDefense();
 			}
 		}
 		return p * defense;
@@ -80,9 +87,9 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		if ((getCritical() > 0) && ((getRIntelligence() / 20.0F + getCritical()) / 100.0F > Math.random())) {
 			p = 2.0D;
 		}
-		for (Spell s : this.spells.values())
-			if (s.isActive())
-				damage += s.getDamage();
+		for (Pair<Spell, Integer> value : this.spells.values())
+			if (value.first.isActive())
+				damage += value.first.getDamage();
 
 		return p * damage;
 	}
@@ -289,7 +296,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 	protected void castSpell() {
 		for (String id : spells.keySet())
 			if (id.equals(String.valueOf(spell[0]) + String.valueOf(spell[1]) + String.valueOf(spell[2]))) {
-				Spell spell = spells.get(id);
+				Spell spell = spells.get(id).first;
 				if (spell != null) {
 					Debugger.info(LogTitle.SPELL, "%s is casting spell:", getPlayer().getName(), spell.getName());
 					spell.execute();
@@ -300,12 +307,6 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		Debugger.error(LogTitle.SPELL, "%s tried to cast spell:", getPlayer().getName(), String.valueOf(spell[0]), String.valueOf(spell[1]),
 				String.valueOf(spell[2]));
 		BottomBar.display(getPlayer(), ChatColor.RED + "" + ChatColor.MAGIC + "Uups");
-	}
-
-	public void regainFood() {
-		if (getPlayer().getFoodLevel() < 20) {
-			getPlayer().setFoodLevel(getPlayer().getFoodLevel() + 1);
-		}
 	}
 
 	public void setLevel(int level) {
@@ -324,7 +325,14 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		config.set("vit", Integer.valueOf(getVitality()));
 		config.set("str", Integer.valueOf(getStrength()));
 		config.set("dex", Integer.valueOf(getDexterity()));
+		config.set("spell-points", spellPoints);
 		config.set("quests", getQString());
+		if (!config.isConfigurationSection("spells"))
+			config.createSection("spells");
+		for (Pair<Spell, Integer> value : spells.values()) {
+			config.set("spells." + value.first.getName(), value.second);
+		}
+
 		config.save(file);
 		despawnPets();
 	}
@@ -344,7 +352,18 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 			setVitality(config.getInt("vit"));
 			setStrength(config.getInt("str"));
 			setDexterity(config.getInt("dex"));
+			spellPoints = config.getInt("spell-points", 0);
 			setQuest(config.getString("quests"));
+			if (config.isConfigurationSection("spells")) {
+				for (String spell : config.getConfigurationSection("spells").getKeys(false)) {
+					int power = config.getInt("spells." + spell, -1);
+					Spell s = SpellLoader.load(this, spell);
+					if (s != null) {
+						spells.put(spell, new Pair<Spell, Integer>(s, power));
+						s.reloadPower();
+					}
+				}
+			}
 
 			return true;
 		} else
@@ -352,8 +371,8 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 	}
 
 	public boolean isInvisible() {
-		for (Spell spell : this.spells.values()) {
-			if (((spell instanceof InvisibleSpell)) && (spell.isActive())) {
+		for (Pair<Spell, Integer> spell : this.spells.values()) {
+			if (((spell.first instanceof InvisibleSpell)) && (spell.first.isActive())) {
 				return true;
 			}
 		}
@@ -367,7 +386,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		this.intelligence = 0;
 		this.vitality = 0;
 		this.strength = 0;
-
+		this.spells.clear();
 	}
 
 	public boolean isLoaded() {
@@ -378,8 +397,38 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		this.loaded = loaded;
 	}
 
-	public void addSpell(String id, Spell spell) {
-		spells.put(id, spell);
+	public void addSpell(String id, String spell) {
+		Pair<Spell, Integer> pair = null;
+		if (spells.containsKey(spell))
+			pair = spells.get(spell);
+		else {
+			Spell s = SpellLoader.load(this, spell);
+			if (s != null) {
+				pair = new Pair<Spell, Integer>(s, 1);
+				s.reloadPower();
+			}
+		}
+		if (pair != null)
+			spells.put(id, pair);
+		else
+			Debugger.warning(LogTitle.SPELL, "%s gave a null loaded spell with spell=%s (in RolecraftPlayer.addSpell)", getName(), spell);
+		spells.remove(spell);
+	}
+
+	public int getSpellPower(String spellName) {
+		for (Pair<Spell, Integer> value : spells.values()) {
+			if (value.first.getName().equals(spellName))
+				return value.second;
+		}
+		return -1;
+	}
+
+	public HashMap<String, Pair<Spell, Integer>> getSpells() {
+		return spells;
+	}
+
+	public int getSpellPoints() {
+		return spellPoints;
 	}
 
 	public boolean spawnPet(Location loc, String name, String customName) {
@@ -406,6 +455,36 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 	@Override
 	public UUID getUniqueId() {
 		return getPlayer().getUniqueId();
+	}
+
+	public void powerUpSpell(String name) {
+		if (spellPoints <= 0)
+			return;
+		for (String k : spells.keySet()) {
+			if (spells.get(k).first.getName().equals(name)) {
+				Pair<Spell, Integer> p = new Pair<Spell, Integer>(spells.get(k).first, spells.get(k).second + 1);
+				spells.put(k, p);
+				spellPoints--;
+				break;
+			}
+		}
+	}
+
+	public void giveSpellPoint() {
+		this.spellPoints++;
+		Spellbook book = new Spellbook(spellPoints > 0);
+		boolean found = false;
+		for (ItemStack stack : getPlayer().getInventory().getContents()) {
+			if (stack == null || !stack.hasItemMeta() || !stack.getItemMeta().hasDisplayName())
+				continue;
+			if (stack.getItemMeta().getDisplayName().equals(book.getItemMeta().getDisplayName())) {
+				found = true;
+				stack.setType(book.getType());
+				getPlayer().updateInventory();
+			}
+		}
+		if (!found)
+			Playerface.giveItem(getPlayer(), book);
 	}
 
 }

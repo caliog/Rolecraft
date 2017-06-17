@@ -50,6 +50,7 @@ import org.caliog.Rolecraft.Items.Custom.Apple_1;
 import org.caliog.Rolecraft.Items.Custom.Apple_2;
 import org.caliog.Rolecraft.Items.Custom.HealthPotion;
 import org.caliog.Rolecraft.Items.Custom.Skillstar;
+import org.caliog.Rolecraft.Items.Custom.Spellbook;
 import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Utils.SkillInventoryView;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
@@ -110,6 +111,7 @@ public class RolecraftListener implements Listener {
 				}
 
 				Playerface.giveItem(player.getPlayer(), new Skillstar(3));
+				player.giveSpellPoint();
 				Msg.sendMessage(event.getPlayer(), MessageKey.LEVEL_REACHED, Msg.LEVEL, String.valueOf(event.getNewLevel()));
 			}
 		} else
@@ -176,14 +178,17 @@ public class RolecraftListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
-	public void skillstar(PlayerInteractEvent event) {
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void customItemClick(PlayerInteractEvent event) {
 		if (RolecraftConfig.isWorldDisabled(event.getPlayer().getWorld()))
 			return;
 		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
 		if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 				&& (Skillstar.isSkillstar(stack))) {
 			event.getPlayer().openInventory(new SkillInventoryView(event.getPlayer(), event.getPlayer().getInventory()));
+		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
+				&& (Spellbook.isSpellbook(stack))) {
+			Spellbook.onClick(event.getPlayer());
 		}
 	}
 
@@ -317,24 +322,6 @@ public class RolecraftListener implements Listener {
 		}
 	}
 
-	/*
-	 * @EventHandler(priority = EventPriority.NORMAL)
-	 * 
-	 * public void onBowShoot(EntityShootBowEvent event) { if
-	 * (myConfig.isWorldDisabled(event.getEntity().getWorld())) return; if
-	 * ((!(event.getEntity() instanceof Player)) ||
-	 * (PlayerManager.getPlayer(event.getEntity().getUniqueId()) == null)) {
-	 * return; } final Player player = (Player) event.getEntity(); ItemStack
-	 * stack = event.getBow(); myClass clazz =
-	 * PlayerManager.getPlayer(player.getUniqueId()); if (clazz == null) {
-	 * return; } if (Weapon.isWeapon(clazz, stack)) { Weapon weapon =
-	 * Weapon.getInstance(clazz, stack); if
-	 * (weapon.getType().equals(Material.BOW)) { final short d = (short)
-	 * (stack.getDurability()); Manager.scheduleTask(new Runnable() { public
-	 * void run() { player.getInventory().getItemInMainHand().setDurability(d);
-	 * } }); } } }
-	 */
-
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPotion(final PlayerInteractEvent event) {
 		if (RolecraftConfig.isWorldDisabled(event.getPlayer().getWorld()))
@@ -355,17 +342,17 @@ public class RolecraftListener implements Listener {
 			ItemStack stack = event.getItem();
 			if ((stack.hasItemMeta()) && (stack.getItemMeta().hasDisplayName())) {
 				String name = stack.getItemMeta().getDisplayName();
-				boolean isApple = true;
+				boolean isApple = true;// strange name of var
 				if (name.equals(hp1)) {
-					player.addHealth(0.1D * player.getMaxHealth());
+					player.addHealth(2D, true);
 				} else if (name.equals(hp2)) {
-					player.addHealth(0.2D * player.getMaxHealth());
+					player.addHealth(4D, true);
 				} else if (name.equals(hp3)) {
-					player.addHealth(0.4D * player.getMaxHealth());
+					player.addHealth(8D, true);
 				} else if (name.equals(apple1)) {
-					player.addHealth(0.5D * player.getMaxHealth());
+					player.addHealth(0.5D * player.getMaxHealth(), true);
 				} else if (name.equals(apple2)) {
-					player.addHealth(player.getMaxHealth());
+					player.addHealth(player.getMaxHealth(), true);
 				} else {
 					isApple = false;
 				}

@@ -1,0 +1,7 @@
+min-level: 1
+damage:
+  1:1
+  10:2
+  20:3
+defense:
+  1:0

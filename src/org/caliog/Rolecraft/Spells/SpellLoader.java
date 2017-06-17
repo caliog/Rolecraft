@@ -2,8 +2,12 @@ package org.caliog.Rolecraft.Spells;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ import java.util.jar.JarFile;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class SpellLoader {
@@ -50,6 +55,11 @@ public class SpellLoader {
 
 			}
 		}
+		for (String s : paths) {
+			String[] split = s.split("\\.");
+			if (split.length > 1)
+				copySpellFile(split[split.length - 1]);
+		}
 
 		// defaults
 		paths.add("org.caliog.Rolecraft.Spells.SpeedSpell");
@@ -79,8 +89,30 @@ public class SpellLoader {
 			Manager.plugin.getLogger().warning("Failed to load Spell: " + name);
 			Debugger.exception("Failed to load Spell:", name);
 			e.printStackTrace();
-
 		}
 		return null;
+	}
+
+	private static void copySpellFile(String name) {
+		try {
+			InputStream s = new FileCreator().getClass().getResourceAsStream("Spells/" + name + ".yml");
+			if (s == null)
+				return;
+			File outputFile = new File(FilePath.spells + name + ".yml");
+			if (outputFile.exists()) {
+				BufferedReader r = new BufferedReader(new FileReader(outputFile));
+				if (r.readLine() != null) {
+					r.close();
+					return;
+				}
+				r.close();
+			} else
+				outputFile.createNewFile();
+
+			OutputStream o = new FileOutputStream(outputFile);
+			FileCreator.copyFile(s, o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

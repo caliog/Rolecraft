@@ -41,17 +41,6 @@ public class InvisibleSpell extends Spell {
 		return Math.round(getPower() / 90.0F * 12.0F);
 	}
 
-	public float getPower() {
-		int level = getPlayer().getLevel();
-		if (level <= 10) {
-			return level * 5;
-		}
-		if (level <= 20) {
-			return level * 2 + 10;
-		}
-		return 90;
-	}
-
 	public double getDamage() {
 		return 0;
 	}

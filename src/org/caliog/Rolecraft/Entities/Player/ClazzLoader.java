@@ -7,8 +7,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Spells.Spell;
-import org.caliog.Rolecraft.Spells.SpellLoader;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 
 public class ClazzLoader {
@@ -34,10 +32,7 @@ public class ClazzLoader {
 			String[] ids = { "xxx", "xxo", "xox", "oxx", "xoo", "oxo", "oox", "ooo" };
 			for (String id : ids) {
 				if (config.isSet("spells." + id)) {
-					Spell spell = SpellLoader.load(clazz, config.getString("spells." + id));
-					if (spell != null)
-						clazz.addSpell(id.replaceAll("x", "1").replaceAll("o", "0"), spell);
-
+					clazz.addSpell(id.toLowerCase().replaceAll("x", "1").replaceAll("o", "0"), config.getString("spells." + id));
 				}
 			}
 			@SuppressWarnings("deprecation")
