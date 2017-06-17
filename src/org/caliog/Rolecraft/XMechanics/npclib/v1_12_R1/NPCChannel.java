@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.npclib.v1_11_R1;
+package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
 
 import java.net.SocketAddress;
 

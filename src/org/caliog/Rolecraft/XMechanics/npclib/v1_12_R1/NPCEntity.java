@@ -1,18 +1,18 @@
-package org.caliog.Rolecraft.XMechanics.npclib.v1_11_R1;
+package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.caliog.Rolecraft.XMechanics.npclib.NpcEntityTargetEvent;
 
 import com.mojang.authlib.GameProfile;
 
-import net.minecraft.server.v1_11_R1.Entity;
-import net.minecraft.server.v1_11_R1.EntityHuman;
-import net.minecraft.server.v1_11_R1.EntityPlayer;
-import net.minecraft.server.v1_11_R1.EnumGamemode;
-import net.minecraft.server.v1_11_R1.EnumMoveType;
-import net.minecraft.server.v1_11_R1.PlayerInteractManager;
+import net.minecraft.server.v1_12_R1.Entity;
+import net.minecraft.server.v1_12_R1.EntityHuman;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.EnumGamemode;
+import net.minecraft.server.v1_12_R1.EnumMoveType;
+import net.minecraft.server.v1_12_R1.PlayerInteractManager;
 
 public class NPCEntity extends EntityPlayer {
 
@@ -49,15 +49,22 @@ public class NPCEntity extends EntityPlayer {
 
 	/*
 	 * 
-	 * @Override public void b_(EntityHuman entity) { if ((lastBounceId != entity.getId() || System.currentTimeMillis() - lastBounceTick > 1000) &&
-	 * entity.getBukkitEntity().getLocation().distanceSquared(getBukkitEntity(). getLocation()) <= 1) { final EntityTargetEvent event = new
-	 * NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(), NpcEntityTargetEvent.NpcTargetReason.NPC_BOUNCED);
+	 * @Override public void b_(EntityHuman entity) { if ((lastBounceId !=
+	 * entity.getId() || System.currentTimeMillis() - lastBounceTick > 1000) &&
+	 * entity.getBukkitEntity().getLocation().distanceSquared(getBukkitEntity().
+	 * getLocation()) <= 1) { final EntityTargetEvent event = new
+	 * NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(),
+	 * NpcEntityTargetEvent.NpcTargetReason.NPC_BOUNCED);
 	 * Bukkit.getPluginManager().callEvent(event);
 	 * 
-	 * lastBounceTick = System.currentTimeMillis(); lastBounceId = entity.getId(); }
+	 * lastBounceTick = System.currentTimeMillis(); lastBounceId =
+	 * entity.getId(); }
 	 * 
-	 * if (lastTargetId == -1 || lastTargetId != entity.getId()) { final EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(),
-	 * entity.getBukkitEntity(), NpcEntityTargetEvent.NpcTargetReason.CLOSEST_PLAYER); Bukkit.getPluginManager().callEvent(event); lastTargetId =
+	 * if (lastTargetId == -1 || lastTargetId != entity.getId()) { final
+	 * EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(),
+	 * entity.getBukkitEntity(),
+	 * NpcEntityTargetEvent.NpcTargetReason.CLOSEST_PLAYER);
+	 * Bukkit.getPluginManager().callEvent(event); lastTargetId =
 	 * entity.getId(); }
 	 * 
 	 * super.b_(entity); }

@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.npclib.v1_11_R1;
+package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,13 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.libs.jline.console.ConsoleReader;
-import org.bukkit.craftbukkit.v1_11_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 
-import net.minecraft.server.v1_11_R1.DedicatedPlayerList;
-import net.minecraft.server.v1_11_R1.DedicatedServer;
-import net.minecraft.server.v1_11_R1.MinecraftServer;
-import net.minecraft.server.v1_11_R1.PropertyManager;
-import net.minecraft.server.v1_11_R1.WorldServer;
+import net.minecraft.server.v1_12_R1.DedicatedPlayerList;
+import net.minecraft.server.v1_12_R1.DedicatedServer;
+import net.minecraft.server.v1_12_R1.MinecraftServer;
+import net.minecraft.server.v1_12_R1.PropertyManager;
+import net.minecraft.server.v1_12_R1.WorldServer;
 
 /**
  * Server hacks for Bukkit

@@ -1,11 +1,11 @@
-package org.caliog.Rolecraft.XMechanics.npclib.v1_11_R1;
+package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.SocketAddress;
 
-import net.minecraft.server.v1_11_R1.EnumProtocolDirection;
-import net.minecraft.server.v1_11_R1.NetworkManager;
+import net.minecraft.server.v1_12_R1.EnumProtocolDirection;
+import net.minecraft.server.v1_12_R1.NetworkManager;
 
 public class NPCNetworkManager extends NetworkManager {
 

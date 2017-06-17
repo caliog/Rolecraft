@@ -7,6 +7,7 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.NMS.NMS;
@@ -54,6 +55,13 @@ public class NMSMethods {
 
 	}
 
+	public static String getRecipeListFieldName() {
+		if (Manager.plugin.getVersion().equals("v1_12_R1"))
+			return "bK";
+		else
+			return "bJ";
+	}
+
 	public static boolean openInventory(Trader trader, Player player) {
 		Recipe recipe = trader.getRecipe();
 		if (recipe.isEmpty())
@@ -76,7 +84,7 @@ public class NMSMethods {
 			}
 
 			// TODO field name "bJ" is variable
-			Field careerLevelField = entityVillager.getDeclaredField("bJ");
+			Field careerLevelField = entityVillager.getDeclaredField(getRecipeListFieldName());
 			careerLevelField.setAccessible(true);
 			careerLevelField.set(villager, Integer.valueOf(10));
 
@@ -100,7 +108,6 @@ public class NMSMethods {
 
 			// TODO method name "b" and field name "F" are variable
 			entityPlayer.getMethod("b", statistic).invoke(handle, statisticList.getField("F").get(null));
-
 			return true;
 		} catch (Exception e) {
 			Debugger.exception("NPC.NMSMethods in openInventory threw exception:", e.getMessage());

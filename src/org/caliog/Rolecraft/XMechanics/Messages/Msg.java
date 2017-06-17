@@ -1,8 +1,10 @@
 package org.caliog.Rolecraft.XMechanics.Messages;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -25,7 +27,6 @@ public class Msg {
 
 	public static YamlConfiguration file;
 
-	@SuppressWarnings("deprecation")
 	public static void init() throws IOException {
 		String lang_path = RolecraftConfig.getLangCode() + "_lang.yml";
 		File messages_file = new File(FilePath.messages);
@@ -44,7 +45,7 @@ public class Msg {
 			}
 		}
 
-		YamlConfiguration def = YamlConfiguration.loadConfiguration(stream);
+		YamlConfiguration def = YamlConfiguration.loadConfiguration(new BufferedReader(new InputStreamReader(stream, "UTF-8")));
 		final boolean copy_hard = !def.getString("lang", "en").equals(file.getString("lang", "."));
 
 		if (copy_hard)

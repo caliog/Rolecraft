@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.npclib.v1_11_R1;
+package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,16 @@ import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.minecraft.server.v1_11_R1.AxisAlignedBB;
-import net.minecraft.server.v1_11_R1.EntityPlayer;
-import net.minecraft.server.v1_11_R1.PlayerChunkMap;
-import net.minecraft.server.v1_11_R1.WorldProvider;
-import net.minecraft.server.v1_11_R1.WorldServer;
+import net.minecraft.server.v1_12_R1.AxisAlignedBB;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.PlayerChunkMap;
+import net.minecraft.server.v1_12_R1.WorldProvider;
+import net.minecraft.server.v1_12_R1.WorldServer;
 
 public class BWorld {
 
@@ -87,10 +87,10 @@ public class BWorld {
 				final double z = loc.getZ() + 0.5;
 				final double radius = 10;
 
-				List<net.minecraft.server.v1_11_R1.Entity> entities = new ArrayList<>();
+				List<net.minecraft.server.v1_12_R1.Entity> entities = new ArrayList<>();
 				final AxisAlignedBB bb = new AxisAlignedBB(x - radius, y - radius, z - radius, x + radius, y + radius, z + radius);
 				entities = craftWorld.getHandle().getEntities(craftPlayer.getHandle(), bb);
-				for (final net.minecraft.server.v1_11_R1.Entity o : entities) {
+				for (final net.minecraft.server.v1_12_R1.Entity o : entities) {
 					if (!(o instanceof EntityPlayer)) {
 						o.getBukkitEntity().remove();
 					}
