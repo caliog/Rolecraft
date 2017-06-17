@@ -40,7 +40,9 @@ public enum MessageKey {
 	QUEST_INFO_REWARD, 
 	QUEST_INFO_START_ITEMS, 
 	QUEST_MISSING_COLLECT, 
-	QUEST_DELIVERED_ITEM;
+	QUEST_DELIVERED_ITEM, 
+	// spells
+	SPELL_CLICK_POWER;
 	// @formatter:on
 
 	public String getMessage() {

@@ -1,6 +1,8 @@
 package org.caliog.Rolecraft.XMechanics.Messages;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import org.bukkit.configuration.ConfigurationSection;
@@ -12,35 +14,46 @@ public class Translator {
 	public static final Translator o = new Translator();
 	public static String lang_code = "en";
 
-	@SuppressWarnings("deprecation")
 	public static void init() {
 		InputStream stream = new FileCreator().getClass().getResourceAsStream("lang/phrases.yml");
 		if (stream == null) {
 			return;
 		}
 
-		YamlConfiguration phrases = YamlConfiguration.loadConfiguration(stream);
-		for (String name : phrases.getKeys(false)) {
-			try {
-				Phrase p = Phrase.valueOf(name);
-				ConfigurationSection section = phrases.getConfigurationSection(name);
-				for (String lc : section.getKeys(false)) {
-					try {
-						cc k = cc.valueOf(lc.toUpperCase());
-						p.translations.put(k, section.getString(lc));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+		// try to translate
+		// TODO bad code with try/catch
+		try {
+			YamlConfiguration phrases = YamlConfiguration.loadConfiguration(new BufferedReader(new InputStreamReader(stream, "UTF-8")));
+			for (String k : phrases.getKeys(false)) {
+				if (!phrases.isString(k + "." + lang_code)) {
+					String translation = TransUtil.getTranslation(phrases.getString(k + ".en"), lang_code);
+					phrases.set(k + "." + lang_code, translation);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 
+			for (String name : phrases.getKeys(false)) {
+				try {
+					Phrase p = Phrase.valueOf(name);
+					ConfigurationSection section = phrases.getConfigurationSection(name);
+					for (String lc : section.getKeys(false)) {
+						try {
+							cc k = cc.valueOf(lc.toUpperCase());
+							p.translations.put(k, section.getString(lc));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public enum cc {
-		EN, DE;
+		EN, DE, FR, RU;
 	}
 
 	public class Trans {
@@ -67,7 +80,9 @@ public class Translator {
 		START,
 		REWARD, 
 		COLLECT,
-		WANTED_MOBS;
+		WANTED_MOBS, 
+		LEFT,
+		RIGHT;
 		// @formatter:on
 		public final HashMap<cc, String> translations = new HashMap<cc, String>();
 

@@ -1,36 +1,70 @@
 AMOUNT:
   en: Amount
   de: Anzahl
+  ru: Количество
+  fr: Montant
 MOB:
   en: Mob
   de: Monster
+  ru: чернь
+  fr: Foule
 REQUIRED_CLASS:
   en: Required Class
   de: Benötigte Klasse
+  ru: Требуемый класс
+  fr: classe requis
 MINIMUM_LEVEL:
   en: Minimum Level
   de: Mindest Level
+  ru: Минимальный уровень
+  fr: Niveau minimum
 EXPERIENCE:
   en: Experience
   de: Erfahrung
+  ru: Опыт
+  fr: Expérience
 ACCEPT:
   en: Accept
   de: Akzeptieren
+  ru: принимать
+  fr: Acceptez
 BACK:
   en: Back
   de: Zurück
+  ru: назад
+  fr: Arrière
 ITEMS:
   en: Items
   de: Items
+  ru: Предметы
+  fr: Articles
 START:
   en: Start
   de: Start
+  ru: Начало
+  fr: Début
 REWARD:
   en: Reward
   de: Belohnung
+  ru: Награда
+  fr: Récompense
 COLLECT:
   en: Collect
   de: Sammel
+  ru: собирать
+  fr: Collecte
 WANTED_MOBS:
   en: Wanted Mobs
   de: Töte Monster
+  ru: Требуются Мобы
+  fr: Recherché Mobs
+LEFT:
+  en: left
+  de: links
+  ru: оставил
+  fr: la gauche
+RIGHT:
+  en: right
+  de: rechts
+  ru: правильно
+  fr: droite

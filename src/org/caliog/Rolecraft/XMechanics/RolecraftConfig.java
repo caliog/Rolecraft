@@ -1,10 +1,12 @@
 package org.caliog.Rolecraft.XMechanics;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,17 +28,15 @@ public class RolecraftConfig {
 
 	public static YamlConfiguration config;
 
-	@SuppressWarnings("deprecation")
 	public static void init() {
 		config = YamlConfiguration.loadConfiguration(new File(FilePath.config));
 		InputStream stream = new FileCreator().getClass().getResourceAsStream("config.yml");
 		if (stream == null)
 			return;
-		YamlConfiguration def = YamlConfiguration.loadConfiguration(stream);
-		config.addDefaults(def);
-		config.options().copyDefaults(true);
-
 		try {
+			YamlConfiguration def = YamlConfiguration.loadConfiguration(new BufferedReader(new InputStreamReader(stream, "UTF-8")));
+			config.addDefaults(def);
+			config.options().copyDefaults(true);
 			File f = new File(FilePath.config);
 			String str = config.saveToString();
 			BufferedWriter bf = new BufferedWriter(new FileWriter(f));
