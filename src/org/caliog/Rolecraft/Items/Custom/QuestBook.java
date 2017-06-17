@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Villagers.Quests;
+package org.caliog.Rolecraft.Items.Custom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,9 @@ import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
+import org.caliog.Rolecraft.Villagers.Quests.QManager;
+import org.caliog.Rolecraft.Villagers.Quests.Quest;
+import org.caliog.Rolecraft.Villagers.Quests.YmlQuest;
 import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInfoMenu;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
