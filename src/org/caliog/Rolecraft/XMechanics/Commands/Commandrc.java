@@ -127,7 +127,7 @@ public class Commandrc extends Commands {
 		 * 
 		 * Permission: rc.class
 		 * 
-		 * Usage: /rc backup
+		 * Usage: /rc class
 		 */
 		cmds.add(new Command("rc", "rc.class", new CommandExecutable() {
 

@@ -133,8 +133,7 @@ public class DeathListener implements Listener {
 				event.getEntity().setExp(newExp);
 			}
 		});
-
-		if (Utils.isBukkitMethod("org.bukkit.event.entity.PlayerDeathEvent", "setKeepInventory", Boolean.class))
+		if (Utils.isBukkitMethod("org.bukkit.event.entity.PlayerDeathEvent", "setKeepInventory", boolean.class))
 			event.setKeepInventory(RolecraftConfig.keepInventory());
 		else if (RolecraftConfig.keepInventory())
 			event.getDrops().clear();

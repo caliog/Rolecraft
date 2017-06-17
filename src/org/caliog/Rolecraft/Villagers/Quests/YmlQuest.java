@@ -137,7 +137,8 @@ public class YmlQuest extends Quest {
 				@Override
 				public void execute(RolecraftPlayer player, Villager villager) {
 					if (Playerface.hasItem(player.getPlayer(), getCollects())) {
-						Playerface.takeItem(player.getPlayer(), getCollects());
+						if (((YmlQuest) quest).getTargetVillager() != null)
+							Playerface.takeItem(player.getPlayer(), getCollects());
 						player.raiseQuestStatus(quest.getName());
 						if (quest.couldComplete(player)) {
 							player.completeQuest(quest.getName());

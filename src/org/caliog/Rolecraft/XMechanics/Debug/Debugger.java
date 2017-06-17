@@ -96,7 +96,7 @@ public class Debugger {
 		Date date = new Date();
 		dateFormat.format(date);
 		log.add(level.toString() + "(" + dateFormat.format(date) + ")> " + title.toString() + "\n" + msg);
-		if (log.size() >= 1024)
+		if (log.size() >= 128)
 			Manager.scheduleTask(new Runnable() {
 
 				@Override

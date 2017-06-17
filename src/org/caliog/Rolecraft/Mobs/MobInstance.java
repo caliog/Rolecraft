@@ -13,6 +13,7 @@ import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Items.ItemUtils;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
 public class MobInstance extends Mob {
@@ -66,8 +67,12 @@ public class MobInstance extends Mob {
 						Integer.parseInt(s.split("%")[1].split("-")[1])) * (Integer.parseInt(s.split("%")[0]) / 100.0F));
 			} else if (s.contains("%")) {
 				e = (int) (Playerface.getExpDifference(getLevel(), getLevel() + 1) * (Integer.parseInt(s.replace("%", "")) / 100F));
-			} else
+			} else if (Utils.isInteger(s)) {
+				e = Integer.valueOf(s);
+			} else {
 				throw new Exception();
+			}
+
 		} catch (Exception exc) {
 			Debugger.exception("Error in %s.yml! Experience expression is incorrect.", getName());
 			Manager.plugin.getLogger().warning("Error in " + getName() + "+.yml! Experience expression is incorrect.");

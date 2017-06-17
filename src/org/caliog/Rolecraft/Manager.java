@@ -25,7 +25,6 @@ import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
 import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Messages.Translator;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
@@ -78,26 +77,46 @@ public class Manager {
 
 		try {
 			MobSpawner.saveZones();
-			EntityManager.save();
-			PlayerManager.save();
-			Playerface.clear();
-
-			// Chets
-			ChestHelper.cleanUp();
-
-			// Villager stuff
-			VManager.save();
-			GManager.save();
-			QuestKill.save();
-			ChatManager.clear();
-
-			Debugger.save();
-
-			DataFolder.backup();
 		} catch (IOException e) {
-			Debugger.exception(LogTitle.NONE, "Manager save method gave exception:" + e.getMessage());
 			e.printStackTrace();
 		}
+		try {
+			EntityManager.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		PlayerManager.save();
+		Playerface.clear();
+
+		// Chets
+		ChestHelper.cleanUp();
+
+		// Villager stuff
+		try {
+			VManager.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			GManager.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			QuestKill.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ChatManager.clear();
+
+		Debugger.save();
+
+		try {
+			DataFolder.backup();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public static void load() {

@@ -161,6 +161,7 @@ public class RolecraftPlugin extends JavaPlugin {
 				}
 			}
 		} //
+
 		for (Field f : FilePath.class.getFields()) {
 			String value;
 			try {
