@@ -11,7 +11,7 @@ import org.caliog.Rolecraft.Items.ItemEffect;
 
 public class Apple_2 extends CustomItem {
 	public Apple_2(int amount) {
-		super(Material.GOLDEN_APPLE, "Apple 2", false);
+		super(Material.GOLDEN_APPLE, "Apple II", false);
 		setAmount(amount);
 		syncItemStack();
 	}

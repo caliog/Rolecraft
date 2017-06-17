@@ -41,7 +41,7 @@ public class HealthPotion {
 		meta.setDisplayName(ChatColor.DARK_GRAY + name);
 		List<String> lore = new ArrayList<String>();
 		lore.add(" ");
-		lore.add(ChatColor.GOLD + "This potion gives you " + heart + " heart!");
+		lore.add(ChatColor.GOLD + "This potion gives you " + heart + " heart" + (heart == 1 ? "" : "s") + "!");
 		lore.add(" ");
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
