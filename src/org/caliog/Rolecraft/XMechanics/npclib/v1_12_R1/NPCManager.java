@@ -1,6 +1,6 @@
 package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
 
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,14 +8,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,16 +22,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.mojang.authlib.GameProfile;
+import org.caliog.Rolecraft.XMechanics.NMS.NMS;
+import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
+import org.caliog.Rolecraft.XMechanics.npclib.NMS.BServer;
+import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
+import org.caliog.Rolecraft.XMechanics.npclib.NMS.NPC;
 
 import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.Packet;
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_12_R1.PlayerInteractManager;
 import net.minecraft.server.v1_12_R1.WorldServer;
 
 public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManager {
@@ -43,13 +40,16 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 	private final Map<World, BWorld> bworlds = new HashMap<>();
 	private NPCNetworkManager npcNetworkManager;
 	private JavaPlugin plugin;
+	private Class<?> worldServerClass, entityClass;
 
 	public NPCManager(JavaPlugin plugin) {
 		server = BServer.getInstance();
-
 		try {
+			worldServerClass = NMS.getNMSClass("WorldServer");
+			entityClass = NMS.getNMSClass("Entity");
+
 			npcNetworkManager = new NPCNetworkManager();
-		} catch (final IOException e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 
@@ -84,7 +84,7 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 				return;
 
 			for (NPC npc : npcs.values()) {
-				sendPacketsTo(p, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER,
+				NMSUtil.sendPacketsTo(p, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER,
 						new EntityPlayer[] { (EntityPlayer) npc.getEntity() }));
 			}
 
@@ -97,53 +97,31 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 
 	public org.caliog.Rolecraft.XMechanics.npclib.NPC spawnHumanNPC(String name, Location l, String id) {
 		if (npcs.containsKey(id)) {
-			server.getLogger().log(Level.WARNING, "NPC with that id already exists, existing NPC returned");
+			Bukkit.getLogger().log(Level.WARNING, "NPC with that id already exists, existing NPC returned");
 			return npcs.get(id);
 		}
 		if (name.length() > 16) { // Check and nag if name is too long, spawn
 			// NPC anyway with shortened name.
 			final String tmp = name.substring(0, 16);
-			server.getLogger().log(Level.WARNING, "NPCs can't have names longer than 16 characters,");
-			server.getLogger().log(Level.WARNING, name + " has been shortened to " + tmp);
+			Bukkit.getLogger().log(Level.WARNING, "NPCs can't have names longer than 16 characters,");
+			Bukkit.getLogger().log(Level.WARNING, name + " has been shortened to " + tmp);
 			name = tmp;
 		}
 		final BWorld world = getBWorld(l.getWorld());
-		final NPCEntity npcEntity = new NPCEntity(this, world, new GameProfile(UUID.randomUUID(), name),
-				new PlayerInteractManager(world.getWorldServer()));
-		sendPacketsTo(Bukkit.getOnlinePlayers(), new Packet[] {
-				new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[] { npcEntity }) });
-		npcEntity.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
-		final NPC npc = new NPC(npcEntity);
-		npc.setYaw(l.getYaw());
-		world.getWorldServer().addEntity(npcEntity); // the right way
-		world.getWorldServer().players.remove(npcEntity);
+		final NPC npc = new NPC(NMSUtil.getUtil().createNPCEntity(this, world, name));
+		npc.moveTo(l);
+		try {
+			Object entityHuman = NMSUtil.getUtil().getPlayerHandle((Player) npc.getBukkitEntity());
+			worldServerClass.getMethod("addEntity", entityClass).invoke(world.getWorldServer(), entityHuman);
+
+			List<?> players = (List<?>) worldServerClass.getField("players").get(world.getWorldServer());
+			players.remove(entityHuman);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException
+				| NoSuchFieldException e) {
+			e.printStackTrace();
+		}
 		npcs.put(id, npc);
 		return npc;
-	}
-
-	public void sendPacketsTo(Iterable<? extends Player> recipients, Packet<?>... packets) {
-		Iterable<EntityPlayer> nmsRecipients = Iterables.transform(recipients, new Function<Player, EntityPlayer>() {
-
-			@Override
-			public EntityPlayer apply(Player a) {
-				return ((CraftPlayer) a).getHandle();
-			}
-		});
-		for (EntityPlayer recipient : nmsRecipients) {
-			if (recipient != null) {
-				for (Packet<?> packet : packets) {
-					if (packet != null) {
-						recipient.playerConnection.sendPacket(packet);
-					}
-				}
-			}
-		}
-	}
-
-	public void sendPacketsTo(Player player, Packet<?>... packet) {
-		ArrayList<Player> it = new ArrayList<Player>();
-		it.add(player);
-		sendPacketsTo(it, packet);
 	}
 
 	public void despawnById(String id) {
@@ -151,9 +129,8 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 		if (npc != null) {
 			npcs.remove(id);
 			npc.removeFromWorld();
-
-			sendPacketsTo(Bukkit.getOnlinePlayers(), new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER,
-					new EntityPlayer[] { (EntityPlayer) npc.getEntity() }));
+			NMSUtil.sendPacketsTo(Bukkit.getOnlinePlayers(), new PacketPlayOutPlayerInfo(
+					PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, new EntityPlayer[] { (EntityPlayer) npc.getEntity() }));
 
 		}
 	}
@@ -226,14 +203,14 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 		if (name.length() > 16) { // Check and nag if name is too long, spawn
 			// NPC anyway with shortened name.
 			final String tmp = name.substring(0, 16);
-			server.getLogger().log(Level.WARNING, "NPCs can't have names longer than 16 characters,");
-			server.getLogger().log(Level.WARNING, name + " has been shortened to " + tmp);
+			Bukkit.getLogger().log(Level.WARNING, "NPCs can't have names longer than 16 characters,");
+			Bukkit.getLogger().log(Level.WARNING, name + " has been shortened to " + tmp);
 			name = tmp;
 		}
 		final NPC npc = (NPC) getNPC(id);
 		npc.setName(name);
 		final BWorld b = getBWorld(npc.getBukkitEntity().getLocation().getWorld());
-		final WorldServer s = b.getWorldServer();
+		final WorldServer s = (WorldServer) b.getWorldServer();
 		try {
 			Method m = s.getClass().getDeclaredMethod("d", new Class[] { Entity.class });
 			m.setAccessible(true);

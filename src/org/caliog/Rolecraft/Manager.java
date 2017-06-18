@@ -32,7 +32,7 @@ import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
 import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
-import org.caliog.Rolecraft.XMechanics.npclib.NMS;
+import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
 import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 
 public class Manager {
@@ -133,7 +133,7 @@ public class Manager {
 			QuestKill.load();
 
 			// Villagers
-			NPCManager.npcManager = NMS.getNPCManager();
+			NPCManager.npcManager = NMSUtil.getNPCManager();
 			VManager.load();
 			GManager.load();
 

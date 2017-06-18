@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.SocketAddress;
 
+import org.caliog.Rolecraft.XMechanics.npclib.NMS.NPCChannel;
+
 import net.minecraft.server.v1_12_R1.EnumProtocolDirection;
 import net.minecraft.server.v1_12_R1.NetworkManager;
 

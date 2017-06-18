@@ -1,20 +1,30 @@
 package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
 
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.npclib.Moveable;
 import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
-import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 import org.caliog.Rolecraft.XMechanics.npclib.Node;
+import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
+
+import com.mojang.authlib.GameProfile;
 
 import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.Block;
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.EntityLiving;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.IBlockAccess;
+import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
+import net.minecraft.server.v1_12_R1.PlayerInteractManager;
+import net.minecraft.server.v1_12_R1.WorldServer;
 
 public class Util implements NMSUtil {
 
@@ -64,8 +74,8 @@ public class Util implements NMSUtil {
 	}
 
 	@Override
-	public NPCManager getNPCManager() {
-		return new org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1.NPCManager(Manager.plugin);
+	public org.caliog.Rolecraft.XMechanics.npclib.NPCManager getnpcManager() {
+		return new NPCManager(Manager.plugin);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -77,21 +87,43 @@ public class Util implements NMSUtil {
 
 			Block block = Block.getById(node.b.getTypeId());
 			IBlockAccess access = null;
-			final AxisAlignedBB box = block.a(Block.getByCombinedId(node.b.getTypeId()), access,
-					new BlockPosition(node.b.getX(), node.b.getY(), node.b.getZ()));
+
+			try {
+				final AxisAlignedBB box = block.a(Block.getByCombinedId(node.b.getTypeId()), access,
+						new BlockPosition(node.b.getX(), node.b.getY(), node.b.getZ()));
+				if (box != null) {
+					if (Math.abs(box.e - box.b) > 0.2) {
+						node.setNotSolid(false);
+					}
+				}
+			} catch (Exception e) {
+				// e.printStackTrace();
+				node.setNotSolid(false);
+			}
 			// final AxisAlignedBB box =
 			// net.minecraft.server.v1_11_R1.Block.getById(node.b.getTypeId()).a(
 			// net.minecraft.server.v1_11_R1.Block.getByCombinedId(node.b.getTypeId()),
 			// ((CraftWorld) node.b.getWorld()).getHandle(),
 			// new BlockPosition(node.b.getX(), node.b.getY(), node.b.getZ()));
-			if (box != null) {
-				if (Math.abs(box.e - box.b) > 0.2) {
-					node.setNotSolid(false);
-				}
-			}
+
 		}
 		node.setLiquid(node.getLiquids().contains(node.b.getType()));
 
+	}
+
+	@Override
+	public org.bukkit.entity.Entity createNPCEntity(org.caliog.Rolecraft.XMechanics.npclib.NPCManager manager, BWorld world, String name) {
+		final NPCEntity npcEntity = new NPCEntity((NPCManager) manager, world, new GameProfile(UUID.randomUUID(), name),
+				new PlayerInteractManager((WorldServer) world.getWorldServer()));
+		NMSUtil.sendPacketsTo(Bukkit.getOnlinePlayers(),
+				new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[] { npcEntity }));
+
+		return npcEntity.getBukkitEntity();
+	}
+
+	@Override
+	public Object getPlayerHandle(Player p) {
+		return ((CraftPlayer) p).getHandle();
 	}
 
 }

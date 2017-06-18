@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.caliog.Rolecraft.XMechanics.npclib.NpcEntityTargetEvent;
+import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
 
 import com.mojang.authlib.GameProfile;
 
@@ -12,7 +13,9 @@ import net.minecraft.server.v1_12_R1.EntityHuman;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.EnumGamemode;
 import net.minecraft.server.v1_12_R1.EnumMoveType;
+import net.minecraft.server.v1_12_R1.MinecraftServer;
 import net.minecraft.server.v1_12_R1.PlayerInteractManager;
+import net.minecraft.server.v1_12_R1.WorldServer;
 
 public class NPCEntity extends EntityPlayer {
 
@@ -22,7 +25,7 @@ public class NPCEntity extends EntityPlayer {
 	private int lastBounceId;
 
 	public NPCEntity(NPCManager npcManager, BWorld world, GameProfile s, PlayerInteractManager itemInWorldManager) {
-		super(npcManager.getServer().getMCServer(), world.getWorldServer(), s, itemInWorldManager);
+		super((MinecraftServer) npcManager.getServer().getMCServer(), (WorldServer) world.getWorldServer(), s, itemInWorldManager);
 
 		itemInWorldManager.b(EnumGamemode.SURVIVAL);
 

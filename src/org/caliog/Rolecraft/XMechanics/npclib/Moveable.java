@@ -72,7 +72,7 @@ public abstract class Moveable {
 		if (this.taskid == 0) {
 			this.taskid = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(NPCManager.npcManager.getPlugin(), new Runnable() {
 				public void run() {
-					NMSUtil util = NMS.getUtil();
+					NMSUtil util = NMSUtil.getUtil();
 					if (util != null)
 						util.pathStep(a);
 				}
@@ -84,7 +84,7 @@ public abstract class Moveable {
 	}
 
 	public void setYaw(float yaw) {
-		NMSUtil util = NMS.getUtil();
+		NMSUtil util = NMSUtil.getUtil();
 		if (util != null)
 			util.setYaw(getBukkitEntity(), yaw);
 	}

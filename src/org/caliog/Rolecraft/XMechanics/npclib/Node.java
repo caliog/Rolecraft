@@ -35,7 +35,7 @@ public class Node { // Holds data about each block we check
 	}
 
 	public void update() {
-		NMSUtil util = NMS.getUtil();
+		NMSUtil util = NMSUtil.getUtil();
 		if (util != null)
 			util.nodeUpdate(this);
 	}

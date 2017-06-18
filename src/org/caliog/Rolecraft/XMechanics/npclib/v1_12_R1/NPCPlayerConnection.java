@@ -5,12 +5,13 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 
 import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.MinecraftServer;
 import net.minecraft.server.v1_12_R1.PlayerConnection;
 
 public class NPCPlayerConnection extends PlayerConnection {
 
 	public NPCPlayerConnection(NPCManager npcManager, EntityPlayer entityplayer) {
-		super(npcManager.getServer().getMCServer(), npcManager.getNPCNetworkManager(), entityplayer);
+		super((MinecraftServer) npcManager.getServer().getMCServer(), npcManager.getNPCNetworkManager(), entityplayer);
 	}
 
 	@Override
