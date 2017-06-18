@@ -13,13 +13,18 @@ public class SpeedSpell extends Spell {
 		if (!super.execute()) {
 			return false;
 		}
-		float p = getPower() / 1000.0F;
-		if (p > 5.0F) {
-			p = 5.0F;
-		}
-		final int power = (int) p;
+		final int power = getPower();
+		float p = 0.75F;
+		if (power < 10)
+			p = power / 30F;
+		if (power < 20)
+			p = power / 60F + 1 / 6F;
+		if (power < 30)
+			p = power / 80F + 2 / 8F;
+		if (power < 50)
+			p = power / 100F + (5 / 8F - 3 / 10F);
 		final float speed = getPlayer().getPlayer().getWalkSpeed();
-		getPlayer().getPlayer().setWalkSpeed(p);
+		getPlayer().getPlayer().setWalkSpeed((1 + p) * speed);
 
 		Manager.scheduleRepeatingTask(new Runnable() {
 
@@ -41,10 +46,6 @@ public class SpeedSpell extends Spell {
 
 	public int getMinLevel() {
 		return 1;
-	}
-
-	public int getFood() {
-		return (int) (10.0F * (getPower() / 500.0F)) - 1;
 	}
 
 	public double getDamage() {
