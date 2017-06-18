@@ -119,7 +119,7 @@ public class DamageListener implements Listener {
 	}
 
 	private void onPlayerDamagedByEntity(EntityDamageByEntityEvent event, RolecraftPlayer target, Fighter attacker) {
-		double damage = event.getDamage();
+		double damage = attacker.getDamage();
 		damage -= target.getDefense();
 		if (damage < 0)
 			damage = 0;
