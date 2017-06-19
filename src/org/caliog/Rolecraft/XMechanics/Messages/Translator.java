@@ -53,7 +53,7 @@ public class Translator {
 	}
 
 	public enum cc {
-		EN, DE, FR, RU;
+		EN, DE, FR, RU, ES;
 	}
 
 	public class Trans {
