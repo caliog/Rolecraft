@@ -7,7 +7,7 @@ import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 
 public class InvisibleSpell extends Spell {
 	public InvisibleSpell(RolecraftPlayer player) {
-		super(player, "Tarnung");
+		super(player, "Vanish");
 	}
 
 	public boolean execute() {
