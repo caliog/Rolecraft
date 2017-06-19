@@ -52,6 +52,9 @@ public class Weapon extends CustomItemInstance {
 			if (effect.getPower() > 0)
 				lore.add(ChatColor.ITALIC + "" + ChatColor.GOLD + effect.getString());
 		}
+		if (getLore() != null) {
+			lore.add(ChatColor.LIGHT_PURPLE + ChatColor.translateAlternateColorCodes('&', getLore()));
+		}
 		lore.add(ChatColor.GRAY + "Kills: " + kills);
 		if ((hasClass()) || (hasMinLevel()) || (!isTradeable())) {
 			lore.add(" ");

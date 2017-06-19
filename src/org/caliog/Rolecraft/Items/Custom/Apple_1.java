@@ -42,4 +42,8 @@ public class Apple_1 extends CustomItem {
 	public String getClazz() {
 		return null;
 	}
+
+	public String getLore() {
+		return null;
+	}
 }

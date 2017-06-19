@@ -55,4 +55,8 @@ public class Skillstar extends CustomItem {
 		}
 		return false;
 	}
+
+	public String getLore() {
+		return null;
+	}
 }

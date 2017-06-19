@@ -44,6 +44,9 @@ public class Armor extends CustomItemInstance {
 			if (effect.getPower() > 0)
 				lore.add(ChatColor.ITALIC + "" + ChatColor.GOLD + effect.getString());
 		}
+		if (getLore() != null) {
+			lore.add(ChatColor.LIGHT_PURPLE + ChatColor.translateAlternateColorCodes('&', getLore()));
+		}
 		if ((hasClass()) || (hasMinLevel()) || (!isTradeable())) {
 			lore.add(" ");
 		}

@@ -38,6 +38,9 @@ public abstract class CustomItem extends ItemStack {
 		if (Utils.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		List<String> lore = new ArrayList<String>();
+		if (getLore() != null) {
+			lore.add(ChatColor.GOLD + ChatColor.translateAlternateColorCodes('&', getLore()));
+		}
 		if ((hasClass()) || (hasMinLevel()) || (!isTradeable())) {
 			lore.add(" ");
 		}
@@ -45,7 +48,7 @@ public abstract class CustomItem extends ItemStack {
 			lore.add(ChatColor.RED + "MinLv: " + getMinLevel());
 		}
 		if (hasClass()) {
-			lore.add(ChatColor.RED + "Klasse: " + getClazz());
+			lore.add(ChatColor.RED + "Class: " + getClazz());
 		}
 		if (!isTradeable()) {
 			lore.add(ChatColor.RED + "soulbound!");
@@ -61,6 +64,8 @@ public abstract class CustomItem extends ItemStack {
 	public abstract int getMinLevel();
 
 	public abstract String getClazz();
+
+	public abstract String getLore();
 
 	public boolean hasClass() {
 		return getClazz() != null;

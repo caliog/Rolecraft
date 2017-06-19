@@ -12,4 +12,8 @@ public abstract class Book extends CustomItem {
 		this.player = clazz;
 		syncItemStack();
 	}
+
+	public String getLore() {
+		return null;
+	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Items.ItemEffect.ItemEffectType;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
@@ -33,13 +34,19 @@ public class CustomItemInstance extends CustomItem {
 		return this.effects;
 	}
 
+	public String getLore() {
+		return this.config.getString("lore", null);
+	}
+
 	public int getMinLevel() {
-		return this.config.getInt("min-level");
+		return this.config.getInt("min-level", 0);
 	}
 
 	public String getClazz() {
 		try {
-			return this.config.getString("class-type");
+			String c = this.config.getString("class-type");
+			if (ClazzLoader.isClass(c))
+				return c;
 		} catch (Exception e) {
 			Debugger.exception(LogTitle.NONE, "CustomItemInstance gave exception in getClazz: " + e.getMessage());
 		}
