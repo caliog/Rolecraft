@@ -189,4 +189,8 @@ public class RolecraftConfig {
 		return config.getBoolean("enable-debugging", false);
 	}
 
+	public static boolean disableDurability() {
+		return config.getBoolean("disable-durability", false);
+	}
+
 }

@@ -16,6 +16,8 @@ keep-inventory: true
 enable-loot-chest: true
 comment5: '#The time after droped items/chests will be removed (in seconds)#'
 remove-item-delay: 120
+comment5c: '#Disables the durability bar ONLY of custom items#'
+disable-durability: false
 comment6: '#Rolecraft will not touch these worlds#'
 disable-worlds:
   - world_nether

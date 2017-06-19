@@ -44,13 +44,14 @@ import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Groups.GManager;
+import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemUtils;
 import org.caliog.Rolecraft.Items.Weapon;
+import org.caliog.Rolecraft.Items.Books.Spellbook;
 import org.caliog.Rolecraft.Items.Custom.Apple_1;
 import org.caliog.Rolecraft.Items.Custom.Apple_2;
 import org.caliog.Rolecraft.Items.Custom.HealthPotion;
 import org.caliog.Rolecraft.Items.Custom.Skillstar;
-import org.caliog.Rolecraft.Items.Custom.Spellbook;
 import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Utils.SkillInventoryView;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
@@ -163,6 +164,13 @@ public class RolecraftListener implements Listener {
 		if (useable) {
 			if (RolecraftConfig.spellsEnabled())
 				c.register(event.getAction());
+			if (RolecraftConfig.disableDurability()) {
+				event.getItem().setDurability((short) 0);
+				for (ItemStack s : event.getPlayer().getEquipment().getArmorContents()) {
+					if (CustomItem.isCustomItem(s))
+						s.setDurability((short) 0);
+				}
+			}
 
 		} else {
 			event.setCancelled(true);
