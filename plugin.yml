@@ -44,3 +44,6 @@ commands:
         description: Creates a abstract pet, which can be spawned later with a spell.
     quest:
         aliases: q
+    spellbook:
+        usage: /spellbook
+        description: Gives you your spellbook if you dont have one already.
