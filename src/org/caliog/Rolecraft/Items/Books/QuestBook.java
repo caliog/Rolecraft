@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Items.Custom;
+package org.caliog.Rolecraft.Items.Books;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +73,10 @@ public class QuestBook extends CustomItem {
 				}
 			}
 		});
+	}
+
+	public String getLore() {
+		return null;
 	}
 
 }

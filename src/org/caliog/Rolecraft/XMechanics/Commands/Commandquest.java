@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
-import org.caliog.Rolecraft.Items.Custom.QuestBook;
+import org.caliog.Rolecraft.Items.Books.QuestBook;
 import org.caliog.Rolecraft.Villagers.Quests.QManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
 import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestEditorMenu;

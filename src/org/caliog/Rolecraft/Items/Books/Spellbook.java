@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Items.Custom;
+package org.caliog.Rolecraft.Items.Books;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
+import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
@@ -59,6 +60,26 @@ public class Spellbook extends CustomItem {
 				stack.setType(player.getSpellPoints() > 0 ? Material.ENCHANTED_BOOK : Material.BOOK);
 			}
 		player.getPlayer().updateInventory();
+	}
+
+	public String getLore() {
+		return null;
+	}
+
+	public static void giveSpellbookToPlayer(RolecraftPlayer rolecraftPlayer) {
+		Spellbook book = new Spellbook(rolecraftPlayer.getSpellPoints() > 0);
+		boolean found = false;
+		for (ItemStack stack : rolecraftPlayer.getPlayer().getInventory().getContents()) {
+			if (stack == null || !stack.hasItemMeta() || !stack.getItemMeta().hasDisplayName())
+				continue;
+			if (stack.getItemMeta().getDisplayName().equals(book.getItemMeta().getDisplayName())) {
+				found = true;
+				stack.setType(book.getType());
+				rolecraftPlayer.getPlayer().updateInventory();
+			}
+		}
+		if (!found)
+			Playerface.giveItem(rolecraftPlayer.getPlayer(), book);
 	}
 
 }

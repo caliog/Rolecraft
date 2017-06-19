@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
-import org.caliog.Rolecraft.Items.Custom.Spellbook;
+import org.caliog.Rolecraft.Items.Books.Spellbook;
 import org.caliog.Rolecraft.Spells.Spell;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;

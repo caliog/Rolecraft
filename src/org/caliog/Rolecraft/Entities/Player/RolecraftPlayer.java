@@ -13,12 +13,11 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.Items.ItemEffect.ItemEffectType;
-import org.caliog.Rolecraft.Items.Custom.Spellbook;
+import org.caliog.Rolecraft.Items.Books.Spellbook;
 import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Spells.InvisibleSpell;
 import org.caliog.Rolecraft.Spells.Spell;
@@ -472,19 +471,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 
 	public void giveSpellPoint() {
 		this.spellPoints++;
-		Spellbook book = new Spellbook(spellPoints > 0);
-		boolean found = false;
-		for (ItemStack stack : getPlayer().getInventory().getContents()) {
-			if (stack == null || !stack.hasItemMeta() || !stack.getItemMeta().hasDisplayName())
-				continue;
-			if (stack.getItemMeta().getDisplayName().equals(book.getItemMeta().getDisplayName())) {
-				found = true;
-				stack.setType(book.getType());
-				getPlayer().updateInventory();
-			}
-		}
-		if (!found)
-			Playerface.giveItem(getPlayer(), book);
+		Spellbook.giveSpellbookToPlayer(this);
 	}
 
 }

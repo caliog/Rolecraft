@@ -17,7 +17,7 @@ import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Guards.GManager;
 import org.caliog.Rolecraft.Guards.Guard;
-import org.caliog.Rolecraft.Items.Custom.QuestBook;
+import org.caliog.Rolecraft.Items.Books.QuestBook;
 import org.caliog.Rolecraft.Mobs.Mob;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.Chat.ChatManager;
