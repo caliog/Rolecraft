@@ -1,15 +1,17 @@
 comment_0: '#Decide if the plugin should search for new updates.#'
 comment_0a: '#There will be no auto-download of new updates.#'
 enable-update-check: true
-comment_0b: '#Choose a language (en, de, ru, etc)#'
+comment_0b: '#Choose a language (en, de, ru, es etc)#'
 lang: en
 comment1: '#You can choose every material you like (e.g. GOLD_NUGGETS, IRON_INGOT)#'
 currency: EMERALD
-comment2: '#Set the default class, players are assigned on first join#'
-default-class: Warrior
 comment4b: '#Chat format: %PLAYER%, %MESSAGE%, %GROUP%, %CLASS%, %LEVEL%#'
 comment4c: '#Leave it blank or set to none if you dont want to use it#'
 chat-format: '&9[&9%CLASS%&9]&8[&2%PLAYER% &6%LEVEL%&8]&f: %MESSAGE%'
+comment2: '#Set the default class, players are assigned on first join#'
+default-class: Warrior
+comment2a: '#The maximum level players can reach. -1 for no maximum level.#'
+max-level: -1
 comment5a: '#Instead of droping items, chests will spawn on death#'
 comment5b: '#Decide if a player loses his inventory on death or not#'
 keep-inventory: true

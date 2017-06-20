@@ -193,4 +193,8 @@ public class RolecraftConfig {
 		return config.getBoolean("disable-durability", false);
 	}
 
+	public static int getMaxLevel() {
+		return config.getInt("max-level", -1);
+	}
+
 }

@@ -89,6 +89,12 @@ public class RolecraftListener implements Listener {
 		if (player == null) {
 			return;
 		}
+		// max level
+		int maxLevel = RolecraftConfig.getMaxLevel();
+		if (maxLevel > 0 && event.getNewLevel() > maxLevel) {
+			event.getPlayer().setLevel(maxLevel);
+			return;
+		}
 		if (!PlayerManager.changedClass.contains(player.getPlayer().getUniqueId())) {
 			if (event.getOldLevel() + 1 == event.getNewLevel()) {
 				if (RolecraftConfig.isFireworkEnabled()) {
