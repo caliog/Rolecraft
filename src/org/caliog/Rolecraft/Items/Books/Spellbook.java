@@ -18,7 +18,7 @@ import net.md_5.bungee.api.ChatColor;
 public class Spellbook extends CustomItem {
 
 	public Spellbook(boolean enchanted) {
-		super(enchanted ? Material.ENCHANTED_BOOK : Material.BOOK, ChatColor.DARK_GRAY + "Spellbook", false);
+		super(enchanted ? Material.ENCHANTED_BOOK : Material.BOOK, ChatColor.DARK_GRAY + "Book of Spells", false);
 		this.syncItemStack();
 	}
 
