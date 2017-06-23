@@ -17,6 +17,7 @@ public abstract class Spell {
 	private boolean active = false;
 	private String name;
 	private int power = 0;
+	private final int maxPower;
 	private YamlConfiguration config;
 	private HashMap<Integer, Double> damageMap = new HashMap<Integer, Double>();
 	private HashMap<Integer, Double> defenseMap = new HashMap<Integer, Double>();
@@ -40,7 +41,9 @@ public abstract class Spell {
 					}
 				}
 			}
-		}
+			maxPower = config.getInt("max-power", -1);
+		} else
+			maxPower = -1;
 	}
 
 	public int getMinLevel() {
@@ -145,6 +148,10 @@ public abstract class Spell {
 
 	public void reloadPower() {
 		this.power = player.getSpellPower(getName());
+	}
+
+	public int getMaxPower() {
+		return maxPower;
 	}
 
 	public RolecraftAbstrPlayer getPlayer() {

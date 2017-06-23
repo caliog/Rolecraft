@@ -23,7 +23,7 @@ public class SpellMenu extends Menu {
 	private RolecraftPlayer player;
 
 	public SpellMenu(RolecraftPlayer player) {
-		super(1, "Spellbook");
+		super(1, "Book of Spells");
 		this.player = player;
 		setup();
 	}
@@ -40,16 +40,17 @@ public class SpellMenu extends Menu {
 				break;
 			lore = new ArrayList<String>();
 			Pair<Spell, Integer> value = map.get(k);
-			lore.add(ChatColor.DARK_GRAY + "Power: " + value.second);
+			boolean canstillpowerup = value.first.getMaxPower() < 1 || value.second < value.first.getMaxPower();
+			lore.add(ChatColor.DARK_GRAY + "Power: " + value.second + ChatColor.GRAY + "/" + value.first.getMaxPower());
 			String e = k.replaceAll("1", ChatColor.RED + Phrase.LEFT.translate() + ChatColor.GRAY + "-").replaceAll("0",
 					ChatColor.BLUE + Phrase.RIGHT.translate() + ChatColor.GRAY + "-");
 			lore.add(ChatColor.AQUA + e.substring(0, e.length() - 1));
-			if (t)
+			if (t && canstillpowerup)
 				lore.add(ChatColor.GOLD + Msg.getMessage(MessageKey.SPELL_CLICK_POWER));
 			item = new MenuItem(value.first.getName(), Material.BOOK_AND_QUILL, lore);
 			{
 				final MenuItem final_item = item;
-				if (t)
+				if (t && canstillpowerup)
 					item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 						@Override

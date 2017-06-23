@@ -1,4 +1,5 @@
 min-level: 1
+max-power: 60
 damage:
   '1': 3
   '5': 3.5
