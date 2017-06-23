@@ -71,7 +71,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 
 	public double getDefense() {
 		double defense = super.getDefense();
-		double p = 1.0D + (getRStrength() + 0.8F * getRDexterity()) / 200.0D;
+		double p = 1.0D + (0.8F * getRStrength() + getRDexterity()) / 200.0D;
 		for (Pair<Spell, Integer> value : this.spells.values()) {
 			if (value.first.isActive()) {
 				defense += value.first.getDefense();
@@ -83,7 +83,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 	public double getDamage() {
 		double damage = super.getDamage();
 		double p = 1.0D + getRStrength() / 100.0D;
-		if ((getCritical() > 0) && ((getRIntelligence() / 20.0F + getCritical()) / 100.0F > Math.random())) {
+		if ((getCritical() > 0) && ((getRIntelligence() / 500.0F + getCritical()) / 200.0F > Math.random())) {
 			p = 2.0D;
 		}
 		for (Pair<Spell, Integer> value : this.spells.values())
@@ -398,12 +398,12 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 
 	public void addSpell(String id, String spell) {
 		Pair<Spell, Integer> pair = null;
-		if (spells.containsKey(spell))
+		if (spells.containsKey(spell)) // in case there is a loaded spell dummy
 			pair = spells.get(spell);
 		else {
 			Spell s = SpellLoader.load(this, spell);
 			if (s != null) {
-				pair = new Pair<Spell, Integer>(s, 1);
+				pair = new Pair<Spell, Integer>(s, 0);
 				s.reloadPower();
 			}
 		}
@@ -411,7 +411,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 			spells.put(id, pair);
 		else
 			Debugger.warning(LogTitle.SPELL, "%s gave a null loaded spell with spell=%s (in RolecraftPlayer.addSpell)", getName(), spell);
-		spells.remove(spell);
+		spells.remove(spell); // removing spell dummy
 	}
 
 	public int getSpellPower(String spellName) {
