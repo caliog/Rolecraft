@@ -296,7 +296,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		for (String id : spells.keySet())
 			if (id.equals(String.valueOf(spell[0]) + String.valueOf(spell[1]) + String.valueOf(spell[2]))) {
 				Spell spell = spells.get(id).first;
-				if (spell != null) {
+				if (spell != null && spells.get(id).second > 0) {
 					Debugger.info(LogTitle.SPELL, "%s is casting spell:", getPlayer().getName(), spell.getName());
 					spell.execute();
 					BottomBar.display(getPlayer(), ChatColor.GOLD + spell.getName());
