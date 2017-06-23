@@ -87,6 +87,7 @@ public class NPC extends org.caliog.Rolecraft.XMechanics.npclib.NPC {
 		}
 	}
 
+	// not independent
 	public String getName() {
 		return ((NPCEntity) getEntity()).getName();
 	}
