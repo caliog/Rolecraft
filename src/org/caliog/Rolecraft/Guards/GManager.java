@@ -37,7 +37,7 @@ public class GManager {
 			String eq = values[4];
 			if (NPCManager.npcManager == null) {
 				Manager.plugin.getLogger()
-						.warning("Failed to create guard. ( " + Manager.plugin.getVersion() + " does not support guards.");
+						.warning("Failed to create guard. ( " + Manager.plugin.getVersion() + ") does not support guards.");
 				reader.close();
 				return;
 			}

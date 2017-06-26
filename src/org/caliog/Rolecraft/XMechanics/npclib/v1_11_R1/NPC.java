@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.npclib.NMS;
+package org.caliog.Rolecraft.XMechanics.npclib.v1_11_R1;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -13,14 +13,13 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.caliog.Rolecraft.XMechanics.NMS.NMS;
-import org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1.NPCEntity;
-import org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1.Util;
+import org.caliog.Rolecraft.XMechanics.npclib.NMS.NPCUtils;
 
 public class NPC extends org.caliog.Rolecraft.XMechanics.npclib.NPC {
 	// enumItemSlot, ItemStack
 	private HashMap<Object, Object> previousEquipment = new HashMap<Object, Object>();
 	private Class<?> entityClass, worldClass, worldServerClass, entityTrackerClass, packetPlayOutAnimationClass, itemstackClass,
-			enumItemSlotClass, entityPlayerClass, packetPlayOutEntityEquipmentClass;
+			enumItemSlotClass, entityPlayerClass, packetPlayOutEntityEquipmentClass, packetClass;
 
 	public NPC(Entity bukkitEntity) {
 		try {
@@ -28,6 +27,7 @@ public class NPC extends org.caliog.Rolecraft.XMechanics.npclib.NPC {
 			worldClass = NMS.getNMSClass("World");
 			worldServerClass = NMS.getNMSClass("WorldServer");
 			entityTrackerClass = NMS.getNMSClass("EntityTracker");
+			packetClass = NMS.getNMSClass("Packet");
 			packetPlayOutAnimationClass = NMS.getNMSClass("PacketPlayOutAnimation");
 			itemstackClass = NMS.getNMSClass("ItemStack");
 			enumItemSlotClass = NMS.getNMSClass("EnumItemSlot");
@@ -45,7 +45,7 @@ public class NPC extends org.caliog.Rolecraft.XMechanics.npclib.NPC {
 			Object world = entityClass.getField("world").get(entity);
 			Object tracker = worldServerClass.getMethod("getTracker").invoke(worldServerClass.cast(world));
 			Object packet = packetPlayOutAnimationClass.getConstructor(entityClass, int.class).newInstance(entity, 0);
-			entityTrackerClass.getMethod("a", entityClass, packetPlayOutAnimationClass).invoke(tracker, entity, packet);
+			entityTrackerClass.getMethod("a", entityClass, packetClass).invoke(tracker, entity, packet);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

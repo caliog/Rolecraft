@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
+package org.caliog.Rolecraft.XMechanics.npclib.v1_11_R1;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_11_R1.entity.CraftEntity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,10 +27,10 @@ import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BServer;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
 
-import net.minecraft.server.v1_12_R1.Entity;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_12_R1.WorldServer;
+import net.minecraft.server.v1_11_R1.Entity;
+import net.minecraft.server.v1_11_R1.EntityPlayer;
+import net.minecraft.server.v1_11_R1.PacketPlayOutPlayerInfo;
+import net.minecraft.server.v1_11_R1.WorldServer;
 
 public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManager {
 
