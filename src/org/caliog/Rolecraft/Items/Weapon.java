@@ -12,17 +12,21 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
+import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class Weapon extends CustomItemInstance {
+
 	private int level;
 	private int kills;
+	private final short durability;
 
-	public Weapon(Material type, String name, int level, int kills, boolean tradeable, YamlConfiguration config) {
+	public Weapon(Material type, String name, int level, int kills, short durabilty, boolean tradeable, YamlConfiguration config) {
 		super(type, name, tradeable, config);
 		this.level = level;
 		this.kills = kills;
+		this.durability = durabilty;
 		syncItemStack();
 	}
 
@@ -44,6 +48,8 @@ public class Weapon extends CustomItemInstance {
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName() + ChatColor.GOLD + " Lv. " + getLevel());
 		if (Utils.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		if (RolecraftConfig.disableDurability())
+			meta.setUnbreakable(true);
 		List<String> lore = new ArrayList<String>();
 		String damage = getDamage().length == 1 ? String.valueOf(getDamage()[0])
 				: (getDamage()[0] + "-" + getDamage()[(getDamage().length - 1)]);
@@ -112,11 +118,11 @@ public class Weapon extends CustomItemInstance {
 		if ((name == null) || (level == null)) {
 			return null;
 		}
-		Weapon ci = getInstance(name, Integer.parseInt(level), kills, !soulbound);
+		Weapon ci = getInstance(name, Integer.parseInt(level), kills, item.getDurability(), !soulbound);
 		return ci;
 	}
 
-	public static Weapon getInstance(String name, int level, int kills, boolean tradeable) {
+	public static Weapon getInstance(String name, int level, int kills, short durability, boolean tradeable) {
 		File f = new File(FilePath.weapons + name + ".yml");
 		if (!f.exists()) {
 			return null;
@@ -127,7 +133,7 @@ public class Weapon extends CustomItemInstance {
 		if (mat == null) {
 			return null;
 		}
-		Weapon instance = new Weapon(mat, name, level, kills, tradeable, config);
+		Weapon instance = new Weapon(mat, name, level, kills, durability, tradeable, config);
 		return instance;
 	}
 
@@ -158,7 +164,8 @@ public class Weapon extends CustomItemInstance {
 	public void raiseLevel(final Player p) {
 		if (this.level < 9) {
 			this.level += 1;
-			p.getInventory().setItemInMainHand(new Weapon(getType(), getName(), this.level, 0, isTradeable(), this.config));
+			p.getInventory()
+					.setItemInMainHand(new Weapon(getType(), getName(), this.level, 0, this.durability, isTradeable(), this.config));
 		}
 	}
 

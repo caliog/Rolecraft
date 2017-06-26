@@ -44,7 +44,6 @@ import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Groups.GManager;
-import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemUtils;
 import org.caliog.Rolecraft.Items.Weapon;
 import org.caliog.Rolecraft.Items.Books.Spellbook;
@@ -170,13 +169,6 @@ public class RolecraftListener implements Listener {
 		if (useable) {
 			if (RolecraftConfig.spellsEnabled())
 				c.register(event.getAction());
-			if (RolecraftConfig.disableDurability()) {
-				event.getItem().setDurability((short) 0);
-				for (ItemStack s : event.getPlayer().getEquipment().getArmorContents()) {
-					if (CustomItem.isCustomItem(s))
-						s.setDurability((short) 0);
-				}
-			}
 
 		} else {
 			event.setCancelled(true);

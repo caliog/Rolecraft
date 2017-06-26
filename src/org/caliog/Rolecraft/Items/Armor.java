@@ -10,15 +10,19 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class Armor extends CustomItemInstance {
-	private int level;
 
-	public Armor(Material type, String name, int level, boolean tradeable, YamlConfiguration config) {
+	private int level;
+	private final short durability;
+
+	public Armor(Material type, String name, int level, short durability, boolean tradeable, YamlConfiguration config) {
 		super(type, name, tradeable, config);
 		this.level = level;
+		this.durability = durability;
 		syncItemStack();
 	}
 
@@ -35,6 +39,8 @@ public class Armor extends CustomItemInstance {
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName() + ChatColor.GOLD + " Lv. " + getLevel());
 		if (Utils.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		if (RolecraftConfig.disableDurability())
+			meta.setUnbreakable(true);
 		List<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.ITALIC + "" + ChatColor.BLUE + "Def: " + getDefense());
 		if (!getEffects().isEmpty()) {
@@ -89,11 +95,11 @@ public class Armor extends CustomItemInstance {
 		if ((name == null) || (level == null)) {
 			return null;
 		}
-		Armor ci = getInstance(name, Integer.parseInt(level), !soulbound);
+		Armor ci = getInstance(name, Integer.parseInt(level), item.getDurability(), !soulbound);
 		return ci;
 	}
 
-	public static Armor getInstance(String name, int level, boolean tradeable) {
+	public static Armor getInstance(String name, int level, short durability, boolean tradeable) {
 		File f = new File(FilePath.armor + name + ".yml");
 		if (!f.exists()) {
 			return null;
@@ -104,12 +110,16 @@ public class Armor extends CustomItemInstance {
 		if (mat == null) {
 			return null;
 		}
-		Armor instance = new Armor(mat, name, level, tradeable, config);
+		Armor instance = new Armor(mat, name, level, durability, tradeable, config);
 
 		return instance;
 	}
 
 	public static boolean isArmor(ItemStack item) {
 		return getInstance(item) != null;
+	}
+
+	public short getDurability() {
+		return durability;
 	}
 }

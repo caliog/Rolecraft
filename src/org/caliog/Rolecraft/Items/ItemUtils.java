@@ -12,9 +12,11 @@ import org.caliog.Rolecraft.Items.Custom.HealthPotion;
 import org.caliog.Rolecraft.Items.Custom.Skillstar;
 import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class ItemUtils {
-	public static CustomItem getCustomItem(String name, int a, boolean t) {
+
+	public static CustomItem getCustomItem(String name, int a, short d, boolean t) {
 		if (name.equals("Skillstar")) {
 			return new Skillstar(a);
 		}
@@ -26,10 +28,10 @@ public class ItemUtils {
 		}
 		CustomItem i = CustomItemInstance.getInstance(name, a, t);
 		if (i == null) {
-			i = Armor.getInstance(name, a, t);
+			i = Armor.getInstance(name, a, d, t);
 		}
 		if (i == null) {
-			i = Weapon.getInstance(name, a, 0, t);
+			i = Weapon.getInstance(name, a, 0, d, t);
 		}
 		return i;
 	}
@@ -85,13 +87,18 @@ public class ItemUtils {
 			return null;
 		}
 		int al = 1;
+		short d = 0;
 		boolean soulbound = false;
 		String name;
 		if (string.contains(":")) {
-			name = string.split(":")[0];
-			al = Integer.parseInt(string.split(":")[1]);
-			if (string.split(":").length > 2) {
-				soulbound = Boolean.getBoolean(string.split(":")[2]);
+			String[] split = string.split(":");
+			name = split[0];
+			al = Integer.parseInt(split[1]);
+			if (split.length > 2) {
+				soulbound = Boolean.getBoolean(split[2]);
+			}
+			if (split.length > 3 && Utils.isInteger(split[3])) {
+				d = Short.parseShort(split[3]);
 			}
 		} else {
 			name = string;
@@ -110,7 +117,7 @@ public class ItemUtils {
 			return HealthPotion.getHP3(al);
 		}
 
-		return getCustomItem(name, al, !soulbound);
+		return getCustomItem(name, al, d, !soulbound);
 	}
 
 }
