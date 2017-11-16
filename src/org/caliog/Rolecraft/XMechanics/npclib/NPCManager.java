@@ -1,7 +1,9 @@
 package org.caliog.Rolecraft.XMechanics.npclib;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.caliog.Rolecraft.Guards.Guard;
 
 public abstract class NPCManager {
 
@@ -14,5 +16,7 @@ public abstract class NPCManager {
 	public abstract void despawnById(String valueOf);
 
 	protected abstract JavaPlugin getPlugin();
+
+	public abstract void addGuardToPlayerList(Player player, Guard guard);
 
 }

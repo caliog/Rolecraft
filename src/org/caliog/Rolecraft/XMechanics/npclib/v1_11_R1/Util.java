@@ -45,6 +45,7 @@ public class Util implements NMSUtil {
 	}
 
 	public void pathStep(Moveable a) {
+
 		if (a.pathIterator.hasNext()) {
 			Node n = (Node) a.pathIterator.next();
 			if (n.b.getWorld() != a.getBukkitEntity().getWorld()) {
@@ -53,7 +54,7 @@ public class Util implements NMSUtil {
 				float angle = getHandle(a.getBukkitEntity()).yaw;
 				float look = getHandle(a.getBukkitEntity()).pitch;
 				if ((a.last == null) || (a.runningPath.checkPath(n, a.last, true))) {
-					if (a.last != null) {
+					if (a.last != null && !a.last.b.equals(n.b)) {
 						angle = (float) Math.toDegrees(Math.atan2(a.last.b.getX() - n.b.getX(), n.b.getZ() - a.last.b.getZ()));
 						look = (float) (Math.toDegrees(Math.asin(a.last.b.getY() - n.b.getY())) / 2.0D);
 					}
@@ -65,9 +66,11 @@ public class Util implements NMSUtil {
 			}
 			a.last = n;
 		} else {
-			getHandle(a.getBukkitEntity()).setPositionRotation(a.runningPath.getEnd().getX(), a.runningPath.getEnd().getY(),
-					a.runningPath.getEnd().getZ(), a.runningPath.getEnd().getYaw(), a.runningPath.getEnd().getPitch());
-			setYaw(a.getBukkitEntity(), a.runningPath.getEnd().getYaw());
+			// getHandle(a.getBukkitEntity()).setPositionRotation(a.runningPath.getEnd().getX(),
+			// a.runningPath.getEnd().getY(),
+			// a.runningPath.getEnd().getZ(), a.runningPath.getEnd().getYaw(),
+			// a.runningPath.getEnd().getPitch());
+			// setYaw(a.getBukkitEntity(), a.runningPath.getEnd().getYaw());
 			Bukkit.getServer().getScheduler().cancelTask(a.taskid);
 			a.taskid = 0;
 		}

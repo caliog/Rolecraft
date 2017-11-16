@@ -11,6 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
+import org.caliog.Rolecraft.Villagers.Utils.LocationUtil;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class CheckpointPath {
@@ -61,9 +62,7 @@ public class CheckpointPath {
 			if (checkpoints != null) {
 				for (int i = 1; i < maxCheckpoints; i++) {
 					if (isLoaded && checkpoints[i] != null) {
-						section.set("checkpoint" + i + ".x", checkpoints[i].getX());
-						section.set("checkpoint" + i + ".y", checkpoints[i].getY());
-						section.set("checkpoint" + i + ".z", checkpoints[i].getZ());
+						section.set("checkpoint" + i, LocationUtil.toString(checkpoints[i]));
 					}
 				}
 			}
@@ -89,10 +88,8 @@ public class CheckpointPath {
 			this.cpDelay = section.getInt("checkpoint-delay");
 			int i = 0;
 			for (i = 1; i < maxCheckpoints; i++) {
-				if (section.isConfigurationSection("checkpoint" + i)) {
-					ConfigurationSection cp = section.getConfigurationSection("checkpoint" + i);
-					Location loc = new Location(world, cp.getDouble("x"), cp.getDouble("y"), cp.getDouble("z"));
-
+				if (section.isString("checkpoint" + i)) {
+					Location loc = LocationUtil.fromString(section.getString("checkpoint" + i));
 					this.checkpoints[i] = loc;
 
 				}
@@ -147,7 +144,6 @@ public class CheckpointPath {
 
 								if (currentCP > maxCheckpoints - 1 || checkpoints[currentCP] == null || currentCP > loadedCP)
 									currentCP = 0;
-
 								abstractNPC.walkTo(checkpoints[currentCP], 13000);
 								abstractNPC.setRunning(true);
 							}

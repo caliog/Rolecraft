@@ -236,15 +236,23 @@ public class VManager {
 		searchQuests();
 		// Destroy possible bug copies
 		if (timer % 100 == 0) {
-			for (Villager v : villagers) {
-				if (!RolecraftConfig.isNaturalSpawnDisabled(v.getBukkitEntity().getWorld().getName()))
-					for (Entity e : v.getBukkitEntity().getNearbyEntities(10, 4, 10)) {
-						if (e instanceof org.bukkit.entity.Villager && !EntityManager.isRegistered(e.getUniqueId())) {
-							if (e.getName().equals(v.getName()))
-								e.remove();
-						}
+			Manager.scheduleTask(new Runnable() {
+
+				@Override
+				public void run() {
+					for (Villager v : villagers) {
+						if (!RolecraftConfig.isNaturalSpawnDisabled(v.getBukkitEntity().getWorld().getName()))
+							for (Entity e : v.getBukkitEntity().getNearbyEntities(10, 4, 10)) {
+								if (e instanceof org.bukkit.entity.Villager && !EntityManager.isRegistered(e.getUniqueId())) {
+									if (e.getName().equals(v.getName()))
+										e.remove();
+								}
+							}
 					}
-			}
+
+				}
+			});
+
 		}
 	}
 

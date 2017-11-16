@@ -13,4 +13,6 @@ public abstract class NPC extends Moveable {
 
 	public abstract void updateEquipment();
 
+	public abstract Object getEntity();
+
 }

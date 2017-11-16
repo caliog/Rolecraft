@@ -63,6 +63,7 @@ import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
+@SuppressWarnings("deprecation")
 public class RolecraftListener implements Listener {
 
 	HashMap<UUID, String[]> petMap = new HashMap<UUID, String[]>(); // player,
@@ -272,7 +273,6 @@ public class RolecraftListener implements Listener {
 		Playerface.dropItem(event.getPlayer(), event.getPlayer().getLocation(), event.getItemDrop());
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void inventoryClick(final InventoryClickEvent event) {
 		if ((event.getView() instanceof SkillInventoryView)) {

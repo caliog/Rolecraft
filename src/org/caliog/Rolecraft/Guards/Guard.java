@@ -133,6 +133,7 @@ public class Guard extends GNPC {
 							this.lastShot = target.getWorld().getTime();
 						}
 				} else {
+					setRunning(true);
 					npc.walkTo(target.getLocation());
 					((NPC) npc).lookAtPoint(target.getEyeLocation());
 					if (npc.getBukkitEntity().getLocation().distanceSquared(target.getLocation()) <= 1.44) {
@@ -151,7 +152,7 @@ public class Guard extends GNPC {
 
 	@Override
 	public int getRadius() {
-		return 30;
+		return 20;
 	}
 
 	public void setEquipment(ItemStack stack, ItemStack shield, ItemStack[] armor) {

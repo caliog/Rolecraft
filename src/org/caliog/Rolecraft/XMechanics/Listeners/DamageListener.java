@@ -108,10 +108,11 @@ public class DamageListener implements Listener {
 	}
 
 	private void onMobDamagedByMob(EntityDamageByEntityEvent event, Mob target, Mob attacker) {
-		target.setTarget((LivingEntity) event.getDamager());
+		LivingEntity entity = (LivingEntity) Bukkit.getEntity(attacker.getUniqueId());
+		target.setTarget(entity);
 		target.fight();
 		if (target.damage(event.getDamage() - target.getDefense())) {
-			target.setKiller(event.getDamager().getUniqueId());
+			target.setKiller(entity.getUniqueId());
 			((Damageable) event.getEntity()).setHealth(0.0D);
 			attacker.killedAttack(target.getUniqueId());
 		}

@@ -11,6 +11,8 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.VManager;
+import org.caliog.Rolecraft.XMechanics.PlayerConsole.Stoppable;
+import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 
 public class GuardWatcher {
 
@@ -85,6 +87,28 @@ public class GuardWatcher {
 			} else if (guard.isAttacking()) {
 				guard.getNpc().walkTo(guard.getLocation());
 				guard.setAttacking(null);
+				Stoppable s = new Stoppable() {
+
+					@Override
+					public void run() {
+						if (guard.getEntityLocation().distanceSquared(guard.getLocation()) < 1) {
+							stop();
+						}
+					}
+
+					@Override
+					public void stop() {
+						super.stop();
+						Manager.scheduleTask(new Runnable() {
+
+							@Override
+							public void run() {
+								guard.setRunning(false);
+							}
+						});
+					}
+				};
+				s.setTaskID(Manager.scheduleRepeatingTask(s, 20L, 10L));
 				if (guard.getPath() != null && !guard.getPath().isRun())
 					guard.walkPath();
 
@@ -96,19 +120,24 @@ public class GuardWatcher {
 
 	public static void findPlayer(Guard guard) {
 
-		int radius = guard.getRadius();
+		final int radius = guard.getRadius();
 
-		List<Entity> entities = guard.getNpc().getBukkitEntity().getNearbyEntities(radius, radius, radius);
+		List<Entity> entities = guard.getNpc().getBukkitEntity().getNearbyEntities(2 * radius, radius, 2 * radius);
 
 		for (Entity entity : entities) {
 
 			if (entity instanceof Player && GManager.getGuard(entity.getUniqueId()) == null) {
 				Player player = (Player) entity;
 
+				NPCManager.npcManager.addGuardToPlayerList(player, guard);
+
 				// LOOK
-				if (guard.isLooking() && !guard.isAttacking() && !guard.isRunning()) {
-					guard.getNpc().lookAtPoint(player.getEyeLocation());
-				}
+				if (player.getLocation().distanceSquared(guard.getEntityLocation()) < radius * radius)
+					if (guard.isLooking() && !guard.isAttacking() && !guard.isRunning())
+
+					{
+						guard.getNpc().lookAtPoint(player.getEyeLocation());
+					}
 
 			}
 		}

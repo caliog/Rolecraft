@@ -22,6 +22,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.caliog.Rolecraft.Guards.Guard;
 import org.caliog.Rolecraft.XMechanics.NMS.NMS;
 import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BServer;
@@ -88,6 +89,7 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 			}
 
 		}
+
 	}
 
 	public boolean containsNPC(String name) {
@@ -236,4 +238,9 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 		return plugin;
 	}
 
+	@Override
+	public void addGuardToPlayerList(Player player, Guard guard) {
+		NMSUtil.sendPacketsTo(player, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER,
+				new EntityPlayer[] { (EntityPlayer) guard.getNpc().getEntity() }));
+	}
 }
