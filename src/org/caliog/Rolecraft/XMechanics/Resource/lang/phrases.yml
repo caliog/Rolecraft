@@ -68,3 +68,11 @@ RIGHT:
   de: rechts
   ru: правильно
   fr: droite
+SOULBOUND:
+  en: soulbound
+  de: seelengebunden
+  ru: персональный
+  fr: lié
+CLASS:
+  en: Class
+  de: Klasse

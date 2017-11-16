@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.caliog.Rolecraft.XMechanics.Messages.Translator.Phrase;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public abstract class CustomItem extends ItemStack {
@@ -48,10 +49,10 @@ public abstract class CustomItem extends ItemStack {
 			lore.add(ChatColor.RED + "MinLv: " + getMinLevel());
 		}
 		if (hasClass()) {
-			lore.add(ChatColor.RED + "Class: " + getClazz());
+			lore.add(ChatColor.RED + Phrase.CLASS.translate() + ": " + getClazz());
 		}
 		if (!isTradeable()) {
-			lore.add(ChatColor.RED + "soulbound!");
+			lore.add(ChatColor.RED + Phrase.SOULBOUND.translate() + "!");
 		}
 		meta.setLore(lore);
 		setItemMeta(meta);
@@ -80,7 +81,7 @@ public abstract class CustomItem extends ItemStack {
 			return false;
 		}
 		for (String l : item.getItemMeta().getLore()) {
-			if (l.contains("soulbound")) {
+			if (l.contains("soulbound") || l.contains(Phrase.SOULBOUND.translate())) {
 				return false;
 			}
 		}

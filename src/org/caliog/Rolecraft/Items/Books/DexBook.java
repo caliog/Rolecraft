@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.ItemEffect;
+import org.caliog.Rolecraft.XMechanics.Messages.Translator.Phrase;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class DexBook extends Book {
@@ -24,11 +25,12 @@ public class DexBook extends Book {
 		lore.add(ChatColor.BLUE + " + " + this.player.getDexterity());
 
 		lore.add(" ");
-		lore.add(ChatColor.GOLD + "Drag a skillstar at the book");
+		lore.add(ChatColor.GOLD + "Drag a skillstar at the book");// TODO
+																	// translate
 		lore.add(ChatColor.GOLD + "to increase your dexterity");
 		lore.add(" ");
 
-		lore.add(ChatColor.RED + "soulbound!");
+		lore.add(ChatColor.RED + Phrase.SOULBOUND.translate() + "!");
 		meta.setLore(lore);
 		setItemMeta(meta);
 	}
