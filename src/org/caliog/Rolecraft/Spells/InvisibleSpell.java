@@ -38,7 +38,7 @@ public class InvisibleSpell extends Spell {
 	}
 
 	public int getFood() {
-		return Math.round(getPower() / 90.0F * 12.0F);
+		return Math.round(getPower() / (float) getMaxPower() * 12.0F);
 	}
 
 	public double getDamage() {

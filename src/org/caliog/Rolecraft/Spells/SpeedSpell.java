@@ -13,16 +13,18 @@ public class SpeedSpell extends Spell {
 		if (!super.execute()) {
 			return false;
 		}
-		final int power = getPower();
+		final float x = getPower() / (float) getMaxPower();
 		float p = 0.75F;
-		if (power < 10)
-			p = power / 30F;
-		if (power < 20)
-			p = power / 60F + 1 / 6F;
-		if (power < 30)
-			p = power / 80F + 2 / 8F;
-		if (power < 50)
-			p = power / 100F + (5 / 8F - 3 / 10F);
+		if (x < 0.2F)
+			p = x + 0.1F;
+		if (x < 0.4F)
+			p = 1.2F * (x - 0.2F) + 0.3F;
+		if (x < 0.6F)
+			p = 1.3F * (x - 0.4F) + 0.54F;
+		if (x < 0.8F)
+			p = 0.7F * (x - 0.6F) + 0.8F;
+		if (x == 1)
+			p = 0.96F;
 		final float speed = getPlayer().getPlayer().getWalkSpeed();
 		getPlayer().getPlayer().setWalkSpeed((1 + p) * speed);
 
@@ -30,7 +32,8 @@ public class SpeedSpell extends Spell {
 
 			@Override
 			public void run() {
-				ParticleEffect.VILLAGER_HAPPY.display(0.1F, 0.2F, 0.1F, 0.2F, power * 2, getPlayer().getPlayer().getLocation(), 20D);
+				ParticleEffect.VILLAGER_HAPPY.display(0.1F, 0.2F, 0.1F, 0.2F, (int) (x * 100) + 50, getPlayer().getPlayer().getLocation(),
+						20D);
 
 			}
 		}, 20L, 1L, 600L);

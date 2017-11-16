@@ -41,7 +41,7 @@ public abstract class Spell {
 					}
 				}
 			}
-			maxPower = config.getInt("max-power", -1);
+			maxPower = config.getInt("max-power", 1);
 		} else
 			maxPower = -1;
 	}
