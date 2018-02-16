@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.XMechanics.PlayerConsole.Stoppable;
-import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 
 public class GuardWatcher {
 
@@ -129,7 +128,8 @@ public class GuardWatcher {
 			if (entity instanceof Player && GManager.getGuard(entity.getUniqueId()) == null) {
 				Player player = (Player) entity;
 
-				NPCManager.npcManager.addGuardToPlayerList(player, guard);
+				// Cannot remember a reason why this should be here..
+				// NPCManager.npcManager.addGuardToPlayerList(player, guard);
 
 				// LOOK
 				if (player.getLocation().distanceSquared(guard.getEntityLocation()) < radius * radius)

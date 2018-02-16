@@ -2,6 +2,7 @@ package org.caliog.Rolecraft.Items.Books;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,8 +13,6 @@ import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.Spells.Menu.SpellMenu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class Spellbook extends CustomItem {
 
