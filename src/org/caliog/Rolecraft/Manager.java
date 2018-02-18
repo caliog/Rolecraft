@@ -1,6 +1,5 @@
 package org.caliog.Rolecraft;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
@@ -28,7 +26,6 @@ import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Messages.Translator;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
-import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
 import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
@@ -120,7 +117,7 @@ public class Manager {
 	}
 
 	public static void load() {
-		ClazzLoader.classes = YamlConfiguration.loadConfiguration(new File(FilePath.classes));
+		ClazzLoader.init();
 		Translator.init();
 
 		try {

@@ -1,5 +1,9 @@
 package org.caliog.Rolecraft.Entities.Player;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
@@ -8,10 +12,27 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
+import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class ClazzLoader {
 
+	public final static String[] ids = { "xxx", "xxo", "xox", "oxx", "xoo", "oxo", "oox", "ooo" };
+
 	public static YamlConfiguration classes;
+
+	public static HashMap<String, List<String>> spellMap = new HashMap<String, List<String>>();
+
+	public static void init() {
+		ClazzLoader.classes = YamlConfiguration.loadConfiguration(new File(FilePath.classes));
+		for (String name : classes.getKeys(false)) {
+			List<String> list = new ArrayList<String>();
+			for (String id : ids)
+				if (classes.isSet(name + ".spells." + id)) {
+					list.add(classes.getString(name + ".spells." + id));
+				}
+			spellMap.put(name, list);
+		}
+	}
 
 	public static RolecraftPlayer create(Player player, String c) {
 		if (isClass(c)) {
@@ -29,7 +50,6 @@ public class ClazzLoader {
 				clazz.setStrength(config.getInt("str"));
 			}
 
-			String[] ids = { "xxx", "xxo", "xox", "oxx", "xoo", "oxo", "oox", "ooo" };
 			for (String id : ids) {
 				if (config.isSet("spells." + id)) {
 					clazz.addSpell(id.toLowerCase().replaceAll("x", "1").replaceAll("o", "0"), config.getString("spells." + id));
@@ -80,4 +100,10 @@ public class ClazzLoader {
 		}
 		return r;
 	}
+
+	public static List<String> getSpells(String name) {
+		List<String> empty = new ArrayList<String>();
+		return spellMap.containsKey(name) ? spellMap.get(name) : empty;
+	}
+
 }

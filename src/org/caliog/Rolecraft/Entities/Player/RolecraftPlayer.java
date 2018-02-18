@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -293,7 +294,12 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 	}
 
 	protected void castSpell() {
-		for (String id : spells.keySet())
+		List<String> possible = ClazzLoader.getSpells(this.type);
+		for (String id : spells.keySet()) {
+			System.out.println(
+					"casting: " + spells.get(id).first.getName() + " possible:" + possible.contains(spells.get(id).first.getName()));
+			if (!possible.contains(spells.get(id).first.getName()))
+				continue;
 			if (id.equals(String.valueOf(spell[0]) + String.valueOf(spell[1]) + String.valueOf(spell[2]))) {
 				Spell spell = spells.get(id).first;
 				if (spell != null && spells.get(id).second > 0) {
@@ -303,8 +309,10 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 					return;
 				}
 			}
-		Debugger.error(LogTitle.SPELL, "%s tried to cast spell:", getPlayer().getName(), String.valueOf(spell[0]), String.valueOf(spell[1]),
-				String.valueOf(spell[2]));
+		}
+		Debugger.error(LogTitle.SPELL, "%s tried to cast spell:",
+
+				getPlayer().getName(), String.valueOf(spell[0]), String.valueOf(spell[1]), String.valueOf(spell[2]));
 		BottomBar.display(getPlayer(), ChatColor.RED + "" + ChatColor.MAGIC + "Uups");
 	}
 

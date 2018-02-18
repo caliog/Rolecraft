@@ -2,11 +2,13 @@ package org.caliog.Rolecraft.Spells.Menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.Books.Spellbook;
 import org.caliog.Rolecraft.Spells.Spell;
@@ -34,7 +36,10 @@ public class SpellMenu extends Menu {
 		boolean t = player.getSpellPoints() > 0;
 		HashMap<String, Pair<Spell, Integer>> map = player.getSpells();
 		int c = -1;
+		List<String> showOnly = ClazzLoader.getSpells(player.getType());
 		for (String k : map.keySet()) {
+			if (!showOnly.contains(map.get(k).first.getName()))
+				continue;
 			c++;
 			if (c >= 8)
 				break;
