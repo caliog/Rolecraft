@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.caliog.Rolecraft.Manager;
+import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class MenuInventoryView extends InventoryView {
 
@@ -27,8 +28,15 @@ public class MenuInventoryView extends InventoryView {
 		Manager.plugin.getServer().getPluginManager().registerEvents(listener = new Listener() {
 			@EventHandler(priority = EventPriority.HIGH)
 			public void onInventoryClick(InventoryClickEvent event) {
+				Inventory inv = null;
+				Class<?>[] a = new Class<?>[0];
+				if (Utils.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
+					inv = event.getClickedInventory();
+				} else {
+					inv = event.getInventory();
+				}
 				if (event.getView().equals(myself) && event.getWhoClicked() instanceof Player
-						&& event.getView().getTopInventory().equals(event.getClickedInventory())) {
+						&& event.getView().getTopInventory().equals(inv)) {
 					if (!myself.clicked(event)) {
 						event.setCancelled(true);
 					}

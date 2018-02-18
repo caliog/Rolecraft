@@ -508,7 +508,14 @@ public class RolecraftListener implements Listener {
 	public void onSkillstartCraft(final InventoryClickEvent event) {
 		if (event.isCancelled())
 			return;
-		Inventory inv = event.getClickedInventory();
+		Class<?>[] a = new Class<?>[0];
+		Inventory inv = null;
+		if (Utils.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
+			inv = event.getClickedInventory();
+		} else {
+			inv = event.getInventory();
+		}
+
 		if (inv == null)
 			return;
 		if (inv.getType().equals(InventoryType.CRAFTING) || inv.getType().equals(InventoryType.WORKBENCH)) {
