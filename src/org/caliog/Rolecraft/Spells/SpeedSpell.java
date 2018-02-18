@@ -32,7 +32,7 @@ public class SpeedSpell extends Spell {
 
 			@Override
 			public void run() {
-				ParticleEffect.VILLAGER_HAPPY.display(0.1F, 0.2F, 0.1F, 0.2F, (int) (x * 100) + 50, getPlayer().getPlayer().getLocation(),
+				ParticleEffect.VILLAGER_HAPPY.display(0.1F, 0.2F, 0.1F, 0.2F, (int) (x * 50) + 50, getPlayer().getPlayer().getLocation(),
 						20D);
 
 			}
