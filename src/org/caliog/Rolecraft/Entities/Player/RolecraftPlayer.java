@@ -296,8 +296,6 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 	protected void castSpell() {
 		List<String> possible = ClazzLoader.getSpells(this.type);
 		for (String id : spells.keySet()) {
-			System.out.println(
-					"casting: " + spells.get(id).first.getName() + " possible:" + possible.contains(spells.get(id).first.getName()));
 			if (!possible.contains(spells.get(id).first.getName()))
 				continue;
 			if (id.equals(String.valueOf(spell[0]) + String.valueOf(spell[1]) + String.valueOf(spell[2]))) {

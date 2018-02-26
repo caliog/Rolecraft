@@ -117,6 +117,9 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 
 			List<?> players = (List<?>) worldServerClass.getField("players").get(world.getWorldServer());
 			players.remove(entityHuman);
+
+			NMSUtil.sendPacketsTo(Bukkit.getOnlinePlayers(), new PacketPlayOutPlayerInfo(
+					PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, new EntityPlayer[] { (EntityPlayer) npc.getEntity() }));
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException
 				| NoSuchFieldException e) {
 			e.printStackTrace();

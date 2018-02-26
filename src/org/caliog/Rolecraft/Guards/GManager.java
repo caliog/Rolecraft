@@ -6,11 +6,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.Utils.LocationUtil;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
@@ -21,6 +27,7 @@ public class GManager {
 
 	private static List<Guard> guards = new ArrayList<Guard>();
 	private static File f = new File(FilePath.villagerDataNPCFile);
+	private static HashMap<UUID, Set<UUID>> farAway = new HashMap<UUID, Set<UUID>>();
 
 	public static void load() throws IOException {
 
@@ -61,6 +68,7 @@ public class GManager {
 		writer.close();
 		if (NPCManager.npcManager != null)
 			NPCManager.npcManager.despawnAll();
+		farAway.clear();
 	}
 
 	public static Guard getGuard(UUID entityId) {
@@ -128,7 +136,32 @@ public class GManager {
 		return guards;
 	}
 
-	public static void doLogics() {
+	public static void doLogics(long timer) {
 		GuardWatcher.run();
+
+		// This should be a temporary solution
+		if (timer % 12 == 0) {
+			Collection<? extends Player> list = Bukkit.getOnlinePlayers();
+			for (Guard g : guards) {
+				for (Player p : list) {
+					if (p.getWorld().equals(g.getLocation().getWorld())) {
+						Set<UUID> u = new HashSet<UUID>();
+						if (farAway.containsKey(g.getUniqueId())) {
+							u = farAway.get(g.getUniqueId());
+						}
+						if (p.getLocation().distanceSquared(g.getEntityLocation()) > 2800) {
+							u.add(p.getUniqueId());
+						} else if (u.contains(p.getUniqueId())) {
+							p.hidePlayer(Manager.plugin, (Player) g.getBukkitEntity());
+							p.showPlayer(Manager.plugin, (Player) g.getBukkitEntity());
+							PlayerList.refreshList(p);
+							u.remove(p.getUniqueId());
+						}
+						farAway.put(g.getUniqueId(), u);
+					}
+				}
+			}
+		}
 	}
+
 }

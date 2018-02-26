@@ -50,14 +50,13 @@ public class Manager {
 					if (timer >= 72000)
 						timer = 0;
 					if (Manager.timer % 4 == 0L)
-						GManager.doLogics();
+						GManager.doLogics(timer);
 					if (Manager.timer % 5L == 0L) {
 						Manager.scheduleTask(MobSpawner.getTask());
 						if (Manager.timer % 20L == 0L) {
 							VManager.doLogics(timer);
 							PetController.controll();
 						}
-
 					}
 
 					PlayerManager.task(timer);

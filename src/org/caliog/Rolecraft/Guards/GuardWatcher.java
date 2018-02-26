@@ -128,9 +128,6 @@ public class GuardWatcher {
 			if (entity instanceof Player && GManager.getGuard(entity.getUniqueId()) == null) {
 				Player player = (Player) entity;
 
-				// Cannot remember a reason why this should be here..
-				// NPCManager.npcManager.addGuardToPlayerList(player, guard);
-
 				// LOOK
 				if (player.getLocation().distanceSquared(guard.getEntityLocation()) < radius * radius)
 					if (guard.isLooking() && !guard.isAttacking() && !guard.isRunning())
