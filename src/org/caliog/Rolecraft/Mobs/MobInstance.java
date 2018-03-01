@@ -19,9 +19,9 @@ import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 public class MobInstance extends Mob {
 	public YamlConfiguration mobConfig = new YamlConfiguration();
 
-	public MobInstance(String name, UUID id, Vector m) {
-		super(name, id, m);
-		File f = new File(FilePath.mobs + name + ".yml");
+	public MobInstance(String ident, UUID id, Vector m) {
+		super(ident, id, m);
+		File f = new File(FilePath.mobs + ident + ".yml");
 		if (f.exists()) {
 			this.mobConfig = YamlConfiguration.loadConfiguration(f);
 			setHealth(getHP());
@@ -105,6 +105,10 @@ public class MobInstance extends Mob {
 
 	public boolean isPet() {
 		return this.mobConfig.getBoolean("pet", false);
+	}
+
+	public String getName() {
+		return this.mobConfig.getString("name", this.getIdentifier());
 	}
 
 }

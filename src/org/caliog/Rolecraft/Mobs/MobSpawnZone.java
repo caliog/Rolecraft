@@ -24,7 +24,7 @@ public class MobSpawnZone {
 		this.world = loc.getWorld().getName();
 		this.radius = radius;
 		this.maxAmount = maxAmount;
-		this.mob = c;
+		this.mob = MobSpawner.getIdentifier(c);
 	}
 
 	public MobSpawnZone(Vector m, String mob, int r, int a) {
@@ -32,7 +32,7 @@ public class MobSpawnZone {
 		this.world = m.getWorld();
 		this.radius = r;
 		this.maxAmount = a;
-		this.mob = mob;
+		this.mob = MobSpawner.getIdentifier(mob);
 	}
 
 	public void askForSpawn() {
@@ -49,6 +49,14 @@ public class MobSpawnZone {
 			return;
 		}
 		scheduleMobSpawn(t);
+	}
+
+	public void spawnMobs() {
+		int i = 0;
+		while (i < maxAmount) {
+			if (spawnMob())
+				i++;
+		}
 	}
 
 	private void scheduleMobSpawn(int t) {
@@ -92,7 +100,7 @@ public class MobSpawnZone {
 		return false;
 	}
 
-	protected int countMobs() {
+	public int countMobs() {
 		int counter = 0;
 
 		for (Mob m : EntityManager.getMobs()) {

@@ -13,13 +13,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.Fighter;
 import org.caliog.Rolecraft.Entities.EntityManager;
+import org.caliog.Rolecraft.Entities.Fighter;
 import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
 public abstract class Mob extends Fighter {
-	private final String name;
+	private final String identifier;
 	private final UUID id;
 	protected HashMap<ItemStack, Float> drops = new HashMap<ItemStack, Float>();
 	protected HashMap<String, ItemStack> eq = new HashMap<String, ItemStack>();
@@ -28,20 +28,20 @@ public abstract class Mob extends Fighter {
 	private boolean dead = false;
 	private Set<UUID> attack = new HashSet<UUID>();
 
-	public Mob(String name, UUID id, Vector m) {
-		this.name = name;
+	public Mob(String ident, UUID id, Vector m) {
+		this.identifier = ident;
 		this.id = id;
 		this.spawnZone = m;
 	}
 
 	@SuppressWarnings("deprecation")
-	public static LivingEntity spawnEntity(String name, final Location loc, Vector m) {
+	public static LivingEntity spawnEntity(String ident, final Location loc, Vector m) {
 		Entity entity = null;
 		Mob mob = null;
 
-		EntityType type = new MobInstance(name, null, null).getType();
+		EntityType type = new MobInstance(ident, null, null).getType();
 		entity = loc.getWorld().spawnEntity(loc, type);
-		mob = new MobInstance(name, entity.getUniqueId(), m);
+		mob = new MobInstance(ident, entity.getUniqueId(), m);
 
 		Manager.scheduleRepeatingTask(new Runnable() {
 			public void run() {
@@ -86,9 +86,11 @@ public abstract class Mob extends Fighter {
 
 	public abstract EntityType getType();
 
-	public String getName() {
-		return this.name;
+	public String getIdentifier() {
+		return this.identifier;
 	}
+
+	public abstract String getName();
 
 	public abstract int getLevel();
 

@@ -61,7 +61,7 @@ public class Armor extends CustomItemInstance {
 			lore.add(ChatColor.RED + "MinLv: " + getMinLevel());
 		}
 		if (hasClass()) {
-			lore.add(ChatColor.RED + "Class: " + this.getClazz());
+			lore.add(ChatColor.RED + Phrase.CLASS.translate() + this.getClazz());
 		}
 		if (!isTradeable()) {
 			lore.add(ChatColor.RED + Phrase.SOULBOUND.translate() + "!");
@@ -122,5 +122,19 @@ public class Armor extends CustomItemInstance {
 
 	public short getDurability() {
 		return durability;
+	}
+
+	public static List<String> getArmorList() {
+		File f = new File(FilePath.armor);
+		List<String> list = new ArrayList<String>();
+		for (File a : f.listFiles()) {
+			if (!a.isDirectory() && a.getName().endsWith(".yml")) {
+				YamlConfiguration c = YamlConfiguration.loadConfiguration(a);
+				if (c.isSet("material")) {
+					list.add(a.getName().replace(".yml", ""));
+				}
+			}
+		}
+		return list;
 	}
 }

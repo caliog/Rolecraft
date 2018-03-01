@@ -1,15 +1,12 @@
 package org.caliog.Rolecraft.Entities;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.Mobs.MobSpawner;
 
 public class EntityUtils {
 
@@ -27,20 +24,8 @@ public class EntityUtils {
 		return bar;
 	}
 
-	public static List<String> getMobNameList() {
-		List<String> list = new ArrayList<String>();
-		File f = new File(FilePath.mobs);
-		for (String s : f.list()) {
-			if (s.endsWith(".yml")) {
-				list.add(s.replace(".yml", ""));
-			}
-		}
-		return list;
-	}
-
 	public static boolean isMobClass(String name) {
-		File f = new File(FilePath.mobs + name + ".yml");
-		return f.exists();
+		return MobSpawner.isMobClass(name);
 	}
 
 	public static Entity getEntity(UUID id) {

@@ -5,24 +5,27 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.World;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Slime;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.EntityUtils;
 import org.caliog.Rolecraft.Entities.EntityManager;
+import org.caliog.Rolecraft.Entities.EntityUtils;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
 public class MobSpawner {
 	public static Set<MobSpawnZone> zones = new HashSet<MobSpawnZone>();
+	public static HashMap<String, String> mobs = new HashMap<String, String>();
 
 	public static void loadZones() throws IOException {
 		File f = new File(FilePath.szFile);
@@ -41,7 +44,7 @@ public class MobSpawner {
 					continue;
 				String mob = null;
 				if (EntityUtils.isMobClass(a[1])) {
-					mob = a[1];
+					mob = getIdentifier(a[1]);
 				}
 				int radius = Integer.parseInt(a[2]);
 				int amount = Integer.parseInt(a[3]);
@@ -52,6 +55,17 @@ public class MobSpawner {
 			}
 		}
 		reader.close();
+
+		// Load mobs
+		File m = new File(FilePath.mobs);
+		for (File ff : m.listFiles()) {
+			if (!ff.isDirectory() && ff.getName().endsWith(".yml")) {
+				YamlConfiguration c = YamlConfiguration.loadConfiguration(ff);
+				if (c.isSet("name")) {
+					mobs.put(ff.getName().replace(".yml", ""), c.getName());
+				}
+			}
+		}
 	}
 
 	public static void saveZones() throws IOException {
@@ -66,6 +80,9 @@ public class MobSpawner {
 		EntityManager.killAllMobs();
 		writer.write(text);
 		writer.close();
+
+		// free mobs map
+		mobs.clear();
 	}
 
 	public static boolean isNearSpawnZone(Entity e) {
@@ -125,5 +142,23 @@ public class MobSpawner {
 				}
 			}
 		};
+	}
+
+	public static boolean isMobClass(String name) {
+		return mobs.containsValue(name) || mobs.containsKey(name);
+	}
+
+	public static String getIdentifier(String c) {
+		if (mobs.containsKey(c))
+			return c;
+		for (String id : mobs.keySet()) {
+			if (mobs.get(id) == c)
+				return id;
+		}
+		return null;
+	}
+
+	public static Set<String> getIdentSet() {
+		return mobs.keySet();
 	}
 }

@@ -70,7 +70,7 @@ public class Weapon extends CustomItemInstance {
 			lore.add(ChatColor.RED + "MinLv: " + getMinLevel());
 		}
 		if (hasClass()) {
-			lore.add(ChatColor.RED + "Class: " + getClazz());// TODO translate
+			lore.add(ChatColor.RED + Phrase.CLASS.translate() + getClazz());
 		}
 		if (!isTradeable())
 			lore.add(ChatColor.RED + Phrase.SOULBOUND.translate() + "!");
@@ -197,5 +197,19 @@ public class Weapon extends CustomItemInstance {
 		meta.setLore(lore);
 		this.setItemMeta(meta);
 		player.getInventory().setItemInMainHand(this);
+	}
+
+	public static List<String> getWeaponList() {
+		File f = new File(FilePath.weapons);
+		List<String> list = new ArrayList<String>();
+		for (File a : f.listFiles()) {
+			if (!a.isDirectory() && a.getName().endsWith(".yml")) {
+				YamlConfiguration c = YamlConfiguration.loadConfiguration(a);
+				if (c.isSet("material")) {
+					list.add(a.getName().replace(".yml", ""));
+				}
+			}
+		}
+		return list;
 	}
 }

@@ -3,6 +3,7 @@ package org.caliog.Rolecraft.Villagers.Quests.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,8 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Entities.EntityUtils;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
+import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
@@ -326,7 +327,7 @@ public class QuestEditorMenu extends Menu {
 		public final QuestEditorMenu upperMenu;
 
 		public MobSelectorMenu(QuestEditorMenu menu) {
-			List<String> mobList = EntityUtils.getMobNameList();
+			Set<String> mobList = MobSpawner.getIdentSet();
 			int size = mobList.size();
 			this.height = size / 9 + 1;
 			this.name = size == 0 ? "No mobs available" : "Choose Mobs to kill";
@@ -335,7 +336,7 @@ public class QuestEditorMenu extends Menu {
 			setup(mobList);
 		}
 
-		public void setup(List<String> mobList) {
+		public void setup(Set<String> mobList) {
 			ArrayList<String> list = new ArrayList<String>();
 			int c = 0;
 			for (String name : mobList) {
