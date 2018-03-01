@@ -149,7 +149,7 @@ public class GManager {
 						if (farAway.containsKey(g.getUniqueId())) {
 							u = farAway.get(g.getUniqueId());
 						}
-						if (p.getLocation().distanceSquared(g.getEntityLocation()) > 2800) {
+						if (p.getLocation().distanceSquared(g.getEntityLocation()) > 2500) {
 							u.add(p.getUniqueId());
 						} else if (u.contains(p.getUniqueId())) {
 							p.hidePlayer(Manager.plugin, (Player) g.getBukkitEntity());
