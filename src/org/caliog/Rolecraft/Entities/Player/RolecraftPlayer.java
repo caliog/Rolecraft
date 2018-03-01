@@ -70,6 +70,10 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 			getPlayer().setHealth(getHealth());
 	}
 
+	public void resetHealth() {
+		setHealth(getMaxHealth());
+	}
+
 	public double getDefense() {
 		double defense = super.getDefense();
 		double p = 1.0D + (0.8F * getRStrength() + getRDexterity()) / 200.0D;
