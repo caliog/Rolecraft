@@ -156,9 +156,13 @@ public class VManager {
 			String path = a[6];
 			Villager v = null;
 			if (type.equals(VillagerType.TRADER)) {
-				if (a.length > 7)
+				if (a.length > 7) {
 					recipe = Recipe.fromString(a[7]);
+				}
 				v = spawnTrader(location, name, recipe);
+				if (a.length > 8) {
+					((Trader) v).loadTradeMenu(a[8]);
+				}
 			} else
 				v = spawnVillager(location, name, type);
 

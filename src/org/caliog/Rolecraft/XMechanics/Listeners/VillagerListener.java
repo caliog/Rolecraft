@@ -52,7 +52,6 @@ public class VillagerListener implements Listener {
 				Trader trader = (Trader) vil;
 				trader.openInventory(event.getPlayer());
 			}
-
 		}
 	}
 

@@ -26,6 +26,7 @@ public class MenuItem {
 	private ItemStack stack;
 	private ButtonClickHandler bch = null;
 	private final boolean editable;
+	private int costs;
 
 	public MenuItem() {
 		this(null, Material.AIR, true);
@@ -48,7 +49,7 @@ public class MenuItem {
 	}
 
 	public MenuItem(String name, Material mat, short data, int amount, boolean editable) {
-		this(name, mat, data, amount, null, null, null, editable);
+		this(name, mat, data, amount, null, null, null, editable, 0);
 	}
 
 	public MenuItem(String name, Material mat, List<String> lore) {
@@ -64,15 +65,23 @@ public class MenuItem {
 	}
 
 	public MenuItem(String name, Material mat, short data, List<String> lore, boolean editable) {
-		this(name, mat, data, 1, lore, null, null, editable);
+		this(name, mat, data, 1, lore, null, null, editable, 0);
 	}
 
 	public MenuItem(ItemStack stack, boolean editable) {
-		this(null, stack.getType(), (short) 0, 1, null, null, stack, editable);
+		this(null, stack.getType(), (short) 0, 1, null, null, stack, editable, 0);
+	}
+
+	public MenuItem(ItemStack stack, int costs) {
+		this(stack, costs, false);
+	}
+
+	public MenuItem(ItemStack stack, int costs, boolean editable) {
+		this(null, Material.AIR, (short) 0, 0, new ArrayList<String>(), null, stack, editable, costs);
 	}
 
 	public MenuItem(String name, Material mat, short data, int amount, List<String> lore, HashMap<Enchantment, Integer> enc,
-			ItemStack stack, boolean editable) {
+			ItemStack stack, boolean editable, int costs) {
 		this.material = mat;
 		this.data = data;
 		this.amount = amount;
@@ -81,6 +90,7 @@ public class MenuItem {
 		this.enchantments = enc;
 		this.stack = stack;
 		this.editable = editable;
+		this.costs = costs;
 	}
 
 	public ItemStack createItemStack() {
@@ -94,7 +104,7 @@ public class MenuItem {
 		if (stack.hasItemMeta())
 			meta = stack.getItemMeta();
 		else
-			meta = Bukkit.getItemFactory().getItemMeta(material);
+			meta = Bukkit.getItemFactory().getItemMeta(stack.getType());
 		if (name != null)
 			meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
 		if (lore != null)
@@ -145,12 +155,24 @@ public class MenuItem {
 		return lore;
 	}
 
+	public ItemStack getStack() {
+		return stack;
+	}
+
+	public int getCosts() {
+		return costs;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setCosts(Integer i) {
+		this.costs = i;
 	}
 
 	public List<String> getEnchantments() {

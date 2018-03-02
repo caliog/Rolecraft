@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +11,7 @@ import org.caliog.Rolecraft.Manager;
 
 public abstract class Menu {
 
-	private List<MenuItem> items = new ArrayList<MenuItem>();
+	protected List<MenuItem> items = new ArrayList<MenuItem>();
 	protected int height;
 	protected String name;
 	private boolean giveToolToPlayers;
@@ -35,7 +34,7 @@ public abstract class Menu {
 	protected void init() {
 		items.clear();
 		for (int i = 0; i < height * 9; i++) {
-			items.add(new MenuItem(Material.AIR));
+			items.add(new MenuItem());
 		}
 	}
 

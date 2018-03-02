@@ -8,11 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.NPC.Trader;
+import org.caliog.Rolecraft.Villagers.Traders.TraderEditMenu;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField.FieldProperty;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
+import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 
 public class Commandtrader extends Commands {
 
@@ -108,6 +110,27 @@ public class Commandtrader extends Commands {
 
 			}
 		}, new CommandField("del", FieldProperty.IDENTIFIER)));
+
+		/*
+		 * Name: trader SubName: edit
+		 * 
+		 * Permission: rc.trader.edit
+		 * 
+		 * Usage: /trader edit
+		 */
+		cmds.add(new Command("trader", "rc.trader.edit", new CommandExecutable() {
+
+			@Override
+			public void execute(String[] args, Player player) {
+				Trader trader = VManager.getClosestTrader(player.getLocation());
+				if (trader == null) {
+					player.sendMessage(ChatColor.RED + "There is no trader around you!");
+					return;
+				}
+				MenuManager.openMenu(player, new TraderEditMenu(trader));
+
+			}
+		}, new CommandField("edit", FieldProperty.IDENTIFIER)));
 
 		return cmds;
 	}

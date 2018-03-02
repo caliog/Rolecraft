@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
@@ -32,10 +33,13 @@ import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
 import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
 import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 
+import net.milkbowl.vault.economy.Economy;
+
 public class Manager {
 	public static RolecraftPlugin plugin;
 	private static long timer = 0L;
 	private static List<World> worlds = new ArrayList<World>();
+	public static Economy economy;
 
 	public static RolecraftPlayer getPlayer(UUID id) {
 		return PlayerManager.getPlayer(id);
@@ -116,6 +120,7 @@ public class Manager {
 	}
 
 	public static void load() {
+		setupEconomy();
 		ClazzLoader.init();
 		Translator.init();
 
@@ -200,6 +205,16 @@ public class Manager {
 		for (World w : list)
 			if (!disabled.contains(w.getName()))
 				worlds.add(w);
+	}
+
+	private static boolean setupEconomy() {
+		RegisteredServiceProvider<Economy> economyProvider = plugin.getServer().getServicesManager()
+				.getRegistration(net.milkbowl.vault.economy.Economy.class);
+		if (economyProvider != null) {
+			economy = economyProvider.getProvider();
+		}
+
+		return (economy != null);
 	}
 
 }

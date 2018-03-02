@@ -2,22 +2,32 @@ package org.caliog.Rolecraft.Villagers.NPC;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.caliog.Rolecraft.Villagers.Traders.TraderMenu;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
+import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 
 public class Trader extends Villager {
 
 	private Recipe recipe = new Recipe();
+	private TraderMenu traderMenu;
 
 	public Trader(org.bukkit.entity.Villager v, Location location, String name) {
 		super(v, VillagerType.TRADER, location, name);
 		this.setInteractionRadius(4F);
+		traderMenu = new TraderMenu(this);
 	}
 
 	public boolean openInventory(Player player) {
+		if (traderMenu.isNonEmpty()) {
+			MenuManager.openMenu(player, traderMenu);
+			return true;
+		}
 		return NMSMethods.openInventory(this, player);
 	}
 
@@ -39,7 +49,8 @@ public class Trader extends Villager {
 	@Override
 	public FileWriter save(FileWriter writer) throws IOException {
 		super.save(writer);
-		writer.append(recipe.asString() + "\r");
+		writer.append(recipe.asString() + "&");
+		writer.append(tradeMenuToString() + "\r");
 		return writer;
 	}
 
@@ -50,6 +61,23 @@ public class Trader extends Villager {
 
 	public Recipe getRecipe() {
 		return recipe;
+	}
+
+	public void loadTradeMenu(String s) {
+		this.traderMenu = new TraderMenu(this);
+		traderMenu.loadFromString(s);
+	}
+
+	private String tradeMenuToString() {
+		return traderMenu.toString();
+	}
+
+	public void editMenu(Inventory inv, HashMap<Integer, Integer> costs) {
+		traderMenu.editMenu(inv, costs);
+	}
+
+	public TraderMenu getTraderMenu() {
+		return traderMenu;
 	}
 
 }
