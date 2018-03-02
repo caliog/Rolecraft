@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
@@ -64,6 +65,7 @@ public class SpellLoader {
 		// defaults
 		paths.add("org.caliog.Rolecraft.Spells.SpeedSpell");
 		paths.add("org.caliog.Rolecraft.Spells.InvisibleSpell");
+		paths.add("org.caliog.Rolecraft.Spells.Curse");
 		classLoader = URLClassLoader.newInstance(urls.toArray(new URL[urls.size()]), Manager.plugin.getClass().getClassLoader());
 
 	}
@@ -78,12 +80,22 @@ public class SpellLoader {
 			if (path.endsWith(name))
 				mainC = path;
 		}
+		final boolean isCurse = isCurse(name);
+		if (isCurse)
+			mainC = "org.caliog.Rolecraft.Spells.Curse";
+
 		if (mainC == null)
 			return null;
+
 		try {
 			Class<?> c = classLoader.loadClass(mainC);
 			Class<? extends Spell> spellC = c.asSubclass(Spell.class);
-			Spell spell = spellC.getConstructor(player.getClass()).newInstance(player);
+			Spell spell;
+			if (isCurse) {
+				spell = spellC.getConstructor(player.getClass(), String.class).newInstance(player, name);
+			} else {
+				spell = spellC.getConstructor(player.getClass()).newInstance(player);
+			}
 			return spell;
 		} catch (Exception e) {
 			Manager.plugin.getLogger().warning("Failed to load Spell: " + name);
@@ -114,5 +126,15 @@ public class SpellLoader {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	// TODO maybe find different criteria to check
+	public static boolean isCurse(String name) {
+		File f = new File(FilePath.spells + name + ".yml");
+		if (f.exists()) {
+			YamlConfiguration spells = YamlConfiguration.loadConfiguration(f);
+			return spells.isConfigurationSection("curse");
+		}
+		return false;
 	}
 }
