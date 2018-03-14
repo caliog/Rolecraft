@@ -2,7 +2,7 @@ name: Rolecraft
 author: caliog
 website: http://www.caliog.org
 main: org.caliog.Rolecraft.RolecraftPlugin
-version: 3.2.8
+version: 3.2.10
 softdepend: [Vault]
 
 commands:
