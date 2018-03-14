@@ -38,8 +38,9 @@ public class VillagerListener implements Listener {
 	 * @Category: Trader Interaction
 	 * 
 	 */
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void interactEvent(PlayerInteractEntityEvent event) {
+		// this is called twice by system
 		if (event.getRightClicked() instanceof org.bukkit.entity.Villager) {
 			org.bukkit.entity.Villager v = (org.bukkit.entity.Villager) event.getRightClicked();
 			Villager vil = VManager.getVillager(v.getUniqueId());

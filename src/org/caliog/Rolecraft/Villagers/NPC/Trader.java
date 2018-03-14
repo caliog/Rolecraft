@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.Traders.TraderMenu;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
@@ -16,6 +17,7 @@ public class Trader extends Villager {
 
 	private Recipe recipe = new Recipe();
 	private TraderMenu traderMenu;
+	private boolean openMenu = false;
 
 	public Trader(org.bukkit.entity.Villager v, Location location, String name) {
 		super(v, VillagerType.TRADER, location, name);
@@ -25,8 +27,18 @@ public class Trader extends Villager {
 
 	public boolean openInventory(Player player) {
 		if (traderMenu.isNonEmpty()) {
-			MenuManager.openMenu(player, traderMenu);
-			return true;
+			if (!openMenu) {
+				MenuManager.openMenu(player, traderMenu);
+				openMenu = true;
+				Manager.scheduleTask(new Runnable() {
+
+					@Override
+					public void run() {
+						openMenu = false;
+					}
+				}, 5L);
+				return true;
+			}
 		}
 		return NMSMethods.openInventory(this, player);
 	}

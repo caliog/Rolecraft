@@ -16,6 +16,8 @@ import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem.ExitButton;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -28,6 +30,7 @@ public class TraderEditMenu extends Menu {
 		super(3, "[edit]" + trader.getName());
 		this.trader = trader;
 		loadFromString(trader.getTraderMenu().toString());
+		TraderMenu.costsPhrase = Msg.getMessage(MsgKey.WORD_COSTS) + ": ";
 	}
 
 	/**
@@ -35,6 +38,7 @@ public class TraderEditMenu extends Menu {
 	 */
 	public void loadFromString(String str) {
 		String[] split1 = str.split(";;");
+		this.init();
 		for (String s : split1) {
 			String[] split2 = s.split("::");
 			int slot = 0, costs = 0;
@@ -46,7 +50,12 @@ public class TraderEditMenu extends Menu {
 					this.costs.put(slot, costs);
 					stack = DataSaver.getItem(split2[2]);
 					MenuItem item = new MenuItem(stack, costs, true);
-					item.getLore().add(TraderMenu.costsPhrase + costs);// TODO
+					if (stack.hasItemMeta()) {
+						if (stack.getItemMeta().hasLore()) {
+							item.getLore().addAll(stack.getItemMeta().getLore());
+						}
+					}
+					item.getLore().add(TraderMenu.costsPhrase + costs);
 					item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 						@Override
@@ -105,11 +114,10 @@ public class TraderEditMenu extends Menu {
 									saveToMenu(event.getInventory());
 									loadFromString(trader.getTraderMenu().toString());
 									((MenuInventoryView) event.getView()).reload();
+									// MenuManager.exitMenu(player);
+									// MenuManager.openMenu(player, menu)
 								}
 							}, 5L);
-
-							// MenuManager.exitMenu(player);
-							// MenuManager.openMenu(player, menu)
 
 						}
 					}

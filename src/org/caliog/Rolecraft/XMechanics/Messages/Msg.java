@@ -2,9 +2,12 @@ package org.caliog.Rolecraft.XMechanics.Messages;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -57,6 +60,41 @@ public class Msg {
 		file.options().header("do not change 'lang' value - to change language, use the config.yml");
 		file.save(messages_file);
 		file = YamlConfiguration.loadConfiguration(new File(FilePath.messages));
+
+		// order
+		BufferedReader r = new BufferedReader(new FileReader(messages_file));
+		String nextLine = "";
+		ArrayList<String> list = new ArrayList<String>();
+		while ((nextLine = r.readLine()) != null) {
+			list.add(nextLine);
+		}
+		r.close();
+		FileWriter w = new FileWriter(messages_file);
+		String text = "";
+		if (list.size() >= 2) {
+			text += list.get(0) + "\n";
+			text += list.get(1) + "\n";
+			for (MsgKey k : MsgKey.values()) {
+				boolean found = false;
+				secondloop: for (String l : list) {
+					if (!found && l.startsWith(k.getKey())) {
+						found = true;
+						text += l + "\n";
+						continue;
+					}
+					if (found) {
+						for (MsgKey kk : MsgKey.values()) {
+							if (l.startsWith(kk.getKey()))
+								break secondloop;
+						}
+						// extended line
+						text += l + "\n";
+					}
+				}
+			}
+		}
+		w.write(text);
+		w.close();
 	}
 
 	private static boolean sendMessageTo(Player player, String msg, MsgKey msgKey) {

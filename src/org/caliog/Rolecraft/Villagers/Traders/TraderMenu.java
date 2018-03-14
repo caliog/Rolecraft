@@ -1,26 +1,33 @@
 package org.caliog.Rolecraft.Villagers.Traders;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.NPC.Trader;
 import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem.ExitButton;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class TraderMenu extends Menu {
 
-	public static String costsPhrase = "Costs: ";
+	static String costsPhrase;
 
 	public TraderMenu(Trader trader) {
 		super(3, trader.getName());
+		ExitButton button = new MenuItem().new ExitButton(this, "Exit!");
+		items.set(3 * 9 - 1, button);
+		costsPhrase = Msg.getMessage(MsgKey.WORD_COSTS) + ": ";
 	}
 
 	/**
@@ -38,7 +45,11 @@ public class TraderMenu extends Menu {
 					costs = Integer.valueOf(split2[1]);
 					stack = DataSaver.getItem(split2[2]);
 					MenuItem item = new MenuItem(stack, costs);
-					item.getLore().add(TraderMenu.costsPhrase + costs);// TODO
+					if (stack.hasItemMeta()) {
+						if (stack.getItemMeta().hasLore())
+							item.getLore().addAll(stack.getItemMeta().getLore());
+					}
+					item.getLore().add(TraderMenu.costsPhrase + costs);
 					item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 						@Override
 						public void onClick(InventoryClickEvent event, Player player) {
@@ -54,9 +65,9 @@ public class TraderMenu extends Menu {
 				}
 			}
 		}
-		
+		// should be there by constructur, but just the be sure
 		ExitButton button = new MenuItem().new ExitButton(this, "Exit!");
-		items.set(3*9-1, button);
+		items.set(3 * 9 - 1, button);
 	}
 
 	public String toString() {
@@ -74,9 +85,32 @@ public class TraderMenu extends Menu {
 			int c = 0;
 			if (costs.containsKey(i))
 				c = costs.get(i);
-			if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR))
+			if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
+				setItem(i, new MenuItem(Material.AIR));
 				continue;
+			}
+			if (inv.getItem(i).hasItemMeta() && inv.getItem(i).getItemMeta().hasLore()) {
+				ItemMeta meta = inv.getItem(i).getItemMeta();
+				List<String> lore = inv.getItem(i).getItemMeta().getLore();
+				for (String l : lore) {
+					if (l.startsWith(costsPhrase)) {
+						// if item only moved
+						if (!costs.containsKey(i))
+							c = Integer.valueOf(l.replace(costsPhrase, ""));
+						lore.remove(l);
+						break;
+					}
+				}
+				meta.setLore(lore);
+				inv.getItem(i).setItemMeta(meta);
+			}
 			MenuItem item = new MenuItem(inv.getItem(i), c);
+			if (inv.getItem(i).hasItemMeta()) {
+				if (inv.getItem(i).getItemMeta().hasLore()) {
+					item.getLore().addAll(inv.getItem(i).getItemMeta().getLore());
+				}
+			}
+			item.getLore().add(TraderMenu.costsPhrase + c);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {

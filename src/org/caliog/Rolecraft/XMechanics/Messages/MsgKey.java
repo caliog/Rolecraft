@@ -59,11 +59,16 @@ public enum MsgKey {
 	WORD_LEFT,
 	WORD_RIGHT,
 	WORD_SOULBOUND,
-	WORD_CLASS;
+	WORD_CLASS,
+	WORD_COSTS;
 	// @formatter:on
 
+	public String getKey() {
+		return this.name().toLowerCase().replaceAll("_", "-");
+	}
+
 	public String getMessage() {
-		return Msg.file.getString(this.name().toLowerCase().replaceAll("_", "-"));
+		return Msg.file.getString(getKey());
 	}
 
 }
