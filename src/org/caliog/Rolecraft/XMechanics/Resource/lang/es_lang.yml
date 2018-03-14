@@ -32,3 +32,19 @@ quest-info-start-items: 'Consigues los objetos cuando aceptas la misión.'
 quest-missing-collect: 'No tienes los objectos necesarios.'
 quest-delivered-items: 'Has entregado satisfactoriamente los objetos necesarios.'
 spell-click-power: '<click> para aumentar el poder de este hechizo.'
+word-amount: Amount
+word-mob: Mob
+word-required-class: Required Class
+word-minimum-level: Min. Level
+word-experience: Experience
+word-accept: Accept
+word-back: Back
+word-items: Items
+word-start: Start
+word-reward: Reward
+word-collect: Collect
+word-wanted-mobs: Kill Mobs
+word-left: left
+word-right: right
+word-soulbound: soulbound
+word-class: Class

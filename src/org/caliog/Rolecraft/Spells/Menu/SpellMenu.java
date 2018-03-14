@@ -15,9 +15,8 @@ import org.caliog.Rolecraft.Spells.Spell;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
-import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Messages.Translator.Phrase;
 import org.caliog.Rolecraft.XMechanics.Utils.Pair;
 
 public class SpellMenu extends Menu {
@@ -47,11 +46,11 @@ public class SpellMenu extends Menu {
 			Pair<Spell, Integer> value = map.get(k);
 			boolean canstillpowerup = value.first.getMaxPower() < 1 || value.second < value.first.getMaxPower();
 			lore.add(ChatColor.DARK_GRAY + "Power: " + value.second + ChatColor.GRAY + "/" + value.first.getMaxPower());
-			String e = k.replaceAll("1", ChatColor.RED + Phrase.LEFT.translate() + ChatColor.GRAY + "-").replaceAll("0",
-					ChatColor.BLUE + Phrase.RIGHT.translate() + ChatColor.GRAY + "-");
+			String e = k.replaceAll("1", ChatColor.RED + Msg.getMessage(MsgKey.WORD_LEFT) + ChatColor.GRAY + "-").replaceAll("0",
+					ChatColor.BLUE + Msg.getMessage(MsgKey.WORD_RIGHT) + ChatColor.GRAY + "-");
 			lore.add(ChatColor.AQUA + e.substring(0, e.length() - 1));
 			if (t && canstillpowerup)
-				lore.add(ChatColor.GOLD + Msg.getMessage(MessageKey.SPELL_CLICK_POWER));
+				lore.add(ChatColor.GOLD + Msg.getMessage(MsgKey.SPELL_CLICK_POWER));
 			item = new MenuItem(value.first.getName(), Material.BOOK_AND_QUILL, lore);
 			{
 				final MenuItem final_item = item;

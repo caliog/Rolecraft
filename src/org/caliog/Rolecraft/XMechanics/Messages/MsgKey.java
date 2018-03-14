@@ -1,6 +1,6 @@
 package org.caliog.Rolecraft.XMechanics.Messages;
 
-public enum MessageKey {
+public enum MsgKey {
 
 	// @formatter:off
 	// GENERAL
@@ -42,7 +42,24 @@ public enum MessageKey {
 	QUEST_MISSING_COLLECT, 
 	QUEST_DELIVERED_ITEM, 
 	// spells
-	SPELL_CLICK_POWER;
+	SPELL_CLICK_POWER,
+	// words
+	WORD_AMOUNT,
+	WORD_MOB,
+	WORD_REQUIRED_CLASS,
+	WORD_MINIMUM_LEVEL,
+	WORD_EXPERIENCE,
+	WORD_ACCEPT,
+	WORD_BACK,
+	WORD_ITEMS,
+	WORD_START,
+	WORD_REWARD,
+	WORD_COLLECT,
+	WORD_WANTED_MOBS,
+	WORD_LEFT,
+	WORD_RIGHT,
+	WORD_SOULBOUND,
+	WORD_CLASS;
 	// @formatter:on
 
 	public String getMessage() {

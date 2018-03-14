@@ -27,7 +27,7 @@ import org.caliog.Rolecraft.Mobs.Mob;
 import org.caliog.Rolecraft.Mobs.MobSpawnZone;
 import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -102,7 +102,7 @@ public class DeathListener implements Listener {
 			if ((current == max) && (w.getLevel() != 9)) {
 				w.raiseLevel(player.getPlayer());
 				String[] a = { Msg.WEAPON, Msg.LEVEL }, b = { w.getName(), String.valueOf(w.getLevel()) };
-				Msg.sendMessage(player.getPlayer(), MessageKey.WEAPON_LEVEL, a, b);
+				Msg.sendMessage(player.getPlayer(), MsgKey.WEAPON_LEVEL, a, b);
 			} else {
 				w.kill(player.getPlayer());
 			}

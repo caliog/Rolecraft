@@ -19,7 +19,7 @@ import org.caliog.Rolecraft.Villagers.Quests.Quest;
 import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
 import org.caliog.Rolecraft.XMechanics.Bars.CenterBar.CenterBar;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Permissions;
-import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 
 public abstract class RolecraftAbstrPlayer extends Fighter {
@@ -112,7 +112,7 @@ public abstract class RolecraftAbstrPlayer extends Fighter {
 			return;
 		giveExp(q.getExp());
 		Playerface.giveItem(getPlayer(), q.getRewards());
-		CenterBar.display(getPlayer(), "", Msg.getMessage(MessageKey.QUEST_COMPLETED, Msg.QUEST, name));
+		CenterBar.display(getPlayer(), "", Msg.getMessage(MsgKey.QUEST_COMPLETED, Msg.QUEST, name));
 		this.quests.put(name, QuestStatus.COMPLETED);
 		QuestKill.delete(getPlayer(), name);
 	}

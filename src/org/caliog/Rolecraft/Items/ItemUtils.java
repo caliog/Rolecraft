@@ -10,7 +10,7 @@ import org.caliog.Rolecraft.Items.Custom.Apple_1;
 import org.caliog.Rolecraft.Items.Custom.Apple_2;
 import org.caliog.Rolecraft.Items.Custom.HealthPotion;
 import org.caliog.Rolecraft.Items.Custom.Skillstar;
-import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -55,17 +55,17 @@ public class ItemUtils {
 		}
 		if ((item.hasClass()) && (!item.getClazz().equals(player.getType()))) {
 			if (Math.random() < 0.5D) {
-				Msg.sendMessage(p, MessageKey.NEED_CLASS1, Msg.CLASS, item.getClazz());
+				Msg.sendMessage(p, MsgKey.NEED_CLASS1, Msg.CLASS, item.getClazz());
 			} else {
-				Msg.sendMessage(p, MessageKey.NEED_CLASS2, Msg.CLASS, item.getClazz());
+				Msg.sendMessage(p, MsgKey.NEED_CLASS2, Msg.CLASS, item.getClazz());
 			}
 			return false;
 		}
 		if ((item.hasMinLevel()) && (player.getLevel() < item.getMinLevel())) {
 			if (Math.random() < 0.5D) {
-				Msg.sendMessage(p, MessageKey.NEED_EXP1);
+				Msg.sendMessage(p, MsgKey.NEED_EXP1);
 			} else {
-				Msg.sendMessage(p, MessageKey.NEED_EXP2);
+				Msg.sendMessage(p, MsgKey.NEED_EXP2);
 			}
 			return false;
 		}

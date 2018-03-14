@@ -20,7 +20,6 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
-import org.caliog.Rolecraft.XMechanics.Messages.Translator;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
@@ -50,7 +49,6 @@ public class RolecraftConfig {
 			Debugger.exception("RolecraftConfig.init threw an exception:", e.getMessage());
 			e.printStackTrace();
 		}
-		Translator.lang_code = getLangCode();
 	}
 
 	public static String getLangCode() {

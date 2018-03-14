@@ -32,3 +32,19 @@ quest-info-start-items: 'Diese Items bekommst du sofort, wenn du den Quest annim
 quest-missing-collect: 'Du hast noch nicht alle Items.'
 quest-delivered-items: 'Du hast alle benötigten Items abgegeben.'
 spell-click-power: '<click> um die Power dieses Spells zu erhöhen.'
+word-amount: Anzahl
+word-mob: Monster
+word-required-class: Benötigte Klasse
+word-minimum-level: Mindest Level
+word-experience: Erfahrung
+word-accept: Akzeptieren
+word-back: Zurück
+word-items: Items
+word-start: Start
+word-reward: Belohnung
+word-collect: Sammle
+word-wanted-mobs: Töte Monster
+word-left: links
+word-right: rechts
+word-soulbound: Seelegebunden
+word-class: Klasse

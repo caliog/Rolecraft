@@ -9,7 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
-import org.caliog.Rolecraft.XMechanics.Messages.Translator.Phrase;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 
 public class Skillstar extends CustomItem {
 	public Skillstar(int amount) {
@@ -29,7 +30,7 @@ public class Skillstar extends CustomItem {
 		lore.add(ChatColor.GOLD + "Drag the star to a book!");
 		lore.add(" ");
 		if (!isTradeable()) {
-			lore.add(ChatColor.RED + Phrase.SOULBOUND.translate() + "!");
+			lore.add(ChatColor.RED + Msg.getMessage(MsgKey.WORD_SOULBOUND) + "!");
 		}
 		meta.setLore(lore);
 		setItemMeta(meta);

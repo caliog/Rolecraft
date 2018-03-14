@@ -8,7 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
-import org.caliog.Rolecraft.XMechanics.Messages.Translator.Phrase;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 
 public class Apple_2 extends CustomItem {
 	public Apple_2(int amount) {
@@ -26,7 +27,7 @@ public class Apple_2 extends CustomItem {
 		lore.add(ChatColor.GOLD + "This apple gives you 100% of your lifepoints!");
 		lore.add(" ");
 		if (!isTradeable()) {
-			lore.add(ChatColor.RED + Phrase.SOULBOUND.translate() + "!");
+			lore.add(ChatColor.RED + Msg.getMessage(MsgKey.WORD_SOULBOUND) + "!");
 		}
 		meta.setLore(lore);
 		setItemMeta(meta);

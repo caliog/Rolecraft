@@ -32,3 +32,19 @@ quest-info-start-items: 'Предметы которые вы получите �
 quest-missing-collect: 'У вас нет необходимых предметов'
 quest-delivered-items: 'Вы успешно доставили необходимые элементы.'
 spell-click-power: '<click> чтобы увеличить силу этого заклинания. '
+word-amount: Amount
+word-mob: Mob
+word-required-class: Required Class
+word-minimum-level: Min. Level
+word-experience: Experience
+word-accept: Accept
+word-back: Back
+word-items: Items
+word-start: Start
+word-reward: Reward
+word-collect: Collect
+word-wanted-mobs: Kill Mobs
+word-left: left
+word-right: right
+word-soulbound: soulbound
+word-class: Class

@@ -11,7 +11,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Messages.Translator.Phrase;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -61,10 +62,10 @@ public class Armor extends CustomItemInstance {
 			lore.add(ChatColor.RED + "MinLv: " + getMinLevel());
 		}
 		if (hasClass()) {
-			lore.add(ChatColor.RED + Phrase.CLASS.translate() + this.getClazz());
+			lore.add(ChatColor.RED + Msg.getMessage(MsgKey.WORD_CLASS) + this.getClazz());
 		}
 		if (!isTradeable()) {
-			lore.add(ChatColor.RED + Phrase.SOULBOUND.translate() + "!");
+			lore.add(ChatColor.RED + Msg.getMessage(MsgKey.WORD_SOULBOUND) + "!");
 		}
 		meta.setLore(lore);
 		setItemMeta(meta);
@@ -88,7 +89,7 @@ public class Armor extends CustomItemInstance {
 
 		level = dn.substring(dn.indexOf(" Lv. ") + 5);
 		for (String l : item.getItemMeta().getLore()) {
-			if (l.contains("soulbound!") || l.contains(Phrase.SOULBOUND.translate() + "!")) {
+			if (l.contains("soulbound!") || l.contains(Msg.getMessage(MsgKey.WORD_SOULBOUND) + "!")) {
 				soulbound = true;
 				break;
 			}

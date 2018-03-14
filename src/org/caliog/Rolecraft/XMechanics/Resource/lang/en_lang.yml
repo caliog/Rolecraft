@@ -32,3 +32,19 @@ quest-info-start-items: 'You get the items when you accept the quest.'
 quest-missing-collect: 'You do not have the required items.'
 quest-delivered-items: 'You successfully delivered the required items.'
 spell-click-power: '<click> to increase the power of this spell.'
+word-amount: Amount
+word-mob: Mob
+word-required-class: Required Class
+word-minimum-level: Min. Level
+word-experience: Experience
+word-accept: Accept
+word-back: Back
+word-items: Items
+word-start: Start
+word-reward: Reward
+word-collect: Collect
+word-wanted-mobs: Kill Mobs
+word-left: left
+word-right: right
+word-soulbound: soulbound
+word-class: Class

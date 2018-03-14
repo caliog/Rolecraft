@@ -59,7 +59,7 @@ public class Msg {
 		file = YamlConfiguration.loadConfiguration(new File(FilePath.messages));
 	}
 
-	private static boolean sendMessageTo(Player player, String msg, MessageKey msgKey) {
+	private static boolean sendMessageTo(Player player, String msg, MsgKey msgKey) {
 		if (msg == null || msg.length() == 0) {
 			String k = msgKey == null ? "" : (" (key = " + msgKey.name() + ")");
 			Manager.plugin.getLogger().warning("Message error! Look over your messages file!" + k);
@@ -69,7 +69,7 @@ public class Msg {
 		return true;
 	}
 
-	public static void sendMessage(Player player, MessageKey msgKey, String[] key, String[] replace) {
+	public static void sendMessage(Player player, MsgKey msgKey, String[] key, String[] replace) {
 		if (key != null)
 			if (key.length != replace.length) {
 				Manager.plugin.getLogger().warning("Parameter Error in Msg.java");
@@ -79,18 +79,18 @@ public class Msg {
 		sendMessageTo(player, getMessage(msgKey, key, replace), msgKey);
 	}
 
-	public static String getMessage(MessageKey msgKey, String key, String replace) {
+	public static String getMessage(MsgKey msgKey, String key, String replace) {
 		String[] a = { key };
 		String[] b = { replace };
 		return getMessage(msgKey, a, b);
 	}
 
-	public static String getMessage(MessageKey msgKey) {
+	public static String getMessage(MsgKey msgKey) {
 		String t = null;
 		return getMessage(msgKey, t, t);
 	}
 
-	private static String getMessage(MessageKey msgKey, String[] key, String[] replace) {
+	private static String getMessage(MsgKey msgKey, String[] key, String[] replace) {
 		String msg = msgKey.getMessage();
 		if (msg == null || (key != null && replace != null && replace.length != key.length))
 			return null;
@@ -103,12 +103,12 @@ public class Msg {
 		return msg;
 	}
 
-	public static void sendMessage(Player player, MessageKey msgKey, String key, String replace) {
+	public static void sendMessage(Player player, MsgKey msgKey, String key, String replace) {
 		String[] a = { key }, b = { replace };
 		sendMessage(player, msgKey, a, b);
 	}
 
-	public static void sendMessage(Player player, MessageKey msgKey) {
+	public static void sendMessage(Player player, MsgKey msgKey) {
 		String[] a = null, b = null;
 		sendMessage(player, msgKey, a, b);
 	}

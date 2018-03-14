@@ -25,7 +25,6 @@ import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Messages.Translator;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
@@ -122,7 +121,6 @@ public class Manager {
 	public static void load() {
 		setupEconomy();
 		ClazzLoader.init();
-		Translator.init();
 
 		try {
 			loadWorlds();

@@ -17,9 +17,8 @@ import org.caliog.Rolecraft.Villagers.Quests.YmlQuest;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
-import org.caliog.Rolecraft.XMechanics.Messages.MessageKey;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Messages.Translator.Phrase;
 
 public class QuestInfoMenu extends Menu {
 
@@ -43,7 +42,7 @@ public class QuestInfoMenu extends Menu {
 
 		if (!quest.getMobs().isEmpty()) {
 			// 0. item - mob kills
-			item = new MenuItem(Phrase.WANTED_MOBS.translate(), Material.SKULL_ITEM);
+			item = new MenuItem(Msg.getMessage(MsgKey.WORD_WANTED_MOBS), Material.SKULL_ITEM);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
@@ -58,14 +57,14 @@ public class QuestInfoMenu extends Menu {
 
 		if (!quest.getCollects().isEmpty()) {
 			// 1. item - collects
-			lore.add(Msg.getMessage(MessageKey.QUEST_INFO_COLLECT));
-			item = new MenuItem(Phrase.COLLECT.translate(), Material.CHEST, lore);
+			lore.add(Msg.getMessage(MsgKey.QUEST_INFO_COLLECT));
+			item = new MenuItem(Msg.getMessage(MsgKey.WORD_COLLECT), Material.CHEST, lore);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
 					MenuManager.openMenu(player, new ItemSelectorMenu((QuestInfoMenu) getMenu(),
-							Phrase.COLLECT.translate() + " " + Phrase.ITEMS.translate(), quest.getCollects()));
+							Msg.getMessage(MsgKey.WORD_COLLECT) + " " + Msg.getMessage(MsgKey.WORD_ITEMS), quest.getCollects()));
 				}
 
 			});
@@ -75,14 +74,14 @@ public class QuestInfoMenu extends Menu {
 		if (!quest.getRewards().isEmpty()) {
 			// 2. item - rewards
 			lore = new ArrayList<String>();
-			lore.add(Msg.getMessage(MessageKey.QUEST_INFO_REWARD));
-			item = new MenuItem(Phrase.REWARD.translate(), Material.GOLD_NUGGET, lore);
+			lore.add(Msg.getMessage(MsgKey.QUEST_INFO_REWARD));
+			item = new MenuItem(Msg.getMessage(MsgKey.WORD_REWARD), Material.GOLD_NUGGET, lore);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
 					MenuManager.openMenu(player, new ItemSelectorMenu((QuestInfoMenu) getMenu(),
-							Phrase.REWARD.translate() + " " + Phrase.ITEMS.translate(), quest.getRewards()));
+							Msg.getMessage(MsgKey.WORD_REWARD) + " " + Msg.getMessage(MsgKey.WORD_ITEMS), quest.getRewards()));
 				}
 
 			});
@@ -92,14 +91,15 @@ public class QuestInfoMenu extends Menu {
 		if (!quest.getReceives().isEmpty()) {
 			// 3. item - receive on start item
 			lore = new ArrayList<String>();
-			lore.add(Msg.getMessage(MessageKey.QUEST_INFO_START_ITEMS));
-			item = new MenuItem(Phrase.START.translate() + " " + Phrase.ITEMS.translate(), Material.BOOK_AND_QUILL, lore);
+			lore.add(Msg.getMessage(MsgKey.QUEST_INFO_START_ITEMS));
+			item = new MenuItem(Msg.getMessage(MsgKey.WORD_START) + " " + Msg.getMessage(MsgKey.WORD_ITEMS),
+					Material.BOOK_AND_QUILL, lore);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
 					MenuManager.openMenu(player, new ItemSelectorMenu((QuestInfoMenu) getMenu(),
-							Phrase.START.translate() + " " + Phrase.ITEMS.translate(), quest.getReceives()));
+							Msg.getMessage(MsgKey.WORD_START) + " " + Msg.getMessage(MsgKey.WORD_ITEMS), quest.getReceives()));
 				}
 
 			});
@@ -108,30 +108,31 @@ public class QuestInfoMenu extends Menu {
 
 		// 4. item - exp reward
 		lore = new ArrayList<String>();
-		item = new MenuItem(Phrase.EXPERIENCE.translate() + ": " + ChatColor.GREEN + quest.getExp(), Material.EXP_BOTTLE);
+		item = new MenuItem(Msg.getMessage(MsgKey.WORD_EXPERIENCE) + ": " + ChatColor.GREEN + quest.getExp(), Material.EXP_BOTTLE);
 		this.setItem(4, item);
 
 		// 5. item - lvl
 		lore = new ArrayList<String>();
-		item = new MenuItem(Phrase.MINIMUM_LEVEL.translate() + ": " + ChatColor.GOLD + quest.getMinLevel(), Material.CAKE);
+		item = new MenuItem(Msg.getMessage(MsgKey.WORD_MINIMUM_LEVEL) + ": " + ChatColor.GOLD + quest.getMinLevel(), Material.CAKE);
 		this.setItem(5, item);
 
 		// 6. item - class
 		lore = new ArrayList<String>();
-		item = new MenuItem(Phrase.REQUIRED_CLASS.translate() + ": " + ChatColor.GRAY + quest.getClazz(), Material.DIAMOND_HELMET, lore);
+		item = new MenuItem(Msg.getMessage(MsgKey.WORD_REQUIRED_CLASS) + ": " + ChatColor.GRAY + quest.getClazz(),
+				Material.DIAMOND_HELMET, lore);
 		this.setItem(6, item);
 
 		if (quest.getTargetVillager() != null) {
 			// 7. item - villager
 			lore = new ArrayList<String>();
-			lore.add(Msg.getMessage(MessageKey.QUEST_TARGET_VILLAGER));
+			lore.add(Msg.getMessage(MsgKey.QUEST_TARGET_VILLAGER));
 			item = new MenuItem(quest.getTargetVillager(), Material.SKULL_ITEM, (short) 3, lore);
 			this.setItem(7, item);
 		}
 
 		if (accept) {
 			// accept button
-			item = new MenuItem(Phrase.ACCEPT.translate(), Material.STAINED_GLASS_PANE, (short) 13, 1);
+			item = new MenuItem(Msg.getMessage(MsgKey.WORD_ACCEPT), Material.STAINED_GLASS_PANE, (short) 13, 1);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
@@ -145,7 +146,7 @@ public class QuestInfoMenu extends Menu {
 			this.setItem(height * 9 - 1, item);
 		} else {
 			// exit button
-			this.setItem(height * 9 - 1, item.new ExitButton(this, Phrase.BACK.translate()));
+			this.setItem(height * 9 - 1, item.new ExitButton(this, Msg.getMessage(MsgKey.WORD_BACK)));
 		}
 
 	}
@@ -165,7 +166,7 @@ public class QuestInfoMenu extends Menu {
 		public MobSelectorMenu(QuestInfoMenu menu, Player player) {
 			int size = menu.getQuest().getMobs().size();
 			this.height = size / 9 + 1;
-			this.name = Phrase.WANTED_MOBS.translate();
+			this.name = Msg.getMessage(MsgKey.WORD_WANTED_MOBS);
 			this.upperMenu = menu;
 			init();
 			setup(player);
@@ -179,9 +180,9 @@ public class QuestInfoMenu extends Menu {
 				if (map.get(name) == 0)
 					continue;
 				list = new ArrayList<String>();
-				String str = ChatColor.AQUA + Phrase.AMOUNT.translate() + ": " + map.get(name);
+				String str = ChatColor.AQUA + Msg.getMessage(MsgKey.WORD_AMOUNT) + ": " + map.get(name);
 				if (!isAccept())
-					str = ChatColor.AQUA + Phrase.AMOUNT.translate() + ": "
+					str = ChatColor.AQUA + Msg.getMessage(MsgKey.WORD_AMOUNT) + ": "
 							+ (map.get(name) - QuestKill.getKilled(player, getQuest().getName(), name)) + "/" + map.get(name);
 				list.add(str);
 				final MenuItem item = new MenuItem(name, Material.SKULL_ITEM, list);
@@ -189,7 +190,7 @@ public class QuestInfoMenu extends Menu {
 				c++;
 			}
 
-			this.setItem(height * 9 - 1, new MenuItem().new ExitButton(this, Phrase.BACK.translate()));
+			this.setItem(height * 9 - 1, new MenuItem().new ExitButton(this, Msg.getMessage(MsgKey.WORD_BACK)));
 
 		}
 
@@ -214,7 +215,7 @@ public class QuestInfoMenu extends Menu {
 					}
 				}
 			}
-			this.setItem(height * 9 - 1, new MenuItem().new ExitButton(this, Phrase.BACK.translate()));
+			this.setItem(height * 9 - 1, new MenuItem().new ExitButton(this, Msg.getMessage(MsgKey.WORD_BACK)));
 		}
 
 	}
