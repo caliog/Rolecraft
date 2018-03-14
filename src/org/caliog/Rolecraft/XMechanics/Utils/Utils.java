@@ -58,7 +58,6 @@ public class Utils {
 			Class<?> cl = Manager.plugin.getClass().getClassLoader().loadClass(c);
 			cl.getMethod(m, param);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 		return true;

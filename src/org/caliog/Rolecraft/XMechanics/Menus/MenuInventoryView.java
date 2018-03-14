@@ -81,8 +81,8 @@ public class MenuInventoryView extends InventoryView {
 	}
 
 	public boolean clicked(InventoryClickEvent event) {
-		if (event.getClickedInventory() != null && event.getClickedInventory().getTitle() != null)
-			if (event.getClickedInventory().getTitle().equals(top.getTitle()))
+		if (event.getInventory() != null && event.getInventory().getTitle() != null)
+			if (event.getInventory().getTitle().equals(top.getTitle()))
 				return menu.clicked(event);
 		return false;
 	}
