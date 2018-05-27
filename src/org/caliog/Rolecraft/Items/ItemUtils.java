@@ -10,20 +10,20 @@ import org.caliog.Rolecraft.Items.Custom.Apple_1;
 import org.caliog.Rolecraft.Items.Custom.Apple_2;
 import org.caliog.Rolecraft.Items.Custom.HealthPotion;
 import org.caliog.Rolecraft.Items.Custom.Skillstar;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class ItemUtils {
 
 	public static CustomItem getCustomItem(String name, int a, short d, boolean t) {
-		if (name.equals("Skillstar")) {
+		if (name.equalsIgnoreCase("Skillstar")) {
 			return new Skillstar(a);
 		}
-		if ((name.equals("Apple_1")) || (name.equals("Apple I"))) {
+		if ((name.equalsIgnoreCase("Apple_1")) || (name.equalsIgnoreCase("Apple I"))) {
 			return new Apple_1(a);
 		}
-		if ((name.equals("Apple_2")) || (name.equals("Apple II"))) {
+		if ((name.equalsIgnoreCase("Apple_2")) || (name.equalsIgnoreCase("Apple II"))) {
 			return new Apple_2(a);
 		}
 		CustomItem i = CustomItemInstance.getInstance(name, a, t);
