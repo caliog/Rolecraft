@@ -47,6 +47,14 @@ public class MobInstance extends Mob {
 		this.eq.put("CHESTPLATE", ItemUtils.getItem(this.mobConfig.getString("equipment.chestplate")));
 		this.eq.put("LEGGINGS", ItemUtils.getItem(this.mobConfig.getString("equipment.leggings")));
 		this.eq.put("BOOTS", ItemUtils.getItem(this.mobConfig.getString("equipment.boots")));
+
+		// Warning
+		for (String id : eq.keySet()) {
+			if (eq.get(id) == null && this.mobConfig.getString("equipment." + id.toLowerCase()) != null) {
+				Manager.plugin.getLogger()
+						.warning("equipment." + id.toLowerCase() + " in " + this.getIdentifier() + ".yml is not set correctly!");
+			}
+		}
 		return this.eq;
 	}
 
