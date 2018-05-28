@@ -86,7 +86,6 @@ public class SpellLoader {
 
 		if (mainC == null)
 			return null;
-
 		try {
 			Class<?> c = classLoader.loadClass(mainC);
 			Class<? extends Spell> spellC = c.asSubclass(Spell.class);
@@ -130,6 +129,8 @@ public class SpellLoader {
 
 	// TODO maybe find different criteria to check
 	public static boolean isCurse(String name) {
+		if (name.equals("Curse"))
+			return true;
 		File f = new File(FilePath.spells + name + ".yml");
 		if (f.exists()) {
 			YamlConfiguration spells = YamlConfiguration.loadConfiguration(f);

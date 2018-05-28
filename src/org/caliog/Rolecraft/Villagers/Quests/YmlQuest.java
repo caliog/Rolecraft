@@ -25,8 +25,8 @@ import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestEditorMenu;
 import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInfoMenu;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.PlayerConsole.Stoppable;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
@@ -143,7 +143,7 @@ public class YmlQuest extends Quest {
 						if (quest.couldComplete(player)) {
 							player.completeQuest(quest.getName());
 						} else {
-							Msg.sendMessage(player.getPlayer(), MsgKey.QUEST_DELIVERED_ITEM);
+							Msg.sendMessage(player.getPlayer(), MsgKey.QUEST_DELIVERED_ITEMS);
 						}
 					} else {
 						Msg.sendMessage(player.getPlayer(), MsgKey.QUEST_MISSING_COLLECT);
