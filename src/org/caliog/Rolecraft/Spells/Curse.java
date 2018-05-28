@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.util.Vector;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityManager;
@@ -36,7 +39,7 @@ public class Curse extends Spell {
 
 	// TODO edit names
 	public enum Direction {
-		STRAIGHT, CONE, FULL, FINDER;
+		RAY, CONE, FULL, AUTO_TARGET;
 	}
 
 	private CurseType type;
@@ -46,7 +49,7 @@ public class Curse extends Spell {
 		super(player, name);
 		String[] a = load();
 		if (a == null) {
-			String b[] = { CurseType.BLACK.name(), Direction.STRAIGHT.name() };
+			String b[] = { CurseType.BLACK.name(), Direction.RAY.name() };
 			a = b;
 			Debugger.warning(LogTitle.SPELL, "Returned null while trying to load curse: ", name);
 		}
@@ -55,7 +58,7 @@ public class Curse extends Spell {
 			dir = Direction.valueOf(a[1]);
 		} catch (IllegalArgumentException e) {
 			type = CurseType.BLACK;
-			dir = Direction.STRAIGHT;
+			dir = Direction.RAY;
 			e.printStackTrace();
 		}
 	}
@@ -87,22 +90,27 @@ public class Curse extends Spell {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	private void effects() {
 		final int distance = 20;
 		List<Vector> vectorList = calculateVectors();
 		final Location center = getPlayer().getPlayer().getEyeLocation();
+		center.add(0, -0.3, 0);
 		final int a = (int) (20 * ((float) getPower()) / getMaxPower());
 
 		// entities
 		Collection<Entity> entities = center.getWorld().getNearbyEntities(center, distance, distance / 4, distance);
+		entities.remove(getPlayer().getPlayer());
 		Collection<Entity> temp = new ArrayList<Entity>();
+		// collect entities which a close to fireline
 		for (final Vector v : vectorList) {
 			for (Entity entity : entities) {
+				if (temp.contains(entity))
+					continue;
 				if (entity.getType().equals(EntityType.PLAYER) || EntityManager.isRegistered(entity.getUniqueId())) {
 					Vector b = entity.getLocation().toVector().subtract(getPlayer().getPlayer().getLocation().toVector());
 					if (v.crossProduct(b).lengthSquared() < 0.28F) {
 						temp.add(entity);
-						entities.remove(entity);
 					}
 
 				}
@@ -111,8 +119,11 @@ public class Curse extends Spell {
 				Location loc = center.clone().add(v.clone().multiply(i));
 				type.effect.display(0.1F, 0.1F, 0.1F, type.color, 12 + a, loc, 50D);
 				for (Entity t : temp) {
-					if (t.getLocation().distanceSquared(loc) < 0.28F) {
-						// deal damage
+					if (t.getLocation().distanceSquared(loc) < 400) {
+						// TODO not tested yet
+						EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(this.getPlayer().getPlayer(), t, DamageCause.CUSTOM,
+								getDamage());
+						Bukkit.getPluginManager().callEvent(event);
 					}
 				}
 			}
@@ -131,7 +142,7 @@ public class Curse extends Spell {
 		double z = Math.cos(pitch);
 		Vector look = new Vector(x, z, y);
 
-		if (dir.equals(Direction.CONE) || dir.equals(Direction.STRAIGHT))
+		if (dir.equals(Direction.CONE) || dir.equals(Direction.RAY))
 			vectorList.add(look);
 
 		final double angle = 3.141592653589793D / 8D;
