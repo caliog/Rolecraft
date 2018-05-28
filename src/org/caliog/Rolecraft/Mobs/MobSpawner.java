@@ -62,7 +62,7 @@ public class MobSpawner {
 			if (!ff.isDirectory() && ff.getName().endsWith(".yml")) {
 				YamlConfiguration c = YamlConfiguration.loadConfiguration(ff);
 				if (c.isSet("name")) {
-					mobs.put(ff.getName().replace(".yml", ""), c.getName());
+					mobs.put(ff.getName().replace(".yml", ""), c.getString("name"));
 				}
 			}
 		}
