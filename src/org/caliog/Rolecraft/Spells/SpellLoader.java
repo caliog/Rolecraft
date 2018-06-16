@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,8 @@ public class SpellLoader {
 
 	protected static ClassLoader classLoader;
 	private static Set<String> paths = new HashSet<String>();
+
+	public final static HashMap<String, String> spellIdName = new HashMap<String, String>();
 
 	public static void init() throws IOException {
 		File dir = new File(FilePath.spells);
@@ -54,6 +57,11 @@ public class SpellLoader {
 				urls.add(f.toURI().toURL());
 				jar.close();
 
+			} else if (file.endsWith(".yml")) {
+				YamlConfiguration c = YamlConfiguration.loadConfiguration(new File(FilePath.spells + file));
+				if (c.isSet("name"))
+					spellIdName.put(new File(file).getName().replaceAll(".yml", ""), c.getString("name", null));
+
 			}
 		}
 		for (String s : paths) {
@@ -70,10 +78,18 @@ public class SpellLoader {
 
 	}
 
+	// name is identifier
 	public static Spell load(RolecraftPlayer player, String name) {
 		String mainC = null;
 		if (name == null)
 			return null;
+
+		for (String key : spellIdName.keySet())
+			if (spellIdName.get(key).equals(name)) {
+				name = key;
+				break;
+			}
+
 		if ((name.equals("Speed") || name.equals("Invisible")) && !name.endsWith("Spell"))
 			name += "Spell";
 		for (String path : paths) {
@@ -127,7 +143,6 @@ public class SpellLoader {
 		}
 	}
 
-	// TODO maybe find different criteria to check
 	public static boolean isCurse(String name) {
 		if (name.equals("Curse"))
 			return true;

@@ -7,8 +7,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftAbstrPlayer;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -16,17 +16,19 @@ public abstract class Spell {
 	private final RolecraftPlayer player;
 	private boolean active = false;
 	private String name;
+	private String identifier;
 	private int power = 0;
 	private final int maxPower;
 	private YamlConfiguration config;
 	private HashMap<Integer, Double> damageMap = new HashMap<Integer, Double>();
 	private HashMap<Integer, Double> defenseMap = new HashMap<Integer, Double>();
 
-	public Spell(RolecraftPlayer player, String name) {
+	public Spell(RolecraftPlayer player, String identifier) {
 		this.player = player;
-		this.setName(name);
-		this.config = YamlConfiguration.loadConfiguration(new File(FilePath.spells + name + ".yml"));
+		this.setIdentifier(identifier);
+		this.config = YamlConfiguration.loadConfiguration(new File(FilePath.spells + identifier + ".yml"));
 		if (config != null) {
+			this.setName(config.getString("name", identifier));
 			if (config.isConfigurationSection("damage")) {
 				for (String k : config.getConfigurationSection("damage").getKeys(false)) {
 					if (Utils.isInteger(k)) {
@@ -162,7 +164,16 @@ public abstract class Spell {
 		return name;
 	}
 
+	public String getIdentifier() {
+		return identifier;
+	}
+
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	private void setIdentifier(String identifier) {
+		this.identifier = identifier;
+
 	}
 }
