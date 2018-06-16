@@ -18,8 +18,9 @@ import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Slime;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityManager;
-import org.caliog.Rolecraft.Entities.EntityUtils;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
@@ -32,6 +33,19 @@ public class MobSpawner {
 		if (!f.exists()) {
 			return;
 		}
+		{
+			// Load mobs
+			File m = new File(FilePath.mobs);
+			for (File ff : m.listFiles()) {
+				if (!ff.isDirectory() && ff.getName().endsWith(".yml")) {
+					YamlConfiguration c = YamlConfiguration.loadConfiguration(ff);
+					if (c.isSet("name")) {
+						mobs.put(ff.getName().replace(".yml", ""), c.getString("name"));
+					}
+				}
+			}
+		}
+
 		BufferedReader reader = new BufferedReader(new FileReader(f));
 		String line = "";
 		while ((line = reader.readLine()) != null) {
@@ -43,8 +57,11 @@ public class MobSpawner {
 				if (m == null || m.isNull())
 					continue;
 				String mob = null;
-				if (EntityUtils.isMobClass(a[1])) {
+				if (isMobClass(a[1])) {
 					mob = getIdentifier(a[1]);
+				} else {
+					Debugger.warning(LogTitle.NONE, "Skipping " + a[1] + " in mob spawn zones.");
+					continue;
 				}
 				int radius = Integer.parseInt(a[2]);
 				int amount = Integer.parseInt(a[3]);
@@ -56,16 +73,6 @@ public class MobSpawner {
 		}
 		reader.close();
 
-		// Load mobs
-		File m = new File(FilePath.mobs);
-		for (File ff : m.listFiles()) {
-			if (!ff.isDirectory() && ff.getName().endsWith(".yml")) {
-				YamlConfiguration c = YamlConfiguration.loadConfiguration(ff);
-				if (c.isSet("name")) {
-					mobs.put(ff.getName().replace(".yml", ""), c.getString("name"));
-				}
-			}
-		}
 	}
 
 	public static void saveZones() throws IOException {
@@ -152,7 +159,7 @@ public class MobSpawner {
 		if (mobs.containsKey(c))
 			return c;
 		for (String id : mobs.keySet()) {
-			if (mobs.get(id) == c)
+			if (mobs.get(id).equals(c))
 				return id;
 		}
 		return null;

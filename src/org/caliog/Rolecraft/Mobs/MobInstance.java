@@ -12,6 +12,7 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Items.ItemUtils;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
@@ -25,7 +26,8 @@ public class MobInstance extends Mob {
 		if (f.exists()) {
 			this.mobConfig = YamlConfiguration.loadConfiguration(f);
 			setHealth(getHP());
-		}
+		} else
+			Debugger.warning(LogTitle.SPAWN, "Could not find mob file for: " + ident);
 	}
 
 	public int getLevel() {
@@ -36,7 +38,7 @@ public class MobInstance extends Mob {
 		try {
 			return EntityType.valueOf(this.mobConfig.getString("entity-type", "error"));
 		} catch (Exception e) {
-			Manager.plugin.getLogger().warning("Error in " + getName() + "+.yml! Entity-Type is not a valid entity.");
+			Manager.plugin.getLogger().warning("Error in " + getName() + ".yml! Entity-Type is not a valid entity.");
 			return EntityType.COW;
 		}
 	}
