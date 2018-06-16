@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
-import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -135,33 +134,6 @@ public class RolecraftPlugin extends JavaPlugin {
 	}
 
 	private void mkdir() {
-		// temporary
-		{
-			File file = new File("plugins/Rolecraft/Data");
-			File data = new File(FilePath.data);
-			if (file.exists() && !data.exists())
-				file.renameTo(data);
-			File f = new File("plugins/Rolecraft/Config");
-			if (f.exists()) {
-				for (File ff : f.listFiles()) {
-					try {
-						if (ff.isFile()) {
-							FileUtils.copyFile(ff, new File(ff.getAbsolutePath().replace("\\Config", "")));
-						} else
-							FileUtils.copyDirectory(ff, new File(ff.getAbsolutePath().replace("\\Config", "")), true);
-
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				try {
-					FileUtils.forceDelete(f);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		} //
-
 		for (Field f : FilePath.class.getFields()) {
 			String value;
 			try {
