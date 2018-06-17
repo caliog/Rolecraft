@@ -54,7 +54,7 @@ import org.caliog.Rolecraft.Items.Custom.Skillstar;
 import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Utils.SkillInventoryView;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
@@ -119,7 +119,7 @@ public class RolecraftListener implements Listener {
 
 				Playerface.giveItem(player.getPlayer(), new Skillstar(3));
 				player.giveSpellPoint();
-				Msg.sendMessage(event.getPlayer(), MsgKey.LEVEL_REACHED, Msg.LEVEL, String.valueOf(event.getNewLevel()));
+				Msg.sendMessage(event.getPlayer(), Key.LEVEL_REACHED, Msg.LEVEL, String.valueOf(event.getNewLevel()));
 			}
 		} else
 			PlayerManager.changedClass.remove(player.getPlayer().getUniqueId());
@@ -283,25 +283,25 @@ public class RolecraftListener implements Listener {
 						if (player.skillStrength(event.getCursor().getAmount())) {
 							event.setCursor(null);
 						} else {
-							Msg.sendMessage(player.getPlayer(), MsgKey.FULL_STR);
+							Msg.sendMessage(player.getPlayer(), Key.FULL_STR);
 						}
 					} else if (event.getRawSlot() == 1) {
 						if (player.skillDexterity(event.getCursor().getAmount())) {
 							event.setCursor(null);
 						} else {
-							Msg.sendMessage(player.getPlayer(), MsgKey.FULL_DEX);
+							Msg.sendMessage(player.getPlayer(), Key.FULL_DEX);
 						}
 					} else if (event.getRawSlot() == 2) {
 						if (player.skillIntelligence(event.getCursor().getAmount())) {
 							event.setCursor(null);
 						} else {
-							Msg.sendMessage(player.getPlayer(), MsgKey.FULL_INT);
+							Msg.sendMessage(player.getPlayer(), Key.FULL_INT);
 						}
 					} else if (event.getRawSlot() == 3) {
 						if (player.skillVitality(event.getCursor().getAmount())) {
 							event.setCursor(null);
 						} else {
-							Msg.sendMessage(player.getPlayer(), MsgKey.FULL_VIT);
+							Msg.sendMessage(player.getPlayer(), Key.FULL_VIT);
 						}
 					}
 				}

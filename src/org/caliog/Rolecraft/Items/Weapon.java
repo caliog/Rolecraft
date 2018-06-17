@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
@@ -71,10 +71,10 @@ public class Weapon extends CustomItemInstance {
 			lore.add(ChatColor.RED + "MinLv: " + getMinLevel());
 		}
 		if (hasClass()) {
-			lore.add(ChatColor.RED + Msg.getMessage(MsgKey.WORD_CLASS) + getClazz());
+			lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_CLASS) + getClazz());
 		}
 		if (!isTradeable())
-			lore.add(ChatColor.RED + Msg.getMessage(MsgKey.WORD_SOULBOUND) + "!");
+			lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_SOULBOUND) + "!");
 		meta.setLore(lore);
 		setItemMeta(meta);
 	}
@@ -105,7 +105,7 @@ public class Weapon extends CustomItemInstance {
 		level = dn.substring(dn.indexOf(" Lv. ") + 5);
 
 		for (String l : item.getItemMeta().getLore()) {
-			if (l.contains("soulbound!") || l.contains(Msg.getMessage(MsgKey.WORD_SOULBOUND) + "!")) {
+			if (l.contains("soulbound!") || l.contains(Msg.getMessage(Key.WORD_SOULBOUND) + "!")) {
 				soulbound = true;
 				break;
 			} else if (l.contains("Kills:")) {

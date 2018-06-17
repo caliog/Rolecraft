@@ -74,7 +74,7 @@ public class Msg {
 		if (list.size() >= 2) {
 			text += list.get(0) + "\n";
 			text += list.get(1) + "\n";
-			for (MsgKey k : MsgKey.values()) {
+			for (Key k : Key.values()) {
 				boolean found = false;
 				secondloop: for (String l : list) {
 					if (!found && l.startsWith(k.getKey())) {
@@ -83,7 +83,7 @@ public class Msg {
 						continue;
 					}
 					if (found) {
-						for (MsgKey kk : MsgKey.values()) {
+						for (Key kk : Key.values()) {
 							if (l.startsWith(kk.getKey()))
 								break secondloop;
 						}
@@ -97,7 +97,7 @@ public class Msg {
 		w.close();
 	}
 
-	private static boolean sendMessageTo(Player player, String msg, MsgKey msgKey) {
+	private static boolean sendMessageTo(Player player, String msg, Key msgKey) {
 		if (msg == null || msg.length() == 0) {
 			String k = msgKey == null ? "" : (" (key = " + msgKey.name() + ")");
 			Manager.plugin.getLogger().warning("Message error! Look over your messages file!" + k);
@@ -107,7 +107,7 @@ public class Msg {
 		return true;
 	}
 
-	public static void sendMessage(Player player, MsgKey msgKey, String[] key, String[] replace) {
+	public static void sendMessage(Player player, Key msgKey, String[] key, String[] replace) {
 		if (key != null)
 			if (key.length != replace.length) {
 				Manager.plugin.getLogger().warning("Parameter Error in Msg.java");
@@ -117,19 +117,19 @@ public class Msg {
 		sendMessageTo(player, getMessage(msgKey, key, replace), msgKey);
 	}
 
-	public static String getMessage(MsgKey msgKey, String key, String replace) {
+	public static String getMessage(Key msgKey, String key, String replace) {
 		String[] a = { key };
 		String[] b = { replace };
 		return getMessage(msgKey, a, b);
 	}
 
-	public static String getMessage(MsgKey msgKey) {
+	public static String getMessage(Key msgKey) {
 		String t = null;
 		return getMessage(msgKey, t, t);
 	}
 
-	private static String getMessage(MsgKey msgKey, String[] key, String[] replace) {
-		String msg = msgKey.getMessage();
+	private static String getMessage(Key msgKey, String[] key, String[] replace) {
+		String msg = msgKey.getString();
 		if (msg == null || (key != null && replace != null && replace.length != key.length))
 			return null;
 		if (key != null)
@@ -141,12 +141,12 @@ public class Msg {
 		return msg;
 	}
 
-	public static void sendMessage(Player player, MsgKey msgKey, String key, String replace) {
+	public static void sendMessage(Player player, Key msgKey, String key, String replace) {
 		String[] a = { key }, b = { replace };
 		sendMessage(player, msgKey, a, b);
 	}
 
-	public static void sendMessage(Player player, MsgKey msgKey) {
+	public static void sendMessage(Player player, Key msgKey) {
 		String[] a = null, b = null;
 		sendMessage(player, msgKey, a, b);
 	}

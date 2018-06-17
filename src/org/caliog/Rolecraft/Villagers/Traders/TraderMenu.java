@@ -16,7 +16,7 @@ import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem.ExitButton;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class TraderMenu extends Menu {
@@ -27,7 +27,7 @@ public class TraderMenu extends Menu {
 		super(3, trader.getName());
 		ExitButton button = new MenuItem().new ExitButton(this, "Exit!");
 		items.set(3 * 9 - 1, button);
-		costsPhrase = Msg.getMessage(MsgKey.WORD_COSTS) + ": ";
+		costsPhrase = Msg.getMessage(Key.WORD_COSTS) + ": ";
 	}
 
 	/**

@@ -14,7 +14,7 @@ import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage.MessageType;
 import org.caliog.Rolecraft.Villagers.Chat.ChatTask;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 
 public class Priest extends Villager {
@@ -24,9 +24,9 @@ public class Priest extends Villager {
 	public Priest(org.bukkit.entity.Villager entity, Location location, String name) {
 		super(entity, VillagerType.PRIEST, location, name);
 		this.profession = Profession.PRIEST;
-		String msg = Msg.getMessage(MsgKey.CLASS_CHANGE_OFFER, Msg.CLASS, getClassType());
+		String msg = Msg.getMessage(Key.CLASS_CHANGE_OFFER, Msg.CLASS, getClassType());
 		addCMessage(1, new CMessage(msg, MessageType.QUESTION, 3));
-		CMessage message = new CMessage(Msg.getMessage(MsgKey.CLASS_CHANGED, Msg.CLASS, getClassType()), MessageType.END);
+		CMessage message = new CMessage(Msg.getMessage(Key.CLASS_CHANGED, Msg.CLASS, getClassType()), MessageType.END);
 		message.setTask(new ChatTask() {
 
 			@Override

@@ -32,6 +32,7 @@ quest-info-start-items: 'You get the items when you accept the quest.'
 quest-missing-collect: 'You do not have the required items.'
 quest-delivered-items: 'You successfully delivered the required items.'
 spell-click-power: '<click> to increase the power of this spell.'
+spell-no-power: 'No power to use this spell.'
 word-amount: Amount
 word-mob: Mob
 word-required-class: Required Class

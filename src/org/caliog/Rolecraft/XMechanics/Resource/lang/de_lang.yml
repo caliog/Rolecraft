@@ -32,6 +32,7 @@ quest-info-start-items: 'Diese Items bekommst du sofort, wenn du den Quest annim
 quest-missing-collect: 'Du hast noch nicht alle Items.'
 quest-delivered-items: 'Du hast alle benötigten Items abgegeben.'
 spell-click-power: '<click> um die Power dieses Spells zu erhöhen.'
+spell-no-power: 'Keine Macht für diesen Zauber.'
 word-amount: Anzahl
 word-mob: Monster
 word-required-class: Benötigte Klasse

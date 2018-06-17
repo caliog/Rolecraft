@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class DexBook extends Book {
@@ -31,7 +31,7 @@ public class DexBook extends Book {
 		lore.add(ChatColor.GOLD + "to increase your dexterity");
 		lore.add(" ");
 
-		lore.add(ChatColor.RED + Msg.getMessage(MsgKey.WORD_SOULBOUND) + "!");
+		lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_SOULBOUND) + "!");
 		meta.setLore(lore);
 		setItemMeta(meta);
 	}

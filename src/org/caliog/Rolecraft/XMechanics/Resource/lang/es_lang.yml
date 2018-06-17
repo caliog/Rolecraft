@@ -32,6 +32,7 @@ quest-info-start-items: 'Consigues los objetos cuando aceptas la misión.'
 quest-missing-collect: 'No tienes los objectos necesarios.'
 quest-delivered-items: 'Has entregado satisfactoriamente los objetos necesarios.'
 spell-click-power: '<click> para aumentar el poder de este hechizo.'
+spell-no-power: 'No power to use this spell.'
 word-amount: Amount
 word-mob: Mob
 word-required-class: Required Class

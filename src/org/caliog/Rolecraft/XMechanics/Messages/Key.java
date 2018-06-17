@@ -1,6 +1,6 @@
 package org.caliog.Rolecraft.XMechanics.Messages;
 
-public enum MsgKey {
+public enum Key {
 
 	// @formatter:off
 	// GENERAL
@@ -43,6 +43,7 @@ public enum MsgKey {
 	QUEST_DELIVERED_ITEMS, 
 	// spells
 	SPELL_CLICK_POWER,
+	SPELL_NO_POWER,
 	// words
 	WORD_AMOUNT,
 	WORD_MOB,
@@ -67,7 +68,7 @@ public enum MsgKey {
 		return this.name().toLowerCase().replaceAll("_", "-");
 	}
 
-	public String getMessage() {
+	public String getString() {
 		return Msg.file.getString(getKey());
 	}
 

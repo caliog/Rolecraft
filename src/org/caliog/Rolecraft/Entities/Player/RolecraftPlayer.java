@@ -27,6 +27,8 @@ import org.caliog.Rolecraft.Spells.SpellLoader;
 import org.caliog.Rolecraft.XMechanics.Bars.BottomBar.BottomBar;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Pair;
 
@@ -304,17 +306,20 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 				continue;
 			if (id.equals(String.valueOf(spell[0]) + String.valueOf(spell[1]) + String.valueOf(spell[2]))) {
 				Spell spell = spells.get(id).first;
-				if (spell != null && spells.get(id).second > 0) {
-					Debugger.info(LogTitle.SPELL, "%s is casting spell:", getPlayer().getName(), spell.getName());
-					spell.execute();
-					BottomBar.display(getPlayer(), ChatColor.GOLD + spell.getName());
-					return;
-				}
+				if (spell != null)
+					if (spells.get(id).second > 0) {
+						Debugger.info(LogTitle.SPELL, "%s is casting spell:", getPlayer().getName(), spell.getName());
+						spell.execute();
+						BottomBar.display(getPlayer(), ChatColor.GOLD + spell.getName());
+						return;
+					} else {
+						BottomBar.display(getPlayer(), ChatColor.RED + Msg.getMessage(Key.SPELL_NO_POWER));
+						return;
+					}
 			}
 		}
-		Debugger.error(LogTitle.SPELL, "%s tried to cast spell:",
-
-				getPlayer().getName(), String.valueOf(spell[0]), String.valueOf(spell[1]), String.valueOf(spell[2]));
+		Debugger.error(LogTitle.SPELL, "%s tried to cast spell:", getPlayer().getName(), String.valueOf(spell[0]), String.valueOf(spell[1]),
+				String.valueOf(spell[2]));
 		BottomBar.display(getPlayer(), ChatColor.RED + "" + ChatColor.MAGIC + "Uups");
 	}
 

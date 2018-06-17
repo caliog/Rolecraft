@@ -8,7 +8,7 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftAbstrPlayer;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -132,17 +132,17 @@ public abstract class Spell {
 	 */
 	public boolean execute() {
 		if (this.player.getLevel() < getMinLevel()) {
-			Msg.sendMessage(this.player.getPlayer(), MsgKey.SKILL_NEED_LEVEL);
+			Msg.sendMessage(this.player.getPlayer(), Key.SKILL_NEED_LEVEL);
 			return false;
 		}
 		if (this.player.getPlayer().getFoodLevel() - getFood() >= 0) {
 			this.player.getPlayer().setFoodLevel(this.player.getPlayer().getFoodLevel() - getFood());
 		} else {
-			Msg.sendMessage(this.player.getPlayer(), MsgKey.SKILL_NEED_MANA);
+			Msg.sendMessage(this.player.getPlayer(), Key.SKILL_NEED_MANA);
 			return false;
 		}
 		if (isActive()) {
-			Msg.sendMessage(this.player.getPlayer(), MsgKey.SKILL_ACTIVE);
+			Msg.sendMessage(this.player.getPlayer(), Key.SKILL_ACTIVE);
 			return false;
 		}
 		return true;

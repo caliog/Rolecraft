@@ -17,7 +17,7 @@ import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem.ExitButton;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -30,7 +30,7 @@ public class TraderEditMenu extends Menu {
 		super(3, "[edit]" + trader.getName());
 		this.trader = trader;
 		loadFromString(trader.getTraderMenu().toString());
-		TraderMenu.costsPhrase = Msg.getMessage(MsgKey.WORD_COSTS) + ": ";
+		TraderMenu.costsPhrase = Msg.getMessage(Key.WORD_COSTS) + ": ";
 	}
 
 	/**

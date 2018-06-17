@@ -12,7 +12,7 @@ import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField.FieldProperty;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
-import org.caliog.Rolecraft.XMechanics.Messages.MsgKey;
+import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -34,9 +34,9 @@ public class Commandgroup extends Commands {
 			public void execute(String[] args, Player player) {
 				if (!GManager.isInGroup(player)) {
 					GManager.createGroup(player);
-					Msg.sendMessage(player, MsgKey.GROUP_CREATED);
+					Msg.sendMessage(player, Key.GROUP_CREATED);
 				} else {
-					Msg.sendMessage(player, MsgKey.GROUP_CREATE_FAIL);
+					Msg.sendMessage(player, Key.GROUP_CREATE_FAIL);
 				}
 
 			}
@@ -63,7 +63,7 @@ public class Commandgroup extends Commands {
 								GManager.invitation.remove(player.getUniqueId());
 						}
 					}, 1800L);
-					Msg.sendMessage(Bukkit.getPlayer(name), MsgKey.GROUP_INVITED, Msg.PLAYER, player.getName());
+					Msg.sendMessage(Bukkit.getPlayer(name), Key.GROUP_INVITED, Msg.PLAYER, player.getName());
 				} else {
 					player.sendMessage(ChatColor.RED + "This player is offline!");
 				}
@@ -84,12 +84,12 @@ public class Commandgroup extends Commands {
 				if (!GManager.isInGroup(player)) {
 					if (GManager.invitation.containsKey(player.getUniqueId())) {
 						if (!GManager.addMemeber(Utils.getPlayer(GManager.invitation.get(player.getUniqueId())), player)) {
-							Msg.sendMessage(player, MsgKey.GROUP_FAIL);
+							Msg.sendMessage(player, Key.GROUP_FAIL);
 						}
 						GManager.invitation.remove(player.getUniqueId());
 					}
 				} else {
-					Msg.sendMessage(player, MsgKey.GROUP_JOIN_FAIL);
+					Msg.sendMessage(player, Key.GROUP_JOIN_FAIL);
 				}
 
 			}
@@ -110,7 +110,7 @@ public class Commandgroup extends Commands {
 					String name = args[1];
 					if (Bukkit.getPlayer(name) != null) {
 						if (!GManager.removeMemeber(player, name)) {
-							Msg.sendMessage(player, MsgKey.GROUP_CANNOT_KICK_PLAYER);
+							Msg.sendMessage(player, Key.GROUP_CANNOT_KICK_PLAYER);
 						}
 					} else {
 						player.sendMessage(ChatColor.RED + "This player is offline!");
@@ -118,9 +118,9 @@ public class Commandgroup extends Commands {
 				} else {
 					if (GManager.isInGroup(player)) {
 						GManager.leaveGroup(player);
-						Msg.sendMessage(player, MsgKey.GROUP_LEFT);
+						Msg.sendMessage(player, Key.GROUP_LEFT);
 					} else {
-						Msg.sendMessage(player, MsgKey.GROUP_NOT_A_MEMBER);
+						Msg.sendMessage(player, Key.GROUP_NOT_A_MEMBER);
 					}
 				}
 			}
