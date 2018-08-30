@@ -24,6 +24,7 @@ import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
 import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
@@ -206,13 +207,20 @@ public class Manager {
 	}
 
 	private static boolean setupEconomy() {
-		RegisteredServiceProvider<Economy> economyProvider = plugin.getServer().getServicesManager()
-				.getRegistration(net.milkbowl.vault.economy.Economy.class);
-		if (economyProvider != null) {
-			economy = economyProvider.getProvider();
-		}
+		try {
+			Class.forName("net.milkbowl.vault.economy.Economy");
+			RegisteredServiceProvider<Economy> economyProvider = plugin.getServer().getServicesManager()
+					.getRegistration(net.milkbowl.vault.economy.Economy.class);
+			if (economyProvider != null) {
+				economy = economyProvider.getProvider();
+			}
 
-		return (economy != null);
+			return (economy != null);
+		} catch (Exception e) {
+			Debugger.error(LogTitle.NONE, "Vault (Economy) setup failed. Maybe Vault is missing.");
+			plugin.getLogger().warning("Vault is missing! The plugin may not work 100%.");
+		}
+		return false;
 	}
 
 }

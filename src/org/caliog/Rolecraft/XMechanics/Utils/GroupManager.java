@@ -25,7 +25,7 @@ public class GroupManager {
 			}
 		} catch (Exception e) {
 			Debugger.exception("Could not find Vault class Permission in GroupManager.init");
-			Manager.plugin.getLogger().warning("Could not find Vault!");
+			Manager.plugin.getLogger().warning("Vault is missing! The plugin may not work 100%.");
 		}
 		return (permission != null);
 	}

@@ -25,8 +25,8 @@ public class CommandExe {
 		RolecraftPlayer player = PlayerManager.getPlayer(this.player.getUniqueId());
 		if (player == null) {
 			this.player.sendMessage(ChatColor.RED + "Uups, I don't know you! Maybe try to login again. See console for more information!");
-			Manager.plugin.getLogger().warning("Could not identify " + this.player.getName()
-					+ ". Check your config and class configuration. Find help at caliog.org.");
+			Manager.plugin.getLogger()
+					.warning("Could not identify " + this.player.getName() + ". Check your config and class configuration.");
 			return;
 		}
 		if (!player.hasPermission(cmd.getPermission())) {
