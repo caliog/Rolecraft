@@ -27,7 +27,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -50,6 +49,7 @@ import org.caliog.Rolecraft.Items.Books.Spellbook;
 import org.caliog.Rolecraft.Items.Custom.Apple_1;
 import org.caliog.Rolecraft.Items.Custom.Apple_2;
 import org.caliog.Rolecraft.Items.Custom.HealthPotion;
+import org.caliog.Rolecraft.Items.Custom.Money;
 import org.caliog.Rolecraft.Items.Custom.Skillstar;
 import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Utils.SkillInventoryView;
@@ -196,6 +196,9 @@ public class RolecraftListener implements Listener {
 		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 				&& (Spellbook.isSpellbook(stack))) {
 			Spellbook.onClick(event.getPlayer());
+		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
+				&& (Money.isMoney(stack))) {
+			Money.getMoney(stack).onClick(event.getPlayer());
 		}
 	}
 
@@ -237,11 +240,29 @@ public class RolecraftListener implements Listener {
 		if (!Playerface.isAccessible(event.getPlayer(), event.getItem())) {
 			event.setCancelled(true);
 		} else {
-			// potions stack
 			ItemStack stack = event.getItem().getItemStack();
 			if (stack != null && stack.getItemMeta() != null && stack.getItemMeta().getDisplayName() != null) {
 				String name = event.getItem().getItemStack().getItemMeta().getDisplayName();
-				for (ItemStack hp : HealthPotion.all())
+
+				// money
+				if (Money.isMoney(stack)) {
+					Money pickup = Money.getMoney(stack);
+					for (int i = 0; i < event.getPlayer().getInventory().getSize(); i++) {
+						ItemStack s = event.getPlayer().getInventory().getItem(i);
+						if (Money.isMoney(s)) {
+							Money money = Money.getMoney(s);
+							money.addAmount(pickup.getMoneyAmount());
+							event.getPlayer().getInventory().setItem(i, money);
+							event.getPlayer().playSound(event.getItem().getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.2F, 0.2F);
+							event.getItem().remove();
+							event.setCancelled(true);
+							break;
+						}
+					}
+				}
+
+				// potions stack
+				for (ItemStack hp : HealthPotion.all()) {
 					if (name.equalsIgnoreCase(hp.getItemMeta().getDisplayName())) {
 						ItemStack[] contents = event.getPlayer().getInventory().getContents();
 						for (int i = 0; i < contents.length; i++) {
@@ -259,10 +280,8 @@ public class RolecraftListener implements Listener {
 						}
 
 					}
+				}
 			}
-			//
-
-			event.setCancelled(false);
 		}
 	}
 
@@ -313,18 +332,6 @@ public class RolecraftListener implements Listener {
 				});
 				event.setCancelled(true);
 			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void playerItemHeld(PlayerItemHeldEvent event) {
-		RolecraftPlayer clazz = PlayerManager.getPlayer(event.getPlayer().getUniqueId());
-		ItemStack stack = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
-		if ((stack == null) || (!stack.hasItemMeta()) || (!stack.getItemMeta().hasDisplayName())) {
-			return;
-		}
-		if (clazz == null) {
-			return;
 		}
 	}
 

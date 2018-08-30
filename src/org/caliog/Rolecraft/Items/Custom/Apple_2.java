@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
-import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 
 public class Apple_2 extends CustomItem {
 	public Apple_2(int amount) {

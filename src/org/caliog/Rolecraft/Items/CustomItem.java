@@ -79,7 +79,7 @@ public abstract class CustomItem extends ItemStack {
 
 	public static boolean isItemTradeable(ItemStack item) {
 		if (!isCustomItem(item)) {
-			return false;
+			return true;
 		}
 		for (String l : item.getItemMeta().getLore()) {
 			if (l.contains("soulbound") || l.contains(Msg.getMessage(Key.WORD_SOULBOUND))) {

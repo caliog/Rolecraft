@@ -41,7 +41,6 @@ public class Curse extends Spell {
 		}
 	}
 
-	// TODO edit names
 	public enum Direction {
 		RAY, CONE, FULL, AUTO_TARGET, TWIRL;
 	}

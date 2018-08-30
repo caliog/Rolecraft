@@ -14,6 +14,8 @@ public class Recipe {
 		return recipes;
 	}
 
+	// TODO new money convention (+ money command to transform money to
+	// money-item?)
 	public void add(ItemStack give, int price) {
 		if (price < 64)
 			add(new ItemStack(RolecraftConfig.getCurrency(), price), give);

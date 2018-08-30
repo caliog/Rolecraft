@@ -9,9 +9,10 @@ import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.Custom.Apple_1;
 import org.caliog.Rolecraft.Items.Custom.Apple_2;
 import org.caliog.Rolecraft.Items.Custom.HealthPotion;
+import org.caliog.Rolecraft.Items.Custom.Money;
 import org.caliog.Rolecraft.Items.Custom.Skillstar;
-import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class ItemUtils {
@@ -19,6 +20,10 @@ public class ItemUtils {
 	public static CustomItem getCustomItem(String name, int a, short d, boolean t) {
 		if (name.equalsIgnoreCase("Skillstar")) {
 			return new Skillstar(a);
+		}
+		if (name.equalsIgnoreCase("Money") || name.equalsIgnoreCase(Money.getCurrencyName(false))
+				|| name.equalsIgnoreCase(Money.getCurrencyName(true))) {
+			return new Money(a);
 		}
 		if ((name.equalsIgnoreCase("Apple_1")) || (name.equalsIgnoreCase("Apple I"))) {
 			return new Apple_1(a);

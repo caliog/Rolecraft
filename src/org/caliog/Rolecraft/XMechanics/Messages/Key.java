@@ -6,6 +6,7 @@ public enum Key {
 	// GENERAL
 	DEAD_MESSAGE,
 	LEVEL_REACHED,
+	MONEY_CLICK,//TODO Write in lang files
 	//CLASS
 	CLASS_CHANGED,
 	CLASS_CHANGE_OFFER,
