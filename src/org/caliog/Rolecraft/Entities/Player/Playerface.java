@@ -1,6 +1,6 @@
 package org.caliog.Rolecraft.Entities.Player;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Groups.GManager;
 import org.caliog.Rolecraft.Items.CustomItem;
+import org.caliog.Rolecraft.Items.Custom.Money;
 import org.caliog.Rolecraft.Mobs.Mob;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
@@ -89,27 +90,30 @@ public class Playerface {
 		if ((stacks == null) || (stacks.isEmpty())) {
 			return;
 		}
-		if (stacks.size() > 14) {
-			return;
-		}
+
 		for (ItemStack s : stacks) {
 			giveItem(p, s);
 		}
 	}
 
-	public static boolean giveItem(Player p, ItemStack... s) {
-		if (s == null) {
+	public static boolean giveItem(Player p, ItemStack stack) {
+		if (stack == null) {
 			return false;
 		}
-		for (ItemStack stack : s)
-			if (stack == null)
-				return false;
+
+		if (Money.isMoney(stack)) {
+			Money.getMoney(stack).transform(p);
+			return true;
+		}
+
 		if (p.getInventory().firstEmpty() != -1) {
-			p.getInventory().addItem(s);
+			p.getInventory().addItem(stack);
 			p.updateInventory();
 			return true;
 		} else {
-			dropItem(p, p.getLocation(), Arrays.asList(s));
+			ArrayList<ItemStack> l = new ArrayList<ItemStack>();
+			l.add(stack);
+			dropItem(p, p.getLocation(), l);
 			return true;
 		}
 	}
