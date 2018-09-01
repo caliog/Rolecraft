@@ -28,24 +28,23 @@ public class Money extends CustomItem {
 		syncItemStack();
 	}
 
+	// TODO do not transform on "item money" command since you want to put this
+	// in a shop or sth
 	public void syncItemStack() {
 		ItemMeta meta = getItemMeta();
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName());
 		List<String> lore = new ArrayList<String>();
 
-		lore.add(ChatColor.GREEN + Msg.getMessage(Key.WORD_AMOUNT) + ": " + ChatColor.GOLD + amount);
-		lore.add(" ");
-		lore.add(ChatColor.GRAY + Msg.getMessage(Key.MONEY_CLICK));
-
+		lore.add(ChatColor.GREEN + Msg.getMessage(Key.WORD_VALUE) + ": " + ChatColor.GOLD + amount);
 		meta.setLore(lore);
 		setItemMeta(meta);
 	}
 
 	@SuppressWarnings("deprecation")
-	public void onClick(Player player) {
+	public void transform(Player player) {
 		if (Manager.economy != null) {
+			Manager.economy.depositPlayer(player, this.amount);
 			if (player.getItemInHand().equals(this)) {
-				Manager.economy.depositPlayer(player, this.amount);
 				player.setItemInHand(new ItemStack(Material.AIR));
 			}
 		} else {

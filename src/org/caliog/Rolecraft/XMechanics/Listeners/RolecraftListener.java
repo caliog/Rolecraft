@@ -198,7 +198,7 @@ public class RolecraftListener implements Listener {
 			Spellbook.onClick(event.getPlayer());
 		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 				&& (Money.isMoney(stack))) {
-			Money.getMoney(stack).onClick(event.getPlayer());
+			Money.getMoney(stack).transform(event.getPlayer());
 		}
 	}
 
@@ -247,18 +247,26 @@ public class RolecraftListener implements Listener {
 				// money
 				if (Money.isMoney(stack)) {
 					Money pickup = Money.getMoney(stack);
-					for (int i = 0; i < event.getPlayer().getInventory().getSize(); i++) {
-						ItemStack s = event.getPlayer().getInventory().getItem(i);
-						if (Money.isMoney(s)) {
-							Money money = Money.getMoney(s);
-							money.addAmount(pickup.getMoneyAmount());
-							event.getPlayer().getInventory().setItem(i, money);
-							event.getPlayer().playSound(event.getItem().getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.2F, 0.2F);
-							event.getItem().remove();
-							event.setCancelled(true);
-							break;
-						}
-					}
+
+					// only pickup the value
+					pickup.transform(event.getPlayer());
+					event.getItem().remove();
+					event.setCancelled(true);
+					event.getPlayer().playSound(event.getItem().getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.2F, 0.2F);
+					return;
+					/*
+					 * for (int i = 0; i <
+					 * event.getPlayer().getInventory().getSize(); i++) {
+					 * ItemStack s =
+					 * event.getPlayer().getInventory().getItem(i); if
+					 * (Money.isMoney(s)) { Money money = Money.getMoney(s);
+					 * money.addAmount(pickup.getMoneyAmount());
+					 * event.getPlayer().getInventory().setItem(i, money);
+					 * event.getPlayer().playSound(event.getItem().getLocation()
+					 * , Sound.ENTITY_ITEM_PICKUP, 0.2F, 0.2F);
+					 * event.getItem().remove(); event.setCancelled(true);
+					 * break; } }
+					 */
 				}
 
 				// potions stack

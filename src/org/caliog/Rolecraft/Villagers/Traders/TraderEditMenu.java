@@ -16,8 +16,8 @@ import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem.ExitButton;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
-import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -33,9 +33,6 @@ public class TraderEditMenu extends Menu {
 		TraderMenu.costsPhrase = Msg.getMessage(Key.WORD_COSTS) + ": ";
 	}
 
-	/**
-	 * This method only saves costs, slot and stack of the MenuItem in a string.
-	 */
 	public void loadFromString(String str) {
 		String[] split1 = str.split(";;");
 		this.init();

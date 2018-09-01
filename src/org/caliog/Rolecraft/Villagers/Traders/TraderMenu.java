@@ -15,8 +15,8 @@ import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem.ExitButton;
-import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class TraderMenu extends Menu {
@@ -30,9 +30,6 @@ public class TraderMenu extends Menu {
 		costsPhrase = Msg.getMessage(Key.WORD_COSTS) + ": ";
 	}
 
-	/**
-	 * This method only saves costs, slot and stack of the MenuItem in a string.
-	 */
 	public void loadFromString(String str) {
 		String[] split1 = str.split(";;");
 		for (String s : split1) {

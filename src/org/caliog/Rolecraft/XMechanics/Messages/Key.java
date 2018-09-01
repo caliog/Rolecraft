@@ -6,7 +6,6 @@ public enum Key {
 	// GENERAL
 	DEAD_MESSAGE,
 	LEVEL_REACHED,
-	MONEY_CLICK,//TODO Write in lang files
 	//CLASS
 	CLASS_CHANGED,
 	CLASS_CHANGE_OFFER,
@@ -62,7 +61,8 @@ public enum Key {
 	WORD_RIGHT,
 	WORD_SOULBOUND,
 	WORD_CLASS,
-	WORD_COSTS;
+	WORD_COSTS, 
+	WORD_VALUE;
 	// @formatter:on
 
 	public String getKey() {

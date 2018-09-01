@@ -61,12 +61,20 @@ public class Debugger {
 		log(LogLevel.EXCEPTION, title, msg);
 	}
 
+	public static void error(String msg) {
+		error(LogTitle.NONE, msg);
+	}
+
 	public static void error(LogTitle title, String msg) {
 		log(LogLevel.ERROR, title, msg);
 	}
 
 	public static void warning(LogTitle title, String msg) {
 		log(LogLevel.WARNING, title, msg);
+	}
+
+	public static void info(String msg) {
+		info(LogTitle.NONE, msg);
 	}
 
 	public static void info(LogTitle title, String msg) {
