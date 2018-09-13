@@ -28,8 +28,6 @@ public class Money extends CustomItem {
 		syncItemStack();
 	}
 
-	// TODO do not transform on "item money" command since you want to put this
-	// in a shop or sth
 	public void syncItemStack() {
 		ItemMeta meta = getItemMeta();
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName());
@@ -40,12 +38,15 @@ public class Money extends CustomItem {
 		setItemMeta(meta);
 	}
 
-	@SuppressWarnings("deprecation")
 	public void transform(Player player) {
+		transform(player, false);
+	}
+
+	public void transform(Player player, boolean clicked) {
 		if (Manager.economy != null) {
 			Manager.economy.depositPlayer(player, this.amount);
-			if (player.getItemInHand().equals(this)) {
-				player.setItemInHand(new ItemStack(Material.AIR));
+			if (clicked && Money.isMoney(player.getInventory().getItemInMainHand())) {
+				player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 			}
 		} else {
 			Debugger.warning(LogTitle.NONE, "Tried to convert money-item to money without Vault installed. (Money.java, onClick)");
@@ -86,6 +87,11 @@ public class Money extends CustomItem {
 
 	}
 
+	/*
+	 * Careful!
+	 * 
+	 * This produces a NEW ItemStack copying the existing stack.
+	 */
 	public static Money getMoney(ItemStack stack) {
 		if (stack != null && stack.hasItemMeta() && stack.getItemMeta().hasLore() && stack.getItemMeta().hasDisplayName()) {
 			if (!stack.getItemMeta().getDisplayName().equals(ChatColor.DARK_GRAY + getCurrencyName(false)))

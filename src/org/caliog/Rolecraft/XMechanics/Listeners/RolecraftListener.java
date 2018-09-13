@@ -189,7 +189,11 @@ public class RolecraftListener implements Listener {
 	public void customItemClick(PlayerInteractEvent event) {
 		if (RolecraftConfig.isWorldDisabled(event.getPlayer().getWorld()))
 			return;
-		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
+		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand(); // TODO
+																				// CHECK
+																				// FOR
+																				// VERSION
+																				// CONTROLL
 		if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 				&& (Skillstar.isSkillstar(stack))) {
 			event.getPlayer().openInventory(new SkillInventoryView(event.getPlayer(), event.getPlayer().getInventory()));
@@ -198,7 +202,7 @@ public class RolecraftListener implements Listener {
 			Spellbook.onClick(event.getPlayer());
 		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 				&& (Money.isMoney(stack))) {
-			Money.getMoney(stack).transform(event.getPlayer());
+			Money.getMoney(stack).transform(event.getPlayer(), true);
 		}
 	}
 
@@ -525,6 +529,7 @@ public class RolecraftListener implements Listener {
 			return;
 		Class<?>[] a = new Class<?>[0];
 		Inventory inv = null;
+		// TODO Version Controll
 		if (Utils.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
 			inv = event.getClickedInventory();
 		} else {

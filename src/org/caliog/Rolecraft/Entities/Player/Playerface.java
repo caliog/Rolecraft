@@ -92,16 +92,20 @@ public class Playerface {
 		}
 
 		for (ItemStack s : stacks) {
-			giveItem(p, s);
+			giveItem(p, s, true);
 		}
 	}
 
 	public static boolean giveItem(Player p, ItemStack stack) {
+		return giveItem(p, stack, true);
+	}
+
+	public static boolean giveItem(Player p, ItemStack stack, boolean transfMoney) {
 		if (stack == null) {
 			return false;
 		}
 
-		if (Money.isMoney(stack)) {
+		if (Money.isMoney(stack) && transfMoney) {
 			Money.getMoney(stack).transform(p);
 			return true;
 		}

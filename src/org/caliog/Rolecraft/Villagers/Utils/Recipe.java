@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.inventory.ItemStack;
-import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
+import org.caliog.Rolecraft.Items.Custom.Money;
 
 public class Recipe {
 
@@ -14,13 +14,8 @@ public class Recipe {
 		return recipes;
 	}
 
-	// TODO new money convention (+ money command to transform money to
-	// money-item?)
 	public void add(ItemStack give, int price) {
-		if (price < 64)
-			add(new ItemStack(RolecraftConfig.getCurrency(), price), give);
-		else
-			add(new ItemStack(RolecraftConfig.getCurrency(), 64), new ItemStack(RolecraftConfig.getCurrency(), price - 64), give);
+		add(new Money(price), give);
 	}
 
 	protected void add(ItemStack get, ItemStack give) {

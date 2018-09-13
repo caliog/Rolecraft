@@ -124,7 +124,8 @@ public class GManager {
 			id++;
 		}
 		if (NPCManager.npcManager == null) {
-			Manager.plugin.getLogger().warning("Failed to create guard. ( " + Manager.plugin.getBukkitVersion() + " does not support guards.");
+			Manager.plugin.getLogger()
+					.warning("Failed to create guard. ( " + Manager.plugin.getBukkitVersion() + " does not support guards.");
 			return;
 		}
 		Guard g = new Guard(name, loc, id, null);
@@ -139,7 +140,7 @@ public class GManager {
 	public static void doLogics(long timer) {
 		GuardWatcher.run();
 
-		// This should be a temporary solution
+		// This should be a temporary solution (not compatible with v1.11.2)
 		if (timer % 12 == 0) {
 			Collection<? extends Player> list = Bukkit.getOnlinePlayers();
 			for (Guard g : guards) {

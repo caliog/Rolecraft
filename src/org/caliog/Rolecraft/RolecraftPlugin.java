@@ -53,7 +53,8 @@ public class RolecraftPlugin extends JavaPlugin {
 		cmdReg = new CommandRegister();
 
 		RolecraftConfig.init();
-		Debugger.info(LogTitle.NONE, "Enabled Rolecraft version:", bukkitVersion);
+		Debugger.info(LogTitle.NONE, "Enabled :", getDescription().getFullName());
+		Debugger.info(LogTitle.NONE, "Bukkit version:", bukkitVersion);
 
 		createMIC();
 		createSpellCollection();

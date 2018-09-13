@@ -8,8 +8,8 @@ import org.caliog.Rolecraft.Items.ItemUtils;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
-import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField.FieldProperty;
+import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
 import org.caliog.Rolecraft.XMechanics.Messages.CmdMessage;
 
 public class Commanditem extends Commands {
@@ -35,7 +35,7 @@ public class Commanditem extends Commands {
 				if (args.length > 2) {
 					t = Boolean.valueOf(args[2]);
 				}
-				if (Playerface.giveItem(player, ItemUtils.getItem(name + ":" + a + ":" + t)))
+				if (Playerface.giveItem(player, ItemUtils.getItem(name + ":" + a + ":" + t), false))
 					;
 				else
 					player.sendMessage(CmdMessage.gaveYouItemNot);
