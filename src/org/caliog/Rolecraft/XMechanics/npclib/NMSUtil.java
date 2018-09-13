@@ -30,7 +30,7 @@ public interface NMSUtil {
 	public abstract Entity createNPCEntity(NPCManager manager, BWorld world, String name);
 
 	public static NMSUtil getUtil() {
-		String version = Manager.plugin.getVersion();
+		String version = Manager.plugin.getBukkitVersion();
 		try {
 			Class<?> raw = Class.forName("org.caliog.Rolecraft.XMechanics.npclib." + version + ".Util");
 			Class<? extends NMSUtil> util = raw.asSubclass(NMSUtil.class);

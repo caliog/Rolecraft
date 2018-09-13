@@ -34,15 +34,15 @@ import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class RolecraftPlugin extends JavaPlugin {
 	public CommandRegister cmdReg;
-	private String version;
+	private String bukkitVersion;
 	private FileCreator fc = new FileCreator();
 	int backupTask;
 
 	public void onEnable() {
 		String pN = Bukkit.getServer().getClass().getPackage().getName();
-		version = pN.substring(pN.lastIndexOf(".") + 1);
+		bukkitVersion = pN.substring(pN.lastIndexOf(".") + 1);
 
-		if (!version.equalsIgnoreCase("v1_12_R1") && !version.equalsIgnoreCase("v1_11_R1")) {
+		if (!bukkitVersion.equalsIgnoreCase("v1_12_R1") && !bukkitVersion.equalsIgnoreCase("v1_11_R1")) {
 			getLogger().warning("\u001B[31mGuards will not work with your bukkit version. \u001B[0m");
 		}
 
@@ -53,7 +53,7 @@ public class RolecraftPlugin extends JavaPlugin {
 		cmdReg = new CommandRegister();
 
 		RolecraftConfig.init();
-		Debugger.info(LogTitle.NONE, "Enabled Rolecraft version:", version);
+		Debugger.info(LogTitle.NONE, "Enabled Rolecraft version:", bukkitVersion);
 
 		createMIC();
 		createSpellCollection();
@@ -167,8 +167,8 @@ public class RolecraftPlugin extends JavaPlugin {
 
 	}
 
-	public String getVersion() {
-		return version;
+	public String getBukkitVersion() {
+		return bukkitVersion;
 	}
 
 	private void createSpellCollection() {
@@ -214,7 +214,7 @@ public class RolecraftPlugin extends JavaPlugin {
 	}
 
 	public void reload() {
-		Debugger.info(LogTitle.NONE, "Reloading Rolecraft version:", version);
+		Debugger.info(LogTitle.NONE, "Reloading Rolecraft version:", bukkitVersion);
 		RolecraftConfig.config = YamlConfiguration.loadConfiguration(new File(FilePath.config));
 		Msg.file = YamlConfiguration.loadConfiguration(new File(FilePath.messages));
 		ClazzLoader.classes = YamlConfiguration.loadConfiguration(new File(FilePath.classes));

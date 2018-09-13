@@ -7,7 +7,7 @@ import org.caliog.Rolecraft.XMechanics.NMS.NMS;
 public class NMSMethods {
 
 	public static String getNMSMethodChar() {
-		if (Manager.plugin.getVersion().equals("v1_8_R2") || Manager.plugin.getVersion().equals("v1_8_R3"))
+		if (Manager.plugin.getBukkitVersion().equals("v1_8_R2") || Manager.plugin.getBukkitVersion().equals("v1_8_R3"))
 			return "a";
 		else
 			return "b";
@@ -21,7 +21,7 @@ public class NMSMethods {
 			Object bc = chatSerializer.getMethod(getNMSMethodChar(), String.class).invoke(null, "{'text': '" + msg + "'}");
 			Object packet;
 
-			if (Manager.plugin.getVersion().startsWith("v1_11")) {
+			if (Manager.plugin.getBukkitVersion().startsWith("v1_11")) {
 				packet = packetPlayOutChat.getConstructor(NMS.getNMSClass("IChatBaseComponent"), byte.class).newInstance(bc, (byte) 2);
 			} else {// version v1_12
 				Object chatMessageType = NMS.getNMSClass("ChatMessageType").getMethod("a", byte.class).invoke(null, (byte) 2);

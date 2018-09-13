@@ -9,7 +9,7 @@ import org.caliog.Rolecraft.Manager;
 
 public class NMS {
 	public static Class<?> getNMSClass(String nmsClassString) throws ClassNotFoundException {
-		String name = "net.minecraft.server." + Manager.plugin.getVersion() + "." + nmsClassString;
+		String name = "net.minecraft.server." + Manager.plugin.getBukkitVersion() + "." + nmsClassString;
 		Class<?> nmsClass = Class.forName(name);
 		return nmsClass;
 	}
@@ -24,7 +24,7 @@ public class NMS {
 	}
 
 	public static Class<?> getCraftbukkitNMSClass(String nmsClassString) throws ClassNotFoundException {
-		String name = "org.bukkit.craftbukkit." + Manager.plugin.getVersion() + "." + nmsClassString;
+		String name = "org.bukkit.craftbukkit." + Manager.plugin.getBukkitVersion() + "." + nmsClassString;
 		Class<?> nmsClass = Class.forName(name);
 		return nmsClass;
 	}

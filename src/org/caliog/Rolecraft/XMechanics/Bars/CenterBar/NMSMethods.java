@@ -7,7 +7,7 @@ import org.caliog.Rolecraft.XMechanics.NMS.NMS;
 public class NMSMethods {
 
 	public static String getNMSMethodChar() {
-		if (Manager.plugin.getVersion().equals("v1_10_R1"))
+		if (Manager.plugin.getBukkitVersion().equals("v1_10_R1"))
 			return "b";
 		else
 			return "b";

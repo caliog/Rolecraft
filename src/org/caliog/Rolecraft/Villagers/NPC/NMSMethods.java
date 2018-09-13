@@ -56,7 +56,7 @@ public class NMSMethods {
 	}
 
 	public static String getRecipeListFieldName() {
-		if (Manager.plugin.getVersion().equals("v1_12_R1"))
+		if (Manager.plugin.getBukkitVersion().equals("v1_12_R1"))
 			return "bK";
 		else
 			return "bJ";
