@@ -10,20 +10,19 @@ import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.NMS.NMS;
 
 public class NMSMethods {
 
 	public static void initVillager(VillagerNPC npc) {
 		try {
-			Class<?> entityInsentient = NMS.getNMSClass("EntityInsentient");
-			Class<?> entityCreature = NMS.getNMSClass("EntityCreature");
-			Class<?> craftEntity = NMS.getCraftbukkitNMSClass("entity.CraftEntity");
-			Class<?> entityHuman = NMS.getNMSClass("EntityHuman");
-			Class<?> pathfinderGoalSelector = NMS.getNMSClass("PathfinderGoalSelector");
-			Class<?> pathfinderGoalRandomStroll = NMS.getNMSClass("PathfinderGoalRandomStroll");
-			Class<?> pathfinderGoalLookAtPlayer = NMS.getNMSClass("PathfinderGoalLookAtPlayer");
-			Class<?> pathfinderGoal = NMS.getNMSClass("PathfinderGoal");
+			Class<?> entityInsentient = Reflect.getNMSClass("EntityInsentient");
+			Class<?> entityCreature = Reflect.getNMSClass("EntityCreature");
+			Class<?> craftEntity = Reflect.getCraftbukkitNMSClass("entity.CraftEntity");
+			Class<?> entityHuman = Reflect.getNMSClass("EntityHuman");
+			Class<?> pathfinderGoalSelector = Reflect.getNMSClass("PathfinderGoalSelector");
+			Class<?> pathfinderGoalRandomStroll = Reflect.getNMSClass("PathfinderGoalRandomStroll");
+			Class<?> pathfinderGoalLookAtPlayer = Reflect.getNMSClass("PathfinderGoalLookAtPlayer");
+			Class<?> pathfinderGoal = Reflect.getNMSClass("PathfinderGoal");
 
 			Object entity = entityInsentient.cast(craftEntity.getMethod("getHandle").invoke(npc.getBukkitEntity()));
 			Field goalsField = entityInsentient.getDeclaredField("goalSelector");
@@ -44,7 +43,8 @@ public class NMSMethods {
 
 			// TODO method name "a" is variable
 			Method a = pathfinderGoalSelector.getMethod("a", int.class, pathfinderGoal);
-			a.invoke(goals, 6, pathfinderGoalRandomStroll.getConstructor(entityCreature, double.class).newInstance(entity, 0D));
+			a.invoke(goals, 6,
+					pathfinderGoalRandomStroll.getConstructor(entityCreature, double.class).newInstance(entity, 0D));
 			a.invoke(goals, 7, pathfinderGoalLookAtPlayer.getConstructor(entityInsentient, Class.class, float.class)
 					.newInstance(entityInsentient.cast(entity), entityHuman, 8F));
 
@@ -67,23 +67,23 @@ public class NMSMethods {
 		if (recipe.isEmpty())
 			return false;
 		try {
-			Class<?> entityVillager = NMS.getNMSClass("EntityVillager");
-			Class<?> world = NMS.getNMSClass("World");
-			Class<?> craftPlayer = NMS.getCraftbukkitNMSClass("entity.CraftPlayer");
-			Class<?> entityPlayer = NMS.getNMSClass("EntityPlayer");
-			Class<?> entityHuman = NMS.getNMSClass("EntityHuman");
-			Class<?> merchantRecipeList = NMS.getNMSClass("MerchantRecipeList");
-			Class<?> imerchant = NMS.getNMSClass("IMerchant");
-			Class<?> statistic = NMS.getNMSClass("Statistic");
-			Class<?> statisticList = NMS.getNMSClass("StatisticList");
+			Class<?> entityVillager = Reflect.getNMSClass("EntityVillager");
+			Class<?> world = Reflect.getNMSClass("World");
+			Class<?> craftPlayer = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+			Class<?> entityPlayer = Reflect.getNMSClass("EntityPlayer");
+			Class<?> entityHuman = Reflect.getNMSClass("EntityHuman");
+			Class<?> merchantRecipeList = Reflect.getNMSClass("MerchantRecipeList");
+			Class<?> imerchant = Reflect.getNMSClass("IMerchant");
+			Class<?> statistic = Reflect.getNMSClass("Statistic");
+			Class<?> statisticList = Reflect.getNMSClass("StatisticList");
 
 			Object handle = craftPlayer.getMethod("getHandle").invoke(player);
-			Object villager = entityVillager.getConstructor(world, int.class).newInstance(entityPlayer.getField("world").get(handle), 0);
+			Object villager = entityVillager.getConstructor(world, int.class)
+					.newInstance(entityPlayer.getField("world").get(handle), 0);
 			if ((trader.getName() != null)) {
 				entityVillager.getMethod("setCustomName", String.class).invoke(villager, trader.getName());
 			}
 
-			// TODO field name "bJ" is variable
 			Field careerLevelField = entityVillager.getDeclaredField(getRecipeListFieldName());
 			careerLevelField.setAccessible(true);
 			careerLevelField.set(villager, Integer.valueOf(10));
@@ -100,7 +100,8 @@ public class NMSMethods {
 			for (org.bukkit.inventory.ItemStack[] rec : recipe.getRecipe()) {
 				if (rec[2] == null || rec[2].getType().equals(Material.AIR))
 					continue;
-				merchantRecipeList.getMethod("add", Object.class).invoke(recipeList, createRecipe(rec[0], rec[1], rec[2]));
+				merchantRecipeList.getMethod("add", Object.class).invoke(recipeList,
+						createRecipe(rec[0], rec[1], rec[2]));
 			}
 			recipeListField.set(villager, recipeList);
 			entityVillager.getMethod("setTradingPlayer", entityHuman).invoke(villager, handle);
@@ -123,10 +124,10 @@ public class NMSMethods {
 		if (item2 == null)
 			item2 = new ItemStack(Material.AIR);
 		try {
-			Class<?> merchantRecipe = NMS.getNMSClass("MerchantRecipe");
-			Class<?> itemStack = NMS.getNMSClass("ItemStack");
-			recipe = merchantRecipe.getConstructor(itemStack, itemStack, itemStack).newInstance(getHandle(item1), getHandle(item2),
-					getHandle(item3));
+			Class<?> merchantRecipe = Reflect.getNMSClass("MerchantRecipe");
+			Class<?> itemStack = Reflect.getNMSClass("ItemStack");
+			recipe = merchantRecipe.getConstructor(itemStack, itemStack, itemStack).newInstance(getHandle(item1),
+					getHandle(item2), getHandle(item3));
 
 			maxUsesField = merchantRecipe.getDeclaredField("maxUses");
 			maxUsesField.setAccessible(true);
@@ -141,7 +142,7 @@ public class NMSMethods {
 	private static Object getHandle(ItemStack item) throws Exception {
 		if (item == null)
 			return null;
-		Class<?> craftItemStack = NMS.getCraftbukkitNMSClass("inventory.CraftItemStack");
+		Class<?> craftItemStack = Reflect.getCraftbukkitNMSClass("inventory.CraftItemStack");
 		return craftItemStack.getMethod("asNMSCopy", org.bukkit.inventory.ItemStack.class).invoke(null, item);
 	}
 

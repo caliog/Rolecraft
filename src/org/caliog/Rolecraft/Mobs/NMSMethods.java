@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.XMechanics.NMS.NMS;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 
 public class NMSMethods {
 	private static Class<?> entityCreature;
@@ -28,17 +28,17 @@ public class NMSMethods {
 
 	public static void init() throws ClassNotFoundException {
 		init = true;
-		entityCreature = NMS.getNMSClass("EntityCreature");
-		craftEntity = NMS.getCraftbukkitNMSClass("entity.CraftEntity");
-		entityInsentient = NMS.getNMSClass("EntityInsentient");
-		pathfinderGoalSelector = NMS.getNMSClass("PathfinderGoalSelector");
-		pathfinderGoal = NMS.getNMSClass("PathfinderGoal");
-		pathfinderGoalRandomStroll = NMS.getNMSClass("PathfinderGoalRandomStroll");
-		pathfinderGoalFloat = NMS.getNMSClass("PathfinderGoalFloat");
-		pathfinderGoalMeleeAttack = NMS.getNMSClass("PathfinderGoalMeleeAttack");
-		pathfinderGoalMoveTowardsRestriction = NMS.getNMSClass("PathfinderGoalMoveTowardsRestriction");
-		pathfinderGoalHurtByTarget = NMS.getNMSClass("PathfinderGoalHurtByTarget");
-		pathfinderGoalNearestAttackableTarget = NMS.getNMSClass("PathfinderGoalNearestAttackableTarget");
+		entityCreature = Reflect.getNMSClass("EntityCreature");
+		craftEntity = Reflect.getCraftbukkitNMSClass("entity.CraftEntity");
+		entityInsentient = Reflect.getNMSClass("EntityInsentient");
+		pathfinderGoalSelector = Reflect.getNMSClass("PathfinderGoalSelector");
+		pathfinderGoal = Reflect.getNMSClass("PathfinderGoal");
+		pathfinderGoalRandomStroll = Reflect.getNMSClass("PathfinderGoalRandomStroll");
+		pathfinderGoalFloat = Reflect.getNMSClass("PathfinderGoalFloat");
+		pathfinderGoalMeleeAttack = Reflect.getNMSClass("PathfinderGoalMeleeAttack");
+		pathfinderGoalMoveTowardsRestriction = Reflect.getNMSClass("PathfinderGoalMoveTowardsRestriction");
+		pathfinderGoalHurtByTarget = Reflect.getNMSClass("PathfinderGoalHurtByTarget");
+		pathfinderGoalNearestAttackableTarget = Reflect.getNMSClass("PathfinderGoalNearestAttackableTarget");
 	}
 
 	public static void setTarget(Entity e, LivingEntity target) {

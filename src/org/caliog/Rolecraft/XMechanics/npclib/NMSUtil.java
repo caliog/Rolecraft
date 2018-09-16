@@ -9,7 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.NMS.NMS;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
 
 import com.google.common.base.Function;
@@ -56,10 +56,10 @@ public interface NMSUtil {
 
 	public static void sendPacketsTo(Iterable<? extends Player> recipients, Object... packets) {
 		try {
-			Class<?> craftPlayerClass = NMS.getCraftbukkitNMSClass("entity.CraftPlayer");
-			Class<?> entityPlayerClass = NMS.getNMSClass("EntityPlayer");
-			Class<?> playerConnectionClass = NMS.getNMSClass("PlayerConnection");
-			Class<?> packetClass = NMS.getNMSClass("Packet");
+			Class<?> craftPlayerClass = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+			Class<?> entityPlayerClass = Reflect.getNMSClass("EntityPlayer");
+			Class<?> playerConnectionClass = Reflect.getNMSClass("PlayerConnection");
+			Class<?> packetClass = Reflect.getNMSClass("Packet");
 			Iterable<Object> nmsRecipients = Iterables.transform(recipients, new Function<Player, Object>() {
 
 				@Override

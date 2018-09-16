@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
-import org.caliog.Rolecraft.XMechanics.NMS.NMS;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 
 /**
  * Server hacks for Bukkit
@@ -23,7 +23,7 @@ public class BServer {
 	private BServer() {
 		server = Bukkit.getServer();
 		try {
-			craftserver = NMS.getCraftbukkitNMSClass("CraftServer");
+			craftserver = Reflect.getCraftbukkitNMSClass("CraftServer");
 			cServer = craftserver.cast(server);
 			mcServer = craftserver.getMethod("getServer").invoke(cServer);
 		} catch (final Exception ex) {

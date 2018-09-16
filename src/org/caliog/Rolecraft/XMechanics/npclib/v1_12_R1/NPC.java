@@ -12,7 +12,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.caliog.Rolecraft.XMechanics.NMS.NMS;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.NPCUtils;
 
 public class NPC extends org.caliog.Rolecraft.XMechanics.npclib.NPC {
@@ -23,16 +23,16 @@ public class NPC extends org.caliog.Rolecraft.XMechanics.npclib.NPC {
 
 	public NPC(Entity bukkitEntity) {
 		try {
-			entityClass = NMS.getNMSClass("Entity");
-			worldClass = NMS.getNMSClass("World");
-			worldServerClass = NMS.getNMSClass("WorldServer");
-			entityTrackerClass = NMS.getNMSClass("EntityTracker");
-			packetClass = NMS.getNMSClass("Packet");
-			packetPlayOutAnimationClass = NMS.getNMSClass("PacketPlayOutAnimation");
-			itemstackClass = NMS.getNMSClass("ItemStack");
-			enumItemSlotClass = NMS.getNMSClass("EnumItemSlot");
-			entityPlayerClass = NMS.getNMSClass("EntityPlayer");
-			packetPlayOutEntityEquipmentClass = NMS.getNMSClass("PacketPlayOutEntityEquipment");
+			entityClass = Reflect.getNMSClass("Entity");
+			worldClass = Reflect.getNMSClass("World");
+			worldServerClass = Reflect.getNMSClass("WorldServer");
+			entityTrackerClass = Reflect.getNMSClass("EntityTracker");
+			packetClass = Reflect.getNMSClass("Packet");
+			packetPlayOutAnimationClass = Reflect.getNMSClass("PacketPlayOutAnimation");
+			itemstackClass = Reflect.getNMSClass("ItemStack");
+			enumItemSlotClass = Reflect.getNMSClass("EnumItemSlot");
+			entityPlayerClass = Reflect.getNMSClass("EntityPlayer");
+			packetPlayOutEntityEquipmentClass = Reflect.getNMSClass("PacketPlayOutEntityEquipment");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -78,7 +78,7 @@ public class NPC extends org.caliog.Rolecraft.XMechanics.npclib.NPC {
 
 	public void setName(String name) {
 		try {
-			final Class<?> clazz = NMS.getNMSClass("EntityHuman");
+			final Class<?> clazz = Reflect.getNMSClass("EntityHuman");
 			final Field nameField = clazz.getDeclaredField("name");
 			nameField.setAccessible(true);
 			nameField.set(getEntity(), name);

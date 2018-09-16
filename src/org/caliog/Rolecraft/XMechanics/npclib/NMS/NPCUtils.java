@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.caliog.Rolecraft.XMechanics.NMS.NMS;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 
 public class NPCUtils {
 	public static void sendPacketNearby(Location location, Object packet) {
@@ -23,10 +23,10 @@ public class NPCUtils {
 				continue;
 			}
 			try {
-				Class<?> craftPlayerClass = NMS.getCraftbukkitNMSClass("entity.CraftPlayer");
-				Class<?> entityPlayerClass = NMS.getNMSClass("EntityPlayer");
-				Class<?> packetClass = NMS.getNMSClass("Packet");
-				Class<?> playerConnectionClass = NMS.getNMSClass("PlayerConnection");
+				Class<?> craftPlayerClass = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+				Class<?> entityPlayerClass = Reflect.getNMSClass("EntityPlayer");
+				Class<?> packetClass = Reflect.getNMSClass("Packet");
+				Class<?> playerConnectionClass = Reflect.getNMSClass("PlayerConnection");
 				Object entityPlayer = craftPlayerClass.getMethod("getHandle").invoke(craftPlayerClass.cast(p));
 				Object playerConnection = entityPlayerClass.getField("playerConnection").get(entityPlayer);
 				playerConnectionClass.getMethod("sendPacket", packetClass).invoke(playerConnection, packet);

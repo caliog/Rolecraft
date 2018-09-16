@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.caliog.Rolecraft.Guards.Guard;
-import org.caliog.Rolecraft.XMechanics.NMS.NMS;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BServer;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
@@ -45,8 +45,8 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 	public NPCManager(JavaPlugin plugin) {
 		server = BServer.getInstance();
 		try {
-			worldServerClass = NMS.getNMSClass("WorldServer");
-			entityClass = NMS.getNMSClass("Entity");
+			worldServerClass = Reflect.getNMSClass("WorldServer");
+			entityClass = Reflect.getNMSClass("Entity");
 
 			npcNetworkManager = new NPCNetworkManager();
 		} catch (final Exception e) {

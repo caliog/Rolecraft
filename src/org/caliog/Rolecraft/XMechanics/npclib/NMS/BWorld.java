@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.World;
-import org.caliog.Rolecraft.XMechanics.NMS.NMS;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 
 public class BWorld {
 
@@ -12,7 +12,7 @@ public class BWorld {
 
 	public BWorld(World world) {
 		try {
-			Class<?> craftworld = NMS.getCraftbukkitNMSClass("CraftWorld");
+			Class<?> craftworld = Reflect.getCraftbukkitNMSClass("CraftWorld");
 			Object cWorld = craftworld.cast(world);
 			wServer = craftworld.getMethod("getHandle").invoke(cWorld);
 		} catch (final Exception ex) {
