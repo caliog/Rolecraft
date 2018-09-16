@@ -70,13 +70,13 @@ public class RolecraftPlugin extends JavaPlugin {
 		Manager.scheduleRepeatingTask(Manager.getTask(), 20L, 1L);
 
 		if (RolecraftConfig.getBackupTime() > 0)
-			backupTask = Manager.scheduleRepeatingTask(DataFolder.backupTask(), 20L * 60L * RolecraftConfig.getBackupTime(),
-					20L * 60L * RolecraftConfig.getBackupTime());
+			backupTask = Manager.scheduleRepeatingTask(DataFolder.backupTask(),
+					20L * 60L * RolecraftConfig.getBackupTime(), 20L * 60L * RolecraftConfig.getBackupTime());
 
 		try {
-			Metrics metrics = new Metrics(this);
-			metrics.start();
-		} catch (IOException e) {
+			new Metrics(this);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		searchForNewVersion();
 		getLogger().info(getDescription().getFullName() + " enabled!");
@@ -221,8 +221,8 @@ public class RolecraftPlugin extends JavaPlugin {
 		ClazzLoader.classes = YamlConfiguration.loadConfiguration(new File(FilePath.classes));
 		Manager.cancelTask(backupTask);
 		if (RolecraftConfig.getBackupTime() > 0)
-			backupTask = Manager.scheduleRepeatingTask(DataFolder.backupTask(), 20L * 60L * RolecraftConfig.getBackupTime(),
-					20L * 60L * RolecraftConfig.getBackupTime());
+			backupTask = Manager.scheduleRepeatingTask(DataFolder.backupTask(),
+					20L * 60L * RolecraftConfig.getBackupTime(), 20L * 60L * RolecraftConfig.getBackupTime());
 	}
 
 	private void searchForNewVersion() {
@@ -232,8 +232,9 @@ public class RolecraftPlugin extends JavaPlugin {
 				@Override
 				public void onFinish(Updater updater) {
 					if (updater.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE))
-						getLogger().info("There is a new version (" + updater.getLatestName().replace("Rolecraft", "").trim()
-								+ ") of Rolecraft available!");
+						getLogger().info(
+								"There is a new version (" + updater.getLatestName().replace("Rolecraft", "").trim()
+										+ ") of Rolecraft available!");
 
 				}
 			});
