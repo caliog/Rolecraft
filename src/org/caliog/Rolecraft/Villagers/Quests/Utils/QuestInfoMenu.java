@@ -19,6 +19,7 @@ import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
 
 public class QuestInfoMenu extends Menu {
 
@@ -42,7 +43,7 @@ public class QuestInfoMenu extends Menu {
 
 		if (!quest.getMobs().isEmpty()) {
 			// 0. item - mob kills
-			item = new MenuItem(Msg.getMessage(Key.WORD_WANTED_MOBS), Material.SKULL_ITEM);
+			item = new MenuItem(Msg.getMessage(Key.WORD_WANTED_MOBS), Mat.SKULL_ITEM.e());
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
@@ -63,8 +64,10 @@ public class QuestInfoMenu extends Menu {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
-					MenuManager.openMenu(player, new ItemSelectorMenu((QuestInfoMenu) getMenu(),
-							Msg.getMessage(Key.WORD_COLLECT) + " " + Msg.getMessage(Key.WORD_ITEMS), quest.getCollects()));
+					MenuManager.openMenu(player,
+							new ItemSelectorMenu((QuestInfoMenu) getMenu(),
+									Msg.getMessage(Key.WORD_COLLECT) + " " + Msg.getMessage(Key.WORD_ITEMS),
+									quest.getCollects()));
 				}
 
 			});
@@ -80,8 +83,10 @@ public class QuestInfoMenu extends Menu {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
-					MenuManager.openMenu(player, new ItemSelectorMenu((QuestInfoMenu) getMenu(),
-							Msg.getMessage(Key.WORD_REWARD) + " " + Msg.getMessage(Key.WORD_ITEMS), quest.getRewards()));
+					MenuManager.openMenu(player,
+							new ItemSelectorMenu((QuestInfoMenu) getMenu(),
+									Msg.getMessage(Key.WORD_REWARD) + " " + Msg.getMessage(Key.WORD_ITEMS),
+									quest.getRewards()));
 				}
 
 			});
@@ -93,13 +98,15 @@ public class QuestInfoMenu extends Menu {
 			lore = new ArrayList<String>();
 			lore.add(Msg.getMessage(Key.QUEST_INFO_START_ITEMS));
 			item = new MenuItem(Msg.getMessage(Key.WORD_START) + " " + Msg.getMessage(Key.WORD_ITEMS),
-					Material.BOOK_AND_QUILL, lore);
+					Mat.BOOK_AND_QUILL.e(), lore);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
-					MenuManager.openMenu(player, new ItemSelectorMenu((QuestInfoMenu) getMenu(),
-							Msg.getMessage(Key.WORD_START) + " " + Msg.getMessage(Key.WORD_ITEMS), quest.getReceives()));
+					MenuManager.openMenu(player,
+							new ItemSelectorMenu((QuestInfoMenu) getMenu(),
+									Msg.getMessage(Key.WORD_START) + " " + Msg.getMessage(Key.WORD_ITEMS),
+									quest.getReceives()));
 				}
 
 			});
@@ -108,12 +115,14 @@ public class QuestInfoMenu extends Menu {
 
 		// 4. item - exp reward
 		lore = new ArrayList<String>();
-		item = new MenuItem(Msg.getMessage(Key.WORD_EXPERIENCE) + ": " + ChatColor.GREEN + quest.getExp(), Material.EXP_BOTTLE);
+		item = new MenuItem(Msg.getMessage(Key.WORD_EXPERIENCE) + ": " + ChatColor.GREEN + quest.getExp(),
+				Mat.EXP_BOTTLE.e());
 		this.setItem(4, item);
 
 		// 5. item - lvl
 		lore = new ArrayList<String>();
-		item = new MenuItem(Msg.getMessage(Key.WORD_MINIMUM_LEVEL) + ": " + ChatColor.GOLD + quest.getMinLevel(), Material.CAKE);
+		item = new MenuItem(Msg.getMessage(Key.WORD_MINIMUM_LEVEL) + ": " + ChatColor.GOLD + quest.getMinLevel(),
+				Material.CAKE);
 		this.setItem(5, item);
 
 		// 6. item - class
@@ -126,13 +135,14 @@ public class QuestInfoMenu extends Menu {
 			// 7. item - villager
 			lore = new ArrayList<String>();
 			lore.add(Msg.getMessage(Key.QUEST_TARGET_VILLAGER));
-			item = new MenuItem(quest.getTargetVillager(), Material.SKULL_ITEM, (short) 3, lore);
+			item = new MenuItem(quest.getTargetVillager(), Mat.SKULL_ITEM.e(), (short) 3, lore);
 			this.setItem(7, item);
 		}
 
 		if (accept) {
 			// accept button
-			item = new MenuItem(Msg.getMessage(Key.WORD_ACCEPT), Material.STAINED_GLASS_PANE, (short) 13, 1);
+			item = new MenuItem(Msg.getMessage(Key.WORD_ACCEPT), Mat.STAINED_GLASS_PANE.e(),
+					(short) 13, 1);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
@@ -183,9 +193,10 @@ public class QuestInfoMenu extends Menu {
 				String str = ChatColor.AQUA + Msg.getMessage(Key.WORD_AMOUNT) + ": " + map.get(name);
 				if (!isAccept())
 					str = ChatColor.AQUA + Msg.getMessage(Key.WORD_AMOUNT) + ": "
-							+ (map.get(name) - QuestKill.getKilled(player, getQuest().getName(), name)) + "/" + map.get(name);
+							+ (map.get(name) - QuestKill.getKilled(player, getQuest().getName(), name)) + "/"
+							+ map.get(name);
 				list.add(str);
-				final MenuItem item = new MenuItem(name, Material.SKULL_ITEM, list);
+				final MenuItem item = new MenuItem(name, Mat.SKULL_ITEM.e(), list);
 				this.setItem(c, item);
 				c++;
 			}

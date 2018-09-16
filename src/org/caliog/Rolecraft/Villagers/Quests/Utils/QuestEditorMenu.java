@@ -22,6 +22,7 @@ import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
 
 public class QuestEditorMenu extends Menu {
 
@@ -62,7 +63,7 @@ public class QuestEditorMenu extends Menu {
 		// 0. item - mob kills
 		lore.add("Choose mobs the quester has to kill.");
 
-		item = new MenuItem("Kill Mobs", Material.SKULL_ITEM, lore);
+		item = new MenuItem("Kill Mobs", Mat.SKULL_ITEM.e(), lore);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override
@@ -81,7 +82,8 @@ public class QuestEditorMenu extends Menu {
 
 			@Override
 			public void onClick(InventoryClickEvent event, Player player) {
-				MenuManager.openMenu(player, new ItemSelectorMenu((QuestEditorMenu) getMenu(), "Collect Items", collects));
+				MenuManager.openMenu(player,
+						new ItemSelectorMenu((QuestEditorMenu) getMenu(), "Collect Items", collects));
 			}
 
 		});
@@ -95,7 +97,8 @@ public class QuestEditorMenu extends Menu {
 
 			@Override
 			public void onClick(InventoryClickEvent event, Player player) {
-				MenuManager.openMenu(player, new ItemSelectorMenu((QuestEditorMenu) getMenu(), "Reward Items", rewards));
+				MenuManager.openMenu(player,
+						new ItemSelectorMenu((QuestEditorMenu) getMenu(), "Reward Items", rewards));
 			}
 
 		});
@@ -105,12 +108,13 @@ public class QuestEditorMenu extends Menu {
 		lore = new ArrayList<String>();
 		lore.add("Choose items the quester will");
 		lore.add("receive when he starts the quest.");
-		item = new MenuItem("Start Items", Material.BOOK_AND_QUILL, lore);
+		item = new MenuItem("Start Items", Mat.BOOK_AND_QUILL.e(), lore);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override
 			public void onClick(InventoryClickEvent event, Player player) {
-				MenuManager.openMenu(player, new ItemSelectorMenu((QuestEditorMenu) getMenu(), "Start Items", receives));
+				MenuManager.openMenu(player,
+						new ItemSelectorMenu((QuestEditorMenu) getMenu(), "Start Items", receives));
 			}
 
 		});
@@ -121,7 +125,7 @@ public class QuestEditorMenu extends Menu {
 		lore.add(ChatColor.GOLD + "exp: " + exp);
 		lore.add("<left> - increase");
 		lore.add("<right> - decrease");
-		item = new MenuItem("Experience Reward", Material.EXP_BOTTLE, lore);
+		item = new MenuItem("Experience Reward", Mat.EXP_BOTTLE.e(), lore);
 		{
 			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
@@ -212,7 +216,7 @@ public class QuestEditorMenu extends Menu {
 		lore.add("receives the collect items.");
 		lore.add(ChatColor.GRAY + "leave it blank and the");
 		lore.add(ChatColor.GRAY + "quester can keep his items.");
-		item = new MenuItem(targetVillager == null ? "Villager" : targetVillager, Material.SKULL_ITEM, (short) 3, lore);
+		item = new MenuItem(targetVillager == null ? "Villager" : targetVillager, Mat.SKULL_ITEM.e(), (short) 3, lore);
 		{
 			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
@@ -225,13 +229,16 @@ public class QuestEditorMenu extends Menu {
 						@Override
 						protected void doWork(String lastLine) {
 							if (lastLine == null) {
-								player.sendMessage(ChatColor.GOLD + "Enter the name of a villager: " + ChatColor.GRAY + "(q to quit)");
+								player.sendMessage(ChatColor.GOLD + "Enter the name of a villager: " + ChatColor.GRAY
+										+ "(q to quit)");
 								return;
 							}
 							Villager v = VManager.getVillager(lastLine);
 							if (v == null) {
-								player.sendMessage(ChatColor.DARK_GRAY + lastLine + ChatColor.RED + " is not a villager!");
-								player.sendMessage(ChatColor.GOLD + "Enter the name of a villager: " + ChatColor.GRAY + "(q to quit)");
+								player.sendMessage(
+										ChatColor.DARK_GRAY + lastLine + ChatColor.RED + " is not a villager!");
+								player.sendMessage(ChatColor.GOLD + "Enter the name of a villager: " + ChatColor.GRAY
+										+ "(q to quit)");
 								return;
 							} else {
 								((QuestEditorMenu) getMenu()).targetVillager = v.getName();
@@ -253,7 +260,7 @@ public class QuestEditorMenu extends Menu {
 		this.setItem(7, item);
 
 		// exit button
-		item = new MenuItem("Save..", Material.STAINED_GLASS_PANE, (short) 13, 1);
+		item = new MenuItem("Save..", Mat.STAINED_GLASS_PANE.e(), (short) 13, 1);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override
@@ -347,7 +354,7 @@ public class QuestEditorMenu extends Menu {
 				list.add(ChatColor.AQUA + "Amount: " + a);
 				list.add(ChatColor.GRAY + "<left> - increase");
 				list.add(ChatColor.GRAY + "<right> - decrease");
-				final MenuItem item = new MenuItem(name, Material.SKULL_ITEM, list);
+				final MenuItem item = new MenuItem(name, Mat.SKULL_ITEM.e(), list);
 				item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 					@Override
@@ -417,7 +424,7 @@ public class QuestEditorMenu extends Menu {
 			MenuItem item = new MenuItem("Info", Material.PAPER, list);
 			this.setItem(0, item);
 			// Exit button
-			item = new MenuItem("Save..", Material.STAINED_GLASS_PANE, (short) 13, 1);
+			item = new MenuItem("Save..", Mat.STAINED_GLASS_PANE.e(), (short) 13, 1);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override

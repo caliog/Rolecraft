@@ -7,8 +7,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
 
 /**
  * 
@@ -55,7 +55,7 @@ public class NPCPathFinder extends Thread {
 		Node adjacentBlock;
 		int rep = 0;
 		while (c != endNode && rep < max) { // Repetition variable prevents
-											// infinite loop when destination is
+												// infinite loop when destination is
 											// unreachable
 			if (cancel) {
 				return;
@@ -68,7 +68,8 @@ public class NPCPathFinder extends Thread {
 				for (int j = -1; j <= 1; j++) {
 					for (int k = -1; k <= 1; k++) {
 						adjacentBlock = getNode(c.b.getRelative(i, j, k));
-						if (adjacentBlock != c && !(j == 1 && adjacentBlock.b.getRelative(0, -1, 0).getType() == Material.FENCE)) {
+						if (adjacentBlock != c
+								&& !(j == 1 && adjacentBlock.b.getRelative(0, -1, 0).getType() == Mat.FENCE.e())) {
 							scoreBlock(adjacentBlock, c);
 						}
 					}
@@ -120,7 +121,8 @@ public class NPCPathFinder extends Thread {
 			final boolean xZCor2 = !getNode(parent.b.getRelative(xDir, 0, 0)).isNotsolid();
 
 			corner = xZCor1 || xZCor2;
-		} else if (node.xPos != parent.xPos && node.yPos != parent.yPos || node.yPos != parent.yPos && node.zPos != parent.zPos) {
+		} else if (node.xPos != parent.xPos && node.yPos != parent.yPos
+				|| node.yPos != parent.yPos && node.zPos != parent.zPos) {
 			corner = node.yPos > parent.yPos ? !getNode(parent.b.getRelative(0, 2, 0)).isNotsolid()
 					: !getNode(node.b.getRelative(0, 2, 0)).isNotsolid();
 		}
@@ -134,13 +136,13 @@ public class NPCPathFinder extends Thread {
 			node.update();
 		}
 
-		return !corner
-				&& (node.isNotsolid() && (!nodeBelow.isNotsolid() || nodeBelow.isLiquid() && node.isLiquid()) && nodeAbove.isNotsolid()
-						|| node == endNode);
+		return !corner && (node.isNotsolid() && (!nodeBelow.isNotsolid() || nodeBelow.isLiquid() && node.isLiquid())
+				&& nodeAbove.isNotsolid() || node == endNode);
 	}
 
 	private void scoreBlock(Node node, Node parent) {
-		final int diagonal = node.xPos != parent.xPos && node.zPos != parent.zPos || node.xPos != parent.xPos && node.yPos != parent.yPos
+		final int diagonal = node.xPos != parent.xPos && node.zPos != parent.zPos
+				|| node.xPos != parent.xPos && node.yPos != parent.yPos
 				|| node.yPos != parent.yPos && node.zPos != parent.zPos ? 14 : 10;
 
 		if (checkPath(node, parent)) {

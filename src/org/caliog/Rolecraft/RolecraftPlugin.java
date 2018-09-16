@@ -42,7 +42,8 @@ public class RolecraftPlugin extends JavaPlugin {
 		String pN = Bukkit.getServer().getClass().getPackage().getName();
 		bukkitVersion = pN.substring(pN.lastIndexOf(".") + 1);
 
-		if (!bukkitVersion.equalsIgnoreCase("v1_12_R1") && !bukkitVersion.equalsIgnoreCase("v1_11_R1")) {
+		if (!bukkitVersion.equalsIgnoreCase("v1_12_R1") && !bukkitVersion.equalsIgnoreCase("v1_11_R1")
+				&& !bukkitVersion.equalsIgnoreCase("v1_13_R2")) {
 			getLogger().warning("\u001B[31mGuards will not work with your bukkit version. \u001B[0m");
 		}
 

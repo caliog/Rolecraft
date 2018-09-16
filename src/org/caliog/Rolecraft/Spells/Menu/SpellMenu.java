@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
@@ -18,6 +17,7 @@ import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Pair;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
 
 public class SpellMenu extends Menu {
 
@@ -46,12 +46,12 @@ public class SpellMenu extends Menu {
 			Pair<Spell, Integer> value = map.get(k);
 			boolean canstillpowerup = value.first.getMaxPower() < 1 || value.second < value.first.getMaxPower();
 			lore.add(ChatColor.DARK_GRAY + "Power: " + value.second + ChatColor.GRAY + "/" + value.first.getMaxPower());
-			String e = k.replaceAll("1", ChatColor.RED + Msg.getMessage(Key.WORD_LEFT) + ChatColor.GRAY + "-").replaceAll("0",
-					ChatColor.BLUE + Msg.getMessage(Key.WORD_RIGHT) + ChatColor.GRAY + "-");
+			String e = k.replaceAll("1", ChatColor.RED + Msg.getMessage(Key.WORD_LEFT) + ChatColor.GRAY + "-")
+					.replaceAll("0", ChatColor.BLUE + Msg.getMessage(Key.WORD_RIGHT) + ChatColor.GRAY + "-");
 			lore.add(ChatColor.AQUA + e.substring(0, e.length() - 1));
 			if (t && canstillpowerup)
 				lore.add(ChatColor.GOLD + Msg.getMessage(Key.SPELL_CLICK_POWER));
-			item = new MenuItem(value.first.getName(), Material.BOOK_AND_QUILL, lore);
+			item = new MenuItem(value.first.getName(), Mat.BOOK_AND_QUILL.e(), lore);
 			{
 				final MenuItem final_item = item;
 				if (t && canstillpowerup)

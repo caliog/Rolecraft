@@ -17,6 +17,7 @@ import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInfoMenu;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
 
 public class QuestBook extends CustomItem {
 
@@ -55,7 +56,7 @@ public class QuestBook extends CustomItem {
 			public void init() {
 				super.init();
 				for (int i = 0; i < quests.size(); i++) {
-					MenuItem item = new MenuItem(quests.get(i), Material.BOOK_AND_QUILL);
+					MenuItem item = new MenuItem(quests.get(i), Mat.BOOK_AND_QUILL.e());
 					{
 						final int j = i;
 						item.setButtonClickHandler(item.new ButtonClickHandler(this) {

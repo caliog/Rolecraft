@@ -25,6 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.caliog.Rolecraft.Guards.Guard;
 import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
+import org.caliog.Rolecraft.XMechanics.npclib.NPC;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BServer;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
 
@@ -84,8 +85,9 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 				return;
 
 			for (NPC npc : npcs.values()) {
-				NMSUtil.sendPacketsTo(p, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER,
-						new EntityPlayer[] { (EntityPlayer) npc.getEntity() }));
+				NMSUtil.sendPacketsTo(p,
+						new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER,
+								new EntityPlayer[] { (EntityPlayer) npc.getEntity() }));
 			}
 
 		}
@@ -116,8 +118,8 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 
 			List<?> players = (List<?>) worldServerClass.getField("players").get(world.getWorldServer());
 			players.remove(entityHuman);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException
-				| NoSuchFieldException e) {
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException | NoSuchFieldException e) {
 			e.printStackTrace();
 		}
 		npcs.put(id, npc);
@@ -129,8 +131,9 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 		if (npc != null) {
 			npcs.remove(id);
 			npc.removeFromWorld();
-			NMSUtil.sendPacketsTo(Bukkit.getOnlinePlayers(), new PacketPlayOutPlayerInfo(
-					PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, new EntityPlayer[] { (EntityPlayer) npc.getEntity() }));
+			NMSUtil.sendPacketsTo(Bukkit.getOnlinePlayers(),
+					new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER,
+							new EntityPlayer[] { (EntityPlayer) npc.getEntity() }));
 
 		}
 	}
@@ -239,8 +242,9 @@ public class NPCManager extends org.caliog.Rolecraft.XMechanics.npclib.NPCManage
 
 	@Override
 	public void addGuardToPlayerList(Player player, Guard guard) {
-		NMSUtil.sendPacketsTo(player, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER,
-				new EntityPlayer[] { (EntityPlayer) guard.getNpc().getEntity() }));
+		NMSUtil.sendPacketsTo(player,
+				new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER,
+						new EntityPlayer[] { (EntityPlayer) guard.getNpc().getEntity() }));
 	}
 
 }

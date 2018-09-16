@@ -14,6 +14,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
 
 public class MenuItem {
 
@@ -80,8 +83,8 @@ public class MenuItem {
 		this(null, Material.AIR, (short) 0, 0, new ArrayList<String>(), null, stack, editable, costs);
 	}
 
-	public MenuItem(String name, Material mat, short data, int amount, List<String> lore, HashMap<Enchantment, Integer> enc,
-			ItemStack stack, boolean editable, int costs) {
+	public MenuItem(String name, Material mat, short data, int amount, List<String> lore,
+			HashMap<Enchantment, Integer> enc, ItemStack stack, boolean editable, int costs) {
 		this.material = mat;
 		this.data = data;
 		this.amount = amount;
@@ -216,7 +219,7 @@ public class MenuItem {
 	public class ExitButton extends MenuItem {
 
 		public ExitButton(Menu menu, String title) {
-			super(title, Material.STAINED_GLASS_PANE, (short) 13, 1);
+			super(title, Mat.STAINED_GLASS_PANE.e(), (short) 13, 1);
 			this.setButtonClickHandler(this.new ButtonClickHandler(menu) {
 
 				@Override

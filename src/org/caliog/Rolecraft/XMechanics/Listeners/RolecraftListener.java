@@ -62,6 +62,7 @@ import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
 
 @SuppressWarnings("deprecation")
 public class RolecraftListener implements Listener {
@@ -111,7 +112,8 @@ public class RolecraftListener implements Listener {
 					if (event.getNewLevel() > 60) {
 						c = Color.LIME;
 					}
-					data.addEffects(new FireworkEffect[] { FireworkEffect.builder().withColor(c).with(FireworkEffect.Type.STAR).build() });
+					data.addEffects(new FireworkEffect[] {
+							FireworkEffect.builder().withColor(c).with(FireworkEffect.Type.STAR).build() });
 					data.setPower(0);
 
 					firework.setFireworkMeta(data);
@@ -196,12 +198,13 @@ public class RolecraftListener implements Listener {
 																				// CONTROLL
 		if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 				&& (Skillstar.isSkillstar(stack))) {
-			event.getPlayer().openInventory(new SkillInventoryView(event.getPlayer(), event.getPlayer().getInventory()));
-		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
-				&& (Spellbook.isSpellbook(stack))) {
+			event.getPlayer()
+					.openInventory(new SkillInventoryView(event.getPlayer(), event.getPlayer().getInventory()));
+		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR))
+				|| (event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) && (Spellbook.isSpellbook(stack))) {
 			Spellbook.onClick(event.getPlayer());
-		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
-				&& (Money.isMoney(stack))) {
+		} else if (((event.getAction().equals(Action.RIGHT_CLICK_AIR))
+				|| (event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) && (Money.isMoney(stack))) {
 			Money.getMoney(stack).transform(event.getPlayer(), true);
 		}
 	}
@@ -284,7 +287,8 @@ public class RolecraftListener implements Listener {
 							if ((meta = contents[i].getItemMeta()) != null && meta.getDisplayName() != null)
 								if (meta.getDisplayName().equalsIgnoreCase(hp.getItemMeta().getDisplayName())) {
 									contents[i].setAmount(contents[i].getAmount() + 1);
-									event.getPlayer().playSound(event.getItem().getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.2F, 0.2F);
+									event.getPlayer().playSound(event.getItem().getLocation(), Sound.ENTITY_ITEM_PICKUP,
+											0.2F, 0.2F);
 									event.getItem().remove();
 									event.setCancelled(true);
 									return;
@@ -460,7 +464,7 @@ public class RolecraftListener implements Listener {
 		if (!player.getPlayer().isSneaking())
 			return;
 		ItemStack hand = player.getPlayer().getInventory().getItemInMainHand();
-		if (hand == null || !hand.getType().equals(Material.LEASH))
+		if (hand == null || !hand.getType().equals(Mat.LEASH.e()))
 			return;
 		for (Pet pet : player.getPets()) {
 			Entity entity = EntityUtils.getEntity(pet.getUniqueId(), event.getPlayer().getWorld());

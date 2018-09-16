@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
 
 public class Node { // Holds data about each block we check
 
@@ -12,7 +13,7 @@ public class Node { // Holds data about each block we check
 
 	static {
 		liquids.add(Material.WATER);
-		liquids.add(Material.STATIONARY_WATER);
+		liquids.add(Mat.STATIONARY_WATER.e());
 		// liquids.add(Material.LAVA); Maybe swimming in lava isn't the best
 		// idea for npcs
 		// liquids.add(Material.STATIONARY_LAVA);
@@ -35,9 +36,8 @@ public class Node { // Holds data about each block we check
 	}
 
 	public void update() {
-		NMSUtil util = NMSUtil.getUtil();
-		if (util != null)
-			util.nodeUpdate(this);
+		setNotSolid(!b.getType().isSolid());
+		setLiquid(getLiquids().contains(b.getType()));
 	}
 
 	public boolean isNotsolid() {

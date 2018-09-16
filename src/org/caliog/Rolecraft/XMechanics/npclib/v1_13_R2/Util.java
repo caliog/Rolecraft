@@ -1,10 +1,10 @@
-package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
+package org.caliog.Rolecraft.XMechanics.npclib.v1_13_R2;
 
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_13_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
@@ -13,11 +13,11 @@ import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
 
 import com.mojang.authlib.GameProfile;
 
-import net.minecraft.server.v1_12_R1.EntityLiving;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_12_R1.PlayerInteractManager;
-import net.minecraft.server.v1_12_R1.WorldServer;
+import net.minecraft.server.v1_13_R2.EntityLiving;
+import net.minecraft.server.v1_13_R2.EntityPlayer;
+import net.minecraft.server.v1_13_R2.PacketPlayOutPlayerInfo;
+import net.minecraft.server.v1_13_R2.PlayerInteractManager;
+import net.minecraft.server.v1_13_R2.WorldServer;
 
 public class Util extends NMSUtil {
 
@@ -31,10 +31,10 @@ public class Util extends NMSUtil {
 		while (yaw >= 180)
 			yaw -= 360;
 
-		net.minecraft.server.v1_12_R1.Entity e = (net.minecraft.server.v1_12_R1.Entity) getHandle(entity);
+		net.minecraft.server.v1_13_R2.Entity e = (net.minecraft.server.v1_13_R2.Entity) getHandle(entity);
 		e.yaw = yaw;
 		EntityLiving ee = (EntityLiving) e;
-		ee.aP = yaw;
+		ee.aS = yaw;
 	}
 
 	@Override

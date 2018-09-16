@@ -16,11 +16,7 @@ public class NPCPlayerConnection extends PlayerConnection {
 
 	@Override
 	public CraftPlayer getPlayer() {
-		return new CraftPlayer((CraftServer) Bukkit.getServer(), player); // Fake
-																			// player
-																			// prevents
-																			// spout
-																			// NPEs
+		return new CraftPlayer((CraftServer) Bukkit.getServer(), player);
 	}
 
 }
