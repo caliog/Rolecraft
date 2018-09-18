@@ -7,7 +7,7 @@ import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 public class NMSMethods {
 
 	public static String getNMSMethodChar() {
-		if (Manager.plugin.getServerVersion().equals("v1_10_R1"))
+		if (Manager.getServerVersion().equals("v1_10_R1"))
 			return "b";
 		else
 			return "b";

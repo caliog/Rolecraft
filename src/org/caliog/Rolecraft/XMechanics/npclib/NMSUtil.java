@@ -80,7 +80,7 @@ public abstract class NMSUtil {
 	public abstract Entity createNPCEntity(NPCManager manager, BWorld world, String name);
 
 	public static void initUtil() {
-		String version = Manager.plugin.getServerVersion();
+		String version = Manager.getServerVersion();
 		try {
 			Class<?> raw = Class.forName("org.caliog.Rolecraft.XMechanics.npclib." + version + ".Util");
 			Class<? extends NMSUtil> util = raw.asSubclass(NMSUtil.class);

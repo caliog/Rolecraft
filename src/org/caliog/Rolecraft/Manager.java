@@ -3,7 +3,6 @@ package org.caliog.Rolecraft;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -12,7 +11,6 @@ import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
-import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Guards.GManager;
 import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.Mobs.PetController;
@@ -35,16 +33,18 @@ import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 
 import net.milkbowl.vault.economy.Economy;
 
-public class Manager {
+public final class Manager {
 	public static RolecraftPlugin plugin;
 	private static long timer = 0L;
 	private static List<World> worlds = new ArrayList<World>();
 	public static Economy economy;
 
-	public static RolecraftPlayer getPlayer(UUID id) {
-		return PlayerManager.getPlayer(id);
+	// (no) construction
+	private Manager() {
+
 	}
 
+	// publics
 	public static Runnable getTask() {
 
 		return new Runnable() {
@@ -153,6 +153,7 @@ public class Manager {
 		}
 	}
 
+	// scheduler
 	public static int scheduleRepeatingTask(Runnable r, long d, long p) {
 		return Bukkit.getScheduler().scheduleSyncRepeatingTask(Manager.plugin, r, d, p);
 	}
@@ -183,12 +184,7 @@ public class Manager {
 		return taskId;
 	}
 
-	public static void broadcast(String string) {
-		for (RolecraftPlayer p : PlayerManager.getPlayers())
-			p.getPlayer().sendMessage(string);
-
-	}
-
+	// worlds
 	public static List<World> getWorlds() {
 		return worlds;
 	}
@@ -197,7 +193,13 @@ public class Manager {
 		return !worlds.contains(world);
 	}
 
-	public static void loadWorlds() {
+	// server version
+	public static String getServerVersion() {
+		return plugin.getServerVersion();
+	}
+
+	// privates
+	private static void loadWorlds() {
 		worlds.clear();
 		List<World> list = Bukkit.getWorlds();
 		List<String> disabled = RolecraftConfig.getDisabledWorlds();

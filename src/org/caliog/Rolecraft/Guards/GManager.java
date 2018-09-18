@@ -44,7 +44,7 @@ public class GManager {
 			String eq = values[4];
 			if (NPCManager.npcManager == null) {
 				Manager.plugin.getLogger()
-						.warning("Failed to create guard. ( " + Manager.plugin.getServerVersion() + ") does not support guards.");
+						.warning("Failed to create guard. ( " + Manager.getServerVersion() + ") does not support guards.");
 				reader.close();
 				return;
 			}
@@ -125,7 +125,7 @@ public class GManager {
 		}
 		if (NPCManager.npcManager == null) {
 			Manager.plugin.getLogger()
-					.warning("Failed to create guard. ( " + Manager.plugin.getServerVersion() + " does not support guards.");
+					.warning("Failed to create guard. ( " + Manager.getServerVersion() + " does not support guards.");
 			return;
 		}
 		Guard g = new Guard(name, loc, id, null);
