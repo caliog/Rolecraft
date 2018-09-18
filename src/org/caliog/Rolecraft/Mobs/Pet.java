@@ -18,8 +18,8 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
+import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
 import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
-import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
 import org.bukkit.ChatColor;
@@ -95,7 +95,7 @@ public class Pet extends MobInstance {
 	public static void givePetEgg(Player player, String mob, String customName) {
 		ItemStack egg = new ItemStack(Material.EGG);
 		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.EGG);
-		if (Utils.isBukkitClass("org.bukkit.inventory.ItemFlag"))
+		if (BukkitReflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		meta.setDisplayName(ChatColor.GOLD + customName + "(" + mob + ")");
 		List<String> lore = new ArrayList<String>();

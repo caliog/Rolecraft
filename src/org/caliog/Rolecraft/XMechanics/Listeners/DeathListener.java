@@ -29,7 +29,7 @@ import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Utils.Utils;
+import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
 
 public class DeathListener implements Listener {
 
@@ -133,7 +133,7 @@ public class DeathListener implements Listener {
 				event.getEntity().setExp(newExp);
 			}
 		});
-		if (Utils.isBukkitMethod("org.bukkit.event.entity.PlayerDeathEvent", "setKeepInventory", boolean.class))
+		if (BukkitReflect.isBukkitMethod("org.bukkit.event.entity.PlayerDeathEvent", "setKeepInventory", boolean.class))
 			event.setKeepInventory(RolecraftConfig.keepInventory());
 		else if (RolecraftConfig.keepInventory())
 			event.getDrops().clear();

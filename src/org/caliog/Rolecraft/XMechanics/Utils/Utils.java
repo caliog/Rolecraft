@@ -8,14 +8,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
 
 public class Utils {
 
 	public static String cleanString(String str) {
-		char[] abc = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-				'x', 'y', 'z', ' ', 'ü', 'ä', 'ö' };
+		char[] abc = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+				't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', 'ü', 'ä', 'ö' };
 
 		String newString = "";
 		for (int i = 0; i < str.length(); i++) {
@@ -37,40 +36,11 @@ public class Utils {
 		return Bukkit.getPlayer(id);
 	}
 
-	public static boolean isBukkitClass(String string) {
-		try {
-			Manager.plugin.getClass().getClassLoader().loadClass(string);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
 	public static List<Player> getBukkitPlayers() {
 		List<Player> players = new ArrayList<Player>();
 		for (World w : Bukkit.getWorlds())
 			players.addAll(w.getPlayers());
 		return players;
-	}
-
-	public static boolean isBukkitMethod(String c, String m, Class<?>... param) {
-		try {
-			Class<?> cl = Manager.plugin.getClass().getClassLoader().loadClass(c);
-			cl.getMethod(m, param);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean isBukkitField(String c, String f) {
-		try {
-			Class<?> cl = Manager.plugin.getClass().getClassLoader().loadClass(c);
-			cl.getField(f);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
 	}
 
 	public static int[] addElementToArray(int[] array, int element) {

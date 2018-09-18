@@ -56,6 +56,7 @@ import org.caliog.Rolecraft.Utils.SkillInventoryView;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
+import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
 import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
@@ -534,7 +535,7 @@ public class RolecraftListener implements Listener {
 		Class<?>[] a = new Class<?>[0];
 		Inventory inv = null;
 		// TODO Version Controll
-		if (Utils.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
+		if (BukkitReflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
 			inv = event.getClickedInventory();
 		} else {
 			inv = event.getInventory();
