@@ -15,8 +15,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflection;
+import org.caliog.Rolecraft.XMechanics.Reflection.Reflection.PackageType;
 import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect.ParticleData;
-import org.caliog.Rolecraft.XMechanics.Utils.ReflectionUtils.PackageType;
 
 /**
  * <b>ParticleEffect Library</b>
@@ -1744,11 +1745,11 @@ public enum ParticleEffect {
 				}
 				Class<?> packetClass = PackageType.MINECRAFT_SERVER
 						.getClass(version < 7 ? "Packet63WorldParticles" : "PacketPlayOutWorldParticles");
-				packetConstructor = ReflectionUtils.getConstructor(packetClass);
-				getHandle = ReflectionUtils.getMethod("CraftPlayer", PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
-				playerConnection = ReflectionUtils.getField("EntityPlayer", PackageType.MINECRAFT_SERVER, false,
+				packetConstructor = Reflection.getConstructor(packetClass);
+				getHandle = Reflection.getMethod("CraftPlayer", PackageType.CRAFTBUKKIT_ENTITY, "getHandle");
+				playerConnection = Reflection.getField("EntityPlayer", PackageType.MINECRAFT_SERVER, false,
 						"playerConnection");
-				sendPacket = ReflectionUtils.getMethod(playerConnection.getType(), "sendPacket",
+				sendPacket = Reflection.getMethod(playerConnection.getType(), "sendPacket",
 						PackageType.MINECRAFT_SERVER.getClass("Packet"));
 			} catch (Exception exception) {
 				throw new VersionIncompatibleException(
@@ -1799,24 +1800,24 @@ public enum ParticleEffect {
 					if (data != null) {
 						name += data.getPacketDataString();
 					}
-					ReflectionUtils.setValue(packet, true, "a", name);
+					Reflection.setValue(packet, true, "a", name);
 				} else {
-					ReflectionUtils.setValue(packet, true, "a", enumParticle.getEnumConstants()[effect.getId()]);
-					ReflectionUtils.setValue(packet, true, "j", longDistance);
+					Reflection.setValue(packet, true, "a", enumParticle.getEnumConstants()[effect.getId()]);
+					Reflection.setValue(packet, true, "j", longDistance);
 					if (data != null) {
 						int[] packetData = data.getPacketData();
-						ReflectionUtils.setValue(packet, true, "k", effect == ParticleEffect.ITEM_CRACK ? packetData
+						Reflection.setValue(packet, true, "k", effect == ParticleEffect.ITEM_CRACK ? packetData
 								: new int[] { packetData[0] | (packetData[1] << 12) });
 					}
 				}
-				ReflectionUtils.setValue(packet, true, "b", (float) center.getX());
-				ReflectionUtils.setValue(packet, true, "c", (float) center.getY());
-				ReflectionUtils.setValue(packet, true, "d", (float) center.getZ());
-				ReflectionUtils.setValue(packet, true, "e", offsetX);
-				ReflectionUtils.setValue(packet, true, "f", offsetY);
-				ReflectionUtils.setValue(packet, true, "g", offsetZ);
-				ReflectionUtils.setValue(packet, true, "h", speed);
-				ReflectionUtils.setValue(packet, true, "i", amount);
+				Reflection.setValue(packet, true, "b", (float) center.getX());
+				Reflection.setValue(packet, true, "c", (float) center.getY());
+				Reflection.setValue(packet, true, "d", (float) center.getZ());
+				Reflection.setValue(packet, true, "e", offsetX);
+				Reflection.setValue(packet, true, "f", offsetY);
+				Reflection.setValue(packet, true, "g", offsetZ);
+				Reflection.setValue(packet, true, "h", speed);
+				Reflection.setValue(packet, true, "i", amount);
 			} catch (Exception exception) {
 				throw new PacketInstantiationException("Packet instantiation failed", exception);
 			}

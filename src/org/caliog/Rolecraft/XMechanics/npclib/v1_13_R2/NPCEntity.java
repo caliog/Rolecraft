@@ -17,6 +17,10 @@ import net.minecraft.server.v1_13_R2.MinecraftServer;
 import net.minecraft.server.v1_13_R2.PlayerInteractManager;
 import net.minecraft.server.v1_13_R2.WorldServer;
 
+/**
+ * @author Jonas
+ *
+ */
 public class NPCEntity extends EntityPlayer {
 
 	@SuppressWarnings("unused")
@@ -25,7 +29,8 @@ public class NPCEntity extends EntityPlayer {
 	private int lastBounceId;
 
 	public NPCEntity(NPCManager npcManager, BWorld world, GameProfile s, PlayerInteractManager itemInWorldManager) {
-		super((MinecraftServer) npcManager.getServer().getMCServer(), (WorldServer) world.getWorldServer(), s, itemInWorldManager);
+		super((MinecraftServer) npcManager.getServer().getMCServer(), (WorldServer) world.getWorldServer(), s,
+				itemInWorldManager);
 
 		itemInWorldManager.b(EnumGamemode.SURVIVAL);
 
@@ -50,28 +55,28 @@ public class NPCEntity extends EntityPlayer {
 		return super.a(entity);
 	}
 
-	/*
-	 * 
-	 * @Override public void b_(EntityHuman entity) { if ((lastBounceId !=
-	 * entity.getId() || System.currentTimeMillis() - lastBounceTick > 1000) &&
-	 * entity.getBukkitEntity().getLocation().distanceSquared(getBukkitEntity().
-	 * getLocation()) <= 1) { final EntityTargetEvent event = new
-	 * NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(),
-	 * NpcEntityTargetEvent.NpcTargetReason.NPC_BOUNCED);
-	 * Bukkit.getPluginManager().callEvent(event);
-	 * 
-	 * lastBounceTick = System.currentTimeMillis(); lastBounceId =
-	 * entity.getId(); }
-	 * 
-	 * if (lastTargetId == -1 || lastTargetId != entity.getId()) { final
-	 * EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(),
-	 * entity.getBukkitEntity(),
-	 * NpcEntityTargetEvent.NpcTargetReason.CLOSEST_PLAYER);
-	 * Bukkit.getPluginManager().callEvent(event); lastTargetId =
-	 * entity.getId(); }
-	 * 
-	 * super.b_(entity); }
-	 */
+	//	@Override
+	//	public void b_(EntityHuman entity) {
+	//		if ((lastBounceId != entity.getId() || System.currentTimeMillis() - lastBounceTick > 1000)
+	//				&& entity.getBukkitEntity().getLocation().distanceSquared(getBukkitEntity().getLocation()) <= 1) {
+	//			final EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(),
+	//					NpcEntityTargetEvent.NpcTargetReason.NPC_BOUNCED);
+	//			Bukkit.getPluginManager().callEvent(event);
+	//
+	//			lastBounceTick = System.currentTimeMillis();
+	//			lastBounceId = entity.getId();
+	//		}
+	//
+	//		if (lastTargetId == -1 || lastTargetId != entity.getId()) {
+	//			final EntityTargetEvent event = new NpcEntityTargetEvent(getBukkitEntity(), entity.getBukkitEntity(),
+	//					NpcEntityTargetEvent.NpcTargetReason.CLOSEST_PLAYER);
+	//			Bukkit.getPluginManager().callEvent(event);
+	//			lastTargetId = entity.getId();
+	//		}
+	//
+	//		super.b_(entity);
+	//	}
+
 	@Override
 	public void c(Entity entity) {
 		if (lastBounceId != entity.getId() || System.currentTimeMillis() - lastBounceTick > 1000) {

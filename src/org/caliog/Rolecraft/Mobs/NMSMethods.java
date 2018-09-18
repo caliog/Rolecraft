@@ -29,7 +29,7 @@ public class NMSMethods {
 	public static void init() throws ClassNotFoundException {
 		init = true;
 		entityCreature = Reflect.getNMSClass("EntityCreature");
-		craftEntity = Reflect.getCraftbukkitNMSClass("entity.CraftEntity");
+		craftEntity = Reflect.getCraftbukkitClass("entity.CraftEntity");
 		entityInsentient = Reflect.getNMSClass("EntityInsentient");
 		pathfinderGoalSelector = Reflect.getNMSClass("PathfinderGoalSelector");
 		pathfinderGoal = Reflect.getNMSClass("PathfinderGoal");

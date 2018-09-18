@@ -23,7 +23,7 @@ public class BServer {
 	private BServer() {
 		server = Bukkit.getServer();
 		try {
-			craftserver = Reflect.getCraftbukkitNMSClass("CraftServer");
+			craftserver = Reflect.getCraftbukkitClass("CraftServer");
 			cServer = craftserver.cast(server);
 			mcServer = craftserver.getMethod("getServer").invoke(cServer);
 		} catch (final Exception ex) {

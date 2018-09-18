@@ -80,7 +80,7 @@ public abstract class NMSUtil {
 	public abstract Entity createNPCEntity(NPCManager manager, BWorld world, String name);
 
 	public static void initUtil() {
-		String version = Manager.plugin.getBukkitVersion();
+		String version = Manager.plugin.getServerVersion();
 		try {
 			Class<?> raw = Class.forName("org.caliog.Rolecraft.XMechanics.npclib." + version + ".Util");
 			Class<? extends NMSUtil> util = raw.asSubclass(NMSUtil.class);
@@ -111,7 +111,7 @@ public abstract class NMSUtil {
 
 	public static void sendPacketsTo(Iterable<? extends Player> recipients, Object... packets) {
 		try {
-			Class<?> craftPlayerClass = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+			Class<?> craftPlayerClass = Reflect.getCraftbukkitClass("entity.CraftPlayer");
 			Class<?> entityPlayerClass = Reflect.getNMSClass("EntityPlayer");
 			Class<?> playerConnectionClass = Reflect.getNMSClass("PlayerConnection");
 			Class<?> packetClass = Reflect.getNMSClass("Packet");

@@ -11,7 +11,7 @@ public enum Mat {
 	// @formatter:on
 
 	public Material e() {
-		if (Manager.plugin.getBukkitVersion().startsWith("v1_13")) {
+		if (Manager.plugin.getServerVersion().startsWith("v1_13")) {
 			return Material.getMaterial(this.name(), true);
 		} else {
 			return Material.getMaterial(this.name());

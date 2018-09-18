@@ -23,7 +23,7 @@ public class NPCUtils {
 				continue;
 			}
 			try {
-				Class<?> craftPlayerClass = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+				Class<?> craftPlayerClass = Reflect.getCraftbukkitClass("entity.CraftPlayer");
 				Class<?> entityPlayerClass = Reflect.getNMSClass("EntityPlayer");
 				Class<?> packetClass = Reflect.getNMSClass("Packet");
 				Class<?> playerConnectionClass = Reflect.getNMSClass("PlayerConnection");

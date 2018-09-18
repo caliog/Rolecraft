@@ -12,7 +12,7 @@ public class BWorld {
 
 	public BWorld(World world) {
 		try {
-			Class<?> craftworld = Reflect.getCraftbukkitNMSClass("CraftWorld");
+			Class<?> craftworld = Reflect.getCraftbukkitClass("CraftWorld");
 			Object cWorld = craftworld.cast(world);
 			wServer = craftworld.getMethod("getHandle").invoke(cWorld);
 		} catch (final Exception ex) {

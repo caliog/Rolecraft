@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.Utils;
+package org.caliog.Rolecraft.XMechanics.Reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -28,9 +28,9 @@ import org.bukkit.Bukkit;
  * @author DarkBlade12
  * @version 1.1
  */
-public final class ReflectionUtils {
+public final class Reflection {
 	// Prevent accidental construction
-	private ReflectionUtils() {
+	private Reflection() {
 	}
 
 	/**
@@ -49,7 +49,8 @@ public final class ReflectionUtils {
 	 * @see DataType#getPrimitive(Class[])
 	 * @see DataType#compare(Class[], Class[])
 	 */
-	public static Constructor<?> getConstructor(Class<?> clazz, Class<?>... parameterTypes) throws NoSuchMethodException {
+	public static Constructor<?> getConstructor(Class<?> clazz, Class<?>... parameterTypes)
+			throws NoSuchMethodException {
 		Class<?>[] primitiveTypes = DataType.getPrimitive(parameterTypes);
 		for (Constructor<?> constructor : clazz.getConstructors()) {
 			if (!DataType.compare(DataType.getPrimitive(constructor.getParameterTypes()), primitiveTypes)) {
@@ -57,7 +58,8 @@ public final class ReflectionUtils {
 			}
 			return constructor;
 		}
-		throw new NoSuchMethodException("There is no such constructor in this class with the specified parameter types");
+		throw new NoSuchMethodException(
+				"There is no such constructor in this class with the specified parameter types");
 	}
 
 	/**
@@ -110,8 +112,8 @@ public final class ReflectionUtils {
 	 *             If the desired constructor with the specified arguments
 	 *             cannot be found
 	 */
-	public static Object instantiateObject(Class<?> clazz, Object... arguments) throws InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
+	public static Object instantiateObject(Class<?> clazz, Object... arguments) throws InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
 		return getConstructor(clazz, DataType.getPrimitive(arguments)).newInstance(arguments);
 	}
 
@@ -148,8 +150,9 @@ public final class ReflectionUtils {
 	 * @see #getClass(String, PackageType)
 	 * @see #instantiateObject(Class, Object...)
 	 */
-	public static Object instantiateObject(String className, PackageType packageType, Object... arguments) throws InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+	public static Object instantiateObject(String className, PackageType packageType, Object... arguments)
+			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, ClassNotFoundException {
 		return instantiateObject(packageType.getClass(className), arguments);
 	}
 
@@ -170,7 +173,8 @@ public final class ReflectionUtils {
 	 * @see DataType#getPrimitive(Class[])
 	 * @see DataType#compare(Class[], Class[])
 	 */
-	public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) throws NoSuchMethodException {
+	public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes)
+			throws NoSuchMethodException {
 		Class<?>[] primitiveTypes = DataType.getPrimitive(parameterTypes);
 		for (Method method : clazz.getMethods()) {
 			if (!method.getName().equals(methodName)
@@ -179,7 +183,8 @@ public final class ReflectionUtils {
 			}
 			return method;
 		}
-		throw new NoSuchMethodException("There is no such method in this class with the specified name and parameter types");
+		throw new NoSuchMethodException(
+				"There is no such method in this class with the specified name and parameter types");
 	}
 
 	/**
@@ -204,8 +209,8 @@ public final class ReflectionUtils {
 	 * @see #getClass(String, PackageType)
 	 * @see #getMethod(Class, String, Class...)
 	 */
-	public static Method getMethod(String className, PackageType packageType, String methodName, Class<?>... parameterTypes)
-			throws NoSuchMethodException, ClassNotFoundException {
+	public static Method getMethod(String className, PackageType packageType, String methodName,
+			Class<?>... parameterTypes) throws NoSuchMethodException, ClassNotFoundException {
 		return getMethod(packageType.getClass(className), methodName, parameterTypes);
 	}
 
@@ -304,9 +309,9 @@ public final class ReflectionUtils {
 	 * @see #getClass(String, PackageType)
 	 * @see #invokeMethod(Object, Class, String, Object...)
 	 */
-	public static Object invokeMethod(Object instance, String className, PackageType packageType, String methodName, Object... arguments)
-			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-			ClassNotFoundException {
+	public static Object invokeMethod(Object instance, String className, PackageType packageType, String methodName,
+			Object... arguments) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, ClassNotFoundException {
 		return invokeMethod(instance, packageType.getClass(className), methodName, arguments);
 	}
 
@@ -325,7 +330,8 @@ public final class ReflectionUtils {
 	 * @throws SecurityException
 	 *             If the desired field cannot be made accessible
 	 */
-	public static Field getField(Class<?> clazz, boolean declared, String fieldName) throws NoSuchFieldException, SecurityException {
+	public static Field getField(Class<?> clazz, boolean declared, String fieldName)
+			throws NoSuchFieldException, SecurityException {
 		Field field = declared ? clazz.getDeclaredField(fieldName) : clazz.getField(fieldName);
 		field.setAccessible(true);
 		return field;
@@ -411,8 +417,9 @@ public final class ReflectionUtils {
 	 *             package cannot be found
 	 * @see #getValue(Object, Class, boolean, String)
 	 */
-	public static Object getValue(Object instance, String className, PackageType packageType, boolean declared, String fieldName)
-			throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException, ClassNotFoundException {
+	public static Object getValue(Object instance, String className, PackageType packageType, boolean declared,
+			String fieldName) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException,
+			SecurityException, ClassNotFoundException {
 		return getValue(instance, packageType.getClass(className), declared, fieldName);
 	}
 
@@ -501,9 +508,9 @@ public final class ReflectionUtils {
 	 *             package cannot be found
 	 * @see #setValue(Object, Class, boolean, String, Object)
 	 */
-	public static void setValue(Object instance, String className, PackageType packageType, boolean declared, String fieldName,
-			Object value) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException,
-					ClassNotFoundException {
+	public static void setValue(Object instance, String className, PackageType packageType, boolean declared,
+			String fieldName, Object value) throws IllegalArgumentException, IllegalAccessException,
+			NoSuchFieldException, SecurityException, ClassNotFoundException {
 		setValue(instance, packageType.getClass(className), declared, fieldName, value);
 	}
 
@@ -544,21 +551,30 @@ public final class ReflectionUtils {
 	 * @since 1.0
 	 */
 	public enum PackageType {
-		MINECRAFT_SERVER("net.minecraft.server." + getServerVersion()), CRAFTBUKKIT(
-				"org.bukkit.craftbukkit." + getServerVersion()), CRAFTBUKKIT_BLOCK(CRAFTBUKKIT, "block"), CRAFTBUKKIT_CHUNKIO(CRAFTBUKKIT,
+		MINECRAFT_SERVER("net.minecraft.server." + getServerVersion()), CRAFTBUKKIT("org.bukkit.craftbukkit."
+				+ getServerVersion()), CRAFTBUKKIT_BLOCK(CRAFTBUKKIT, "block"), CRAFTBUKKIT_CHUNKIO(CRAFTBUKKIT,
 						"chunkio"), CRAFTBUKKIT_COMMAND(CRAFTBUKKIT, "command"), CRAFTBUKKIT_CONVERSATIONS(CRAFTBUKKIT,
-								"conversations"), CRAFTBUKKIT_ENCHANTMENS(CRAFTBUKKIT, "enchantments"), CRAFTBUKKIT_ENTITY(CRAFTBUKKIT,
-										"entity"), CRAFTBUKKIT_EVENT(CRAFTBUKKIT, "event"), CRAFTBUKKIT_GENERATOR(CRAFTBUKKIT,
-												"generator"), CRAFTBUKKIT_HELP(CRAFTBUKKIT, "help"), CRAFTBUKKIT_INVENTORY(CRAFTBUKKIT,
-														"inventory"), CRAFTBUKKIT_MAP(CRAFTBUKKIT, "map"), CRAFTBUKKIT_METADATA(CRAFTBUKKIT,
-																"metadata"), CRAFTBUKKIT_POTION(CRAFTBUKKIT,
-																		"potion"), CRAFTBUKKIT_PROJECTILES(CRAFTBUKKIT,
-																				"projectiles"), CRAFTBUKKIT_SCHEDULER(CRAFTBUKKIT,
-																						"scheduler"), CRAFTBUKKIT_SCOREBOARD(CRAFTBUKKIT,
-																								"scoreboard"), CRAFTBUKKIT_UPDATER(
+								"conversations"), CRAFTBUKKIT_ENCHANTMENS(CRAFTBUKKIT,
+										"enchantments"), CRAFTBUKKIT_ENTITY(CRAFTBUKKIT, "entity"), CRAFTBUKKIT_EVENT(
+												CRAFTBUKKIT, "event"), CRAFTBUKKIT_GENERATOR(CRAFTBUKKIT,
+														"generator"), CRAFTBUKKIT_HELP(CRAFTBUKKIT,
+																"help"), CRAFTBUKKIT_INVENTORY(CRAFTBUKKIT,
+																		"inventory"), CRAFTBUKKIT_MAP(CRAFTBUKKIT,
+																				"map"), CRAFTBUKKIT_METADATA(
+																						CRAFTBUKKIT,
+																						"metadata"), CRAFTBUKKIT_POTION(
+																								CRAFTBUKKIT,
+																								"potion"), CRAFTBUKKIT_PROJECTILES(
 																										CRAFTBUKKIT,
-																										"updater"), CRAFTBUKKIT_UTIL(
-																												CRAFTBUKKIT, "util");
+																										"projectiles"), CRAFTBUKKIT_SCHEDULER(
+																												CRAFTBUKKIT,
+																												"scheduler"), CRAFTBUKKIT_SCOREBOARD(
+																														CRAFTBUKKIT,
+																														"scoreboard"), CRAFTBUKKIT_UPDATER(
+																																CRAFTBUKKIT,
+																																"updater"), CRAFTBUKKIT_UTIL(
+																																		CRAFTBUKKIT,
+																																		"util");
 
 		private final String path;
 
@@ -633,9 +649,9 @@ public final class ReflectionUtils {
 	 * @since 1.0
 	 */
 	public enum DataType {
-		BYTE(byte.class, Byte.class), SHORT(short.class, Short.class), INTEGER(int.class, Integer.class), LONG(long.class,
-				Long.class), CHARACTER(char.class, Character.class), FLOAT(float.class, Float.class), DOUBLE(double.class,
-						Double.class), BOOLEAN(boolean.class, Boolean.class);
+		BYTE(byte.class, Byte.class), SHORT(short.class, Short.class), INTEGER(int.class, Integer.class), LONG(
+				long.class, Long.class), CHARACTER(char.class, Character.class), FLOAT(float.class,
+						Float.class), DOUBLE(double.class, Double.class), BOOLEAN(boolean.class, Boolean.class);
 
 		private static final Map<Class<?>, DataType> CLASS_MAP = new HashMap<Class<?>, DataType>();
 		private final Class<?> primitive;

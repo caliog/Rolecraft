@@ -34,16 +34,15 @@ import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class RolecraftPlugin extends JavaPlugin {
 	public CommandRegister cmdReg;
-	private String bukkitVersion;
+	private String serverVersion;
 	private FileCreator fc = new FileCreator();
 	int backupTask;
 
 	public void onEnable() {
-		String pN = Bukkit.getServer().getClass().getPackage().getName();
-		bukkitVersion = pN.substring(pN.lastIndexOf(".") + 1);
+		serverVersion = Bukkit.getServer().getClass().getPackage().getName().substring(23);
 
-		if (!bukkitVersion.equalsIgnoreCase("v1_12_R1") && !bukkitVersion.equalsIgnoreCase("v1_11_R1")
-				&& !bukkitVersion.equalsIgnoreCase("v1_13_R2")) {
+		if (!serverVersion.equalsIgnoreCase("v1_12_R1") && !serverVersion.equalsIgnoreCase("v1_11_R1")
+				&& !serverVersion.equalsIgnoreCase("v1_13_R2")) {
 			getLogger().warning("\u001B[31mGuards will not work with your bukkit version. \u001B[0m");
 		}
 
@@ -55,7 +54,7 @@ public class RolecraftPlugin extends JavaPlugin {
 
 		RolecraftConfig.init();
 		Debugger.info(LogTitle.NONE, "Enabled :", getDescription().getFullName());
-		Debugger.info(LogTitle.NONE, "Bukkit version:", bukkitVersion);
+		Debugger.info(LogTitle.NONE, "Bukkit version:", serverVersion);
 
 		createMIC();
 		createSpellCollection();
@@ -169,8 +168,8 @@ public class RolecraftPlugin extends JavaPlugin {
 
 	}
 
-	public String getBukkitVersion() {
-		return bukkitVersion;
+	public String getServerVersion() {
+		return serverVersion;
 	}
 
 	private void createSpellCollection() {
@@ -216,7 +215,7 @@ public class RolecraftPlugin extends JavaPlugin {
 	}
 
 	public void reload() {
-		Debugger.info(LogTitle.NONE, "Reloading Rolecraft version:", bukkitVersion);
+		Debugger.info(LogTitle.NONE, "Reloading Rolecraft version:", serverVersion);
 		RolecraftConfig.config = YamlConfiguration.loadConfiguration(new File(FilePath.config));
 		Msg.file = YamlConfiguration.loadConfiguration(new File(FilePath.messages));
 		ClazzLoader.classes = YamlConfiguration.loadConfiguration(new File(FilePath.classes));

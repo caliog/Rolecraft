@@ -14,7 +14,7 @@ public class PlayerList {
 	public static void refreshList() {
 		ArrayList<Object> hide = new ArrayList<Object>();
 		try {
-			Class<?> craftPlayer = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+			Class<?> craftPlayer = Reflect.getCraftbukkitClass("entity.CraftPlayer");
 			Class<?> packetPlayOutPlayerInfo = Reflect.getNMSClass("PacketPlayOutPlayerInfo");
 			Class<?> enumPlayerInfoAction = Reflect.getNMSClass("PacketPlayOutPlayerInfo$EnumPlayerInfoAction");
 			// Class<?> entityPlayer = NMS.getNMSClass("EntityPlayer");
@@ -45,7 +45,7 @@ public class PlayerList {
 	public static void refreshList(Player p) {
 		ArrayList<Object> hide = new ArrayList<Object>();
 		try {
-			Class<?> craftPlayer = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+			Class<?> craftPlayer = Reflect.getCraftbukkitClass("entity.CraftPlayer");
 			Class<?> packetPlayOutPlayerInfo = Reflect.getNMSClass("PacketPlayOutPlayerInfo");
 			Class<?> enumPlayerInfoAction = Reflect.getNMSClass("PacketPlayOutPlayerInfo$EnumPlayerInfoAction");
 
@@ -69,7 +69,7 @@ public class PlayerList {
 	public static void restoreList(Player p) {
 		ArrayList<Object> hide = new ArrayList<Object>();
 		try {
-			Class<?> craftPlayer = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+			Class<?> craftPlayer = Reflect.getCraftbukkitClass("entity.CraftPlayer");
 			Class<?> packetPlayOutPlayerInfo = Reflect.getNMSClass("PacketPlayOutPlayerInfo");
 			Class<?> enumPlayerInfoAction = Reflect.getNMSClass("PacketPlayOutPlayerInfo$EnumPlayerInfoAction");
 

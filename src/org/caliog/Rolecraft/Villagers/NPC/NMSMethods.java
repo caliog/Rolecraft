@@ -18,7 +18,7 @@ public class NMSMethods {
 		try {
 			Class<?> entityInsentient = Reflect.getNMSClass("EntityInsentient");
 			Class<?> entityCreature = Reflect.getNMSClass("EntityCreature");
-			Class<?> craftEntity = Reflect.getCraftbukkitNMSClass("entity.CraftEntity");
+			Class<?> craftEntity = Reflect.getCraftbukkitClass("entity.CraftEntity");
 			Class<?> entityHuman = Reflect.getNMSClass("EntityHuman");
 			Class<?> pathfinderGoalSelector = Reflect.getNMSClass("PathfinderGoalSelector");
 			Class<?> pathfinderGoalRandomStroll = Reflect.getNMSClass("PathfinderGoalRandomStroll");
@@ -57,7 +57,7 @@ public class NMSMethods {
 	}
 
 	public static String getRecipeListFieldName() {
-		if (Manager.plugin.getBukkitVersion().equals("v1_12_R1"))
+		if (Manager.plugin.getServerVersion().equals("v1_12_R1"))
 			return "bK";
 		else
 			return "bJ";
@@ -70,7 +70,7 @@ public class NMSMethods {
 		try {
 			Class<?> entityVillager = Reflect.getNMSClass("EntityVillager");
 			Class<?> world = Reflect.getNMSClass("World");
-			Class<?> craftPlayer = Reflect.getCraftbukkitNMSClass("entity.CraftPlayer");
+			Class<?> craftPlayer = Reflect.getCraftbukkitClass("entity.CraftPlayer");
 			Class<?> entityPlayer = Reflect.getNMSClass("EntityPlayer");
 			Class<?> entityHuman = Reflect.getNMSClass("EntityHuman");
 			Class<?> merchantRecipeList = Reflect.getNMSClass("MerchantRecipeList");
@@ -143,7 +143,7 @@ public class NMSMethods {
 	private static Object getHandle(ItemStack item) throws Exception {
 		if (item == null)
 			return null;
-		Class<?> craftItemStack = Reflect.getCraftbukkitNMSClass("inventory.CraftItemStack");
+		Class<?> craftItemStack = Reflect.getCraftbukkitClass("inventory.CraftItemStack");
 		return craftItemStack.getMethod("asNMSCopy", org.bukkit.inventory.ItemStack.class).invoke(null, item);
 	}
 
