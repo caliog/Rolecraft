@@ -15,9 +15,6 @@ import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-
 public abstract class NMSUtil {
 
 	public static NMSUtil util = null;
@@ -73,9 +70,31 @@ public abstract class NMSUtil {
 
 	public abstract NPCManager getnpcManager();
 
-	public abstract Object getPlayerHandle(Player player);
+	public Object getPlayerHandle(Player p) {
+		try {
+			Class<?> CraftEntityClass = Reflect.getCraftbukkitClass("entity.CraftPlayer");
+			Method getHandle = CraftEntityClass.getMethod("getHandle");
+			Object ce = CraftEntityClass.cast(p);
+			return getHandle.invoke(ce);
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+	}
 
-	public abstract Object getHandle(Entity entity);
+	public Object getHandle(Entity e) {
+		try {
+			Class<?> CraftEntityClass = Reflect.getCraftbukkitClass("entity.CraftEntity");
+			Method getHandle = CraftEntityClass.getMethod("getHandle");
+			Object ce = CraftEntityClass.cast(e);
+			return getHandle.invoke(ce);
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+	}
 
 	public abstract Entity createNPCEntity(NPCManager manager, BWorld world, String name);
 
@@ -110,36 +129,20 @@ public abstract class NMSUtil {
 	}
 
 	public static void sendPacketsTo(Iterable<? extends Player> recipients, Object... packets) {
-		try {
-			Class<?> craftPlayerClass = Reflect.getCraftbukkitClass("entity.CraftPlayer");
-			Class<?> entityPlayerClass = Reflect.getNMSClass("EntityPlayer");
-			Class<?> playerConnectionClass = Reflect.getNMSClass("PlayerConnection");
-			Class<?> packetClass = Reflect.getNMSClass("Packet");
-			Iterable<Object> nmsRecipients = Iterables.transform(recipients, new Function<Player, Object>() {
-
-				@Override
-				public Object apply(Player a) {
-					try {
-						return craftPlayerClass.getMethod("getHandle").invoke(craftPlayerClass.cast(a));
-					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-							| NoSuchMethodException | SecurityException e) {
-						e.printStackTrace();
-						return null;
-					}
-				}
-			});
-			for (Object recipient : nmsRecipients) {
-				if (recipient != null) {
-					for (Object packet : packets) {
-						if (packet != null) {
-							Object playerConnection = entityPlayerClass.getField("playerConnection").get(recipient);
-							playerConnectionClass.getMethod("sendPacket", packetClass).invoke(playerConnection, packet);
+		for (Object recipient : recipients) {
+			if (recipient != null) {
+				for (Object packet : packets) {
+					if (packet != null) {
+						try {
+							Reflect.sendPacket((Player) recipient, packet);
+						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+								| NoSuchMethodException | SecurityException | ClassNotFoundException
+								| NoSuchFieldException e) {
+							e.printStackTrace();
 						}
 					}
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

@@ -8,7 +8,7 @@ public class BukkitReflect {
 		try {
 			Class<?> cl = Manager.plugin.getClass().getClassLoader().loadClass(c);
 			cl.getMethod(m, param);
-		} catch (Exception e) {
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 			return false;
 		}
 		return true;
@@ -18,7 +18,7 @@ public class BukkitReflect {
 		try {
 			Class<?> cl = Manager.plugin.getClass().getClassLoader().loadClass(c);
 			cl.getField(f);
-		} catch (Exception e) {
+		} catch (ClassNotFoundException | NoSuchFieldException | SecurityException e) {
 			return false;
 		}
 		return true;
@@ -27,7 +27,7 @@ public class BukkitReflect {
 	public static boolean isBukkitClass(String string) {
 		try {
 			Manager.plugin.getClass().getClassLoader().loadClass(string);
-		} catch (Exception e) {
+		} catch (ClassNotFoundException e) {
 			return false;
 		}
 		return true;

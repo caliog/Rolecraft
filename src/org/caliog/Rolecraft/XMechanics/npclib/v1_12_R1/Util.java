@@ -3,10 +3,7 @@ package org.caliog.Rolecraft.XMechanics.npclib.v1_12_R1;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
@@ -21,10 +18,7 @@ import net.minecraft.server.v1_12_R1.WorldServer;
 
 public class Util extends NMSUtil {
 
-	public Object getHandle(Entity e) {
-		return ((CraftEntity) e).getHandle();
-	}
-
+	@Override
 	public void setYaw(Entity entity, float yaw) {
 		while (yaw < -180)
 			yaw += 360F;
@@ -51,11 +45,6 @@ public class Util extends NMSUtil {
 				PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[] { npcEntity }));
 
 		return npcEntity.getBukkitEntity();
-	}
-
-	@Override
-	public Object getPlayerHandle(Player p) {
-		return ((CraftPlayer) p).getHandle();
 	}
 
 }
