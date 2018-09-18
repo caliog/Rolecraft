@@ -27,10 +27,11 @@ public class Curse extends Spell {
 
 	// add Fireworks_Spark,Explosions or Cloud,Flame,Heart,Redstone,Portal,
 	public enum CurseType {
-		BLACK(ParticleEffect.SPELL_MOB, 0F), WHITE(ParticleEffect.SPELL_MOB, 1F), COLORFUL(ParticleEffect.SPELL_MOB, 0.5F), GREEN(
-				ParticleEffect.VILLAGER_HAPPY, 1F), SPARK(ParticleEffect.FIREWORKS_SPARK, 1F), DUST(ParticleEffect.CLOUD,
-						0.1F), FLAME(ParticleEffect.FLAME, 1F), HEART(ParticleEffect.HEART, 1F), COLORED(ParticleEffect.REDSTONE,
-								0.1F), REDSTONE(ParticleEffect.REDSTONE, 0F), PORTAL(ParticleEffect.PORTAL, 0.2F);
+		BLACK(ParticleEffect.SPELL_MOB, 0F), WHITE(ParticleEffect.SPELL_MOB, 1F), COLORFUL(ParticleEffect.SPELL_MOB,
+				0.5F), GREEN(ParticleEffect.VILLAGER_HAPPY, 1F), SPARK(ParticleEffect.FIREWORKS_SPARK, 1F), DUST(
+						ParticleEffect.CLOUD, 0.1F), FLAME(ParticleEffect.FLAME, 1F), HEART(ParticleEffect.HEART,
+								1F), COLORED(ParticleEffect.REDSTONE, 0.1F), REDSTONE(ParticleEffect.REDSTONE,
+										0F), PORTAL(ParticleEffect.PORTAL, 0.2F);
 
 		public final ParticleEffect effect;
 		public final float color;
@@ -93,7 +94,6 @@ public class Curse extends Spell {
 		return true;
 	}
 
-	@SuppressWarnings("deprecation")
 	private void effects() {
 		final int distance = dir.equals(Direction.TWIRL) ? 40 : 20;
 		Collection<Vector> vectorList = calculateVectors();
@@ -126,9 +126,10 @@ public class Curse extends Spell {
 				for (Entity entity : entities) {
 					if (temp.contains(entity))
 						continue;
-					if (!entity.getType().equals(EntityType.VILLAGER)
-							&& (entity.getType().equals(EntityType.PLAYER) || EntityManager.isRegistered(entity.getUniqueId()))) {
-						Vector b = entity.getLocation().toVector().subtract(getPlayer().getPlayer().getLocation().toVector());
+					if (!entity.getType().equals(EntityType.VILLAGER) && (entity.getType().equals(EntityType.PLAYER)
+							|| EntityManager.isRegistered(entity.getUniqueId()))) {
+						Vector b = entity.getLocation().toVector()
+								.subtract(getPlayer().getPlayer().getLocation().toVector());
 						if (v.clone().crossProduct(b).lengthSquared() < 0.4F) {
 							temp.add(entity);
 						}
@@ -146,8 +147,8 @@ public class Curse extends Spell {
 						for (Entity t : temp) {
 							Vector r = loc.toVector().clone().setY(0);
 							if (r.distanceSquared(loc.toVector().clone().setY(0)) < 2.2) {
-								EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(getPlayer().getPlayer(), t,
-										DamageCause.CUSTOM, getDamage());
+								EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(getPlayer().getPlayer(),
+										t, DamageCause.CUSTOM, getDamage());
 								Bukkit.getPluginManager().callEvent(event);
 							}
 						}
@@ -176,8 +177,8 @@ public class Curse extends Spell {
 			return w;
 		} else if (dir.equals(Direction.AUTO_TARGET)) {
 			if (target != null)
-				return target.getLocation().toVector().clone().subtract(getPlayer().getPlayer().getLocation().toVector()).normalize()
-						.multiply(i);
+				return target.getLocation().toVector().clone()
+						.subtract(getPlayer().getPlayer().getLocation().toVector()).normalize().multiply(i);
 		}
 		return v;
 	}
