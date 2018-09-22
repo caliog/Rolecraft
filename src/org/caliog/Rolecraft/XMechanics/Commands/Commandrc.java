@@ -13,7 +13,6 @@ import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Items.Armor;
 import org.caliog.Rolecraft.Items.Weapon;
 import org.caliog.Rolecraft.Mobs.MobSpawner;
-import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
@@ -84,26 +83,8 @@ public class Commandrc extends Commands {
 				}
 
 			}
-		}, new CommandField("help", FieldProperty.IDENTIFIER), new CommandField("page", "positve integer", FieldProperty.OPTIONAL)));
-		/*
-		 * Name: rc
-		 * 
-		 * Permission: rc.mic
-		 * 
-		 * Usage: /rc mic
-		 */
-		cmds.add(new Command("rc", "rc.mic", new CommandExecutable() {
-
-			@Override
-			public void execute(String[] args, Player player) {
-				if (RolecraftConfig.isMICDisabled())
-					player.sendMessage(ChatColor.RED + "MIC is disabled in config!");
-				else {
-					if (!Manager.plugin.createMIC(player))
-						player.sendMessage(ChatColor.RED + "Couldn't create MIC.jar, is it already existing?");
-				}
-			}
-		}, new CommandField("mic", FieldProperty.IDENTIFIER)));
+		}, new CommandField("help", FieldProperty.IDENTIFIER),
+				new CommandField("page", "positve integer", FieldProperty.OPTIONAL)));
 
 		/*
 		 * Name: rc
@@ -180,7 +161,8 @@ public class Commandrc extends Commands {
 					counter++;
 				}
 			}
-		}, new CommandField("mobs", FieldProperty.IDENTIFIER), new CommandField("page", "positve integer", FieldProperty.OPTIONAL)));
+		}, new CommandField("mobs", FieldProperty.IDENTIFIER),
+				new CommandField("page", "positve integer", FieldProperty.OPTIONAL)));
 
 		/*
 		 * Name: rc SubName: weapons
@@ -208,7 +190,8 @@ public class Commandrc extends Commands {
 					counter++;
 				}
 			}
-		}, new CommandField("weapons", FieldProperty.IDENTIFIER), new CommandField("page", "positve items", FieldProperty.OPTIONAL)));
+		}, new CommandField("weapons", FieldProperty.IDENTIFIER),
+				new CommandField("page", "positve items", FieldProperty.OPTIONAL)));
 
 		/*
 		 * Name: rc SubName: armor
@@ -236,7 +219,8 @@ public class Commandrc extends Commands {
 					counter++;
 				}
 			}
-		}, new CommandField("armor", FieldProperty.IDENTIFIER), new CommandField("page", "positve items", FieldProperty.OPTIONAL)));
+		}, new CommandField("armor", FieldProperty.IDENTIFIER),
+				new CommandField("page", "positve items", FieldProperty.OPTIONAL)));
 		return cmds;
 	}
 }

@@ -33,7 +33,8 @@ public class RolecraftConfig {
 		if (stream == null)
 			return;
 		try {
-			YamlConfiguration def = YamlConfiguration.loadConfiguration(new BufferedReader(new InputStreamReader(stream, "UTF-8")));
+			YamlConfiguration def = YamlConfiguration
+					.loadConfiguration(new BufferedReader(new InputStreamReader(stream, "UTF-8")));
 			config.addDefaults(def);
 			config.options().copyDefaults(true);
 			File f = new File(FilePath.config);
@@ -77,7 +78,8 @@ public class RolecraftConfig {
 		if (ClazzLoader.isClass(str))
 			return str;
 		else if ((str = ClazzLoader.getFirstClass()) != null) {
-			Manager.plugin.getLogger().warning("Could not find your default class in classes.yml! Using " + str + " instead.");
+			Manager.plugin.getLogger()
+					.warning("Could not find your default class in classes.yml! Using " + str + " instead.");
 			return str;
 		} else {
 			Manager.plugin.getLogger().log(Level.WARNING,
@@ -123,12 +125,6 @@ public class RolecraftConfig {
 
 	public static int getDefaultSpawnTime() {
 		return config.getInt("mob-spawn-time", 15);
-	}
-
-	public static boolean isMICDisabled() {
-		if (config == null)
-			return true;
-		return config.getBoolean("disable-mic", false);
 	}
 
 	public static int getMaxBackups() {

@@ -18,7 +18,6 @@ public class FilePath {
 	public static String mobsFile = data + "mobs.data";
 	public static String szFile = data + "spawnzones.data";
 	public static String classes = cl + "classes.yml";
-	public static String mic = main + "MIC.jar";
 	public static String spellCollection = spells + "SpellCollection.jar";
 
 	// Villager

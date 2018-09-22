@@ -56,7 +56,6 @@ public class RolecraftPlugin extends JavaPlugin {
 		Debugger.info(LogTitle.NONE, "Enabled :", getDescription().getFullName());
 		Debugger.info(LogTitle.NONE, "Bukkit version:", serverVersion);
 
-		createMIC();
 		createSpellCollection();
 
 		Manager.load();
@@ -143,8 +142,6 @@ public class RolecraftPlugin extends JavaPlugin {
 				e1.printStackTrace();
 				continue;
 			}
-			if (value.equals(FilePath.mic))
-				continue;
 			if (value.equals(FilePath.spellCollection))
 				continue;
 			if (value.equals(FilePath.messages))
@@ -186,32 +183,6 @@ public class RolecraftPlugin extends JavaPlugin {
 			}
 		}
 
-	}
-
-	public boolean createMIC() {
-		return createMIC(null);
-	}
-
-	public boolean createMIC(final Player player) {
-		final File micFile = new File(FilePath.mic);
-		if (!micFile.exists() || (micFile.exists() && System.currentTimeMillis() - micFile.lastModified() > 1e6))
-			if (!RolecraftConfig.isMICDisabled()) {
-				try {
-					micFile.createNewFile();
-					fc.copyFile(FilePath.mic, "MIC.jar");
-					if (player != null)
-						player.sendMessage(ChatColor.GOLD + "Created MIC.jar in your Rolecraft folder!");
-				} catch (IOException e) {
-					e.printStackTrace();
-					if (player != null)
-						player.sendMessage(ChatColor.GOLD + "Something went wrong..!");
-				}
-			} else {
-				if (player != null)
-					player.sendMessage(ChatColor.GOLD + "You have to set 'disable-mic' to false.");
-			}
-
-		return true;
 	}
 
 	public void reload() {
