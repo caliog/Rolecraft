@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 
 public class CmdMessage {
 
-	public static String gaveYouItemNot = ChatColor.RED + "I could not give you this item, does it really exist?";
+	public static String notKnownItem = ChatColor.RED + "I don't know this item...check its name again.";
 	public static String createdMSZ = ChatColor.GOLD + "Created a mob spawn-zone here!";
 	public static String removedMSZ = ChatColor.GOLD + "Removed this spawn-zone!";
 	public static String hereIsNoMSZ = ChatColor.GOLD + "I cannot find a spawn-zone near you!";

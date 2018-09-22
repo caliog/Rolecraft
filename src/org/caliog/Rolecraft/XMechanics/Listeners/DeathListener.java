@@ -80,8 +80,8 @@ public class DeathListener implements Listener {
 		} else if (diff < 100.0D) {
 			diff = 100.0D;
 		}
-		event.getEntity().setCustomName(ChatColor.BLACK + "[  " + ChatColor.YELLOW + "+ " + Playerface.killed(player.getPlayer(), mob)
-				+ " XP  " + ChatColor.BLACK + "]");
+		event.getEntity().setCustomName(ChatColor.BLACK + "[  " + ChatColor.YELLOW + "+ "
+				+ Playerface.killed(player.getPlayer(), mob) + " XP  " + ChatColor.BLACK + "]");
 		List<ItemStack> stacks = new ArrayList<ItemStack>();
 		for (ItemStack stack : mob.drops().keySet()) {
 			if (Math.random() * diff < ((Float) mob.drops().get(stack)).floatValue()) {
@@ -91,9 +91,10 @@ public class DeathListener implements Listener {
 		}
 		Playerface.dropItem(player.getPlayer(), event.getEntity().getLocation(), stacks);
 		player.getPlayer().playSound(event.getEntity().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.6F, 2.0F);
-		if ((player.getLevel() - mob.getLevel() < 4) && (Weapon.isWeapon(player, player.getPlayer().getInventory().getItemInMainHand()))) {
+		if ((player.getLevel() - mob.getLevel() < 4)
+				&& (Weapon.isWeapon(player.getPlayer().getInventory().getItemInMainHand()))) {
 			final ItemStack hand = player.getPlayer().getInventory().getItemInMainHand();
-			Weapon w = Weapon.getInstance(player, hand);
+			Weapon w = Weapon.getInstance(hand);
 			int level = w.getLevel();
 			int mLevel = w.getMinLevel();
 			int max = (level + 2) * (mLevel + 2);
@@ -118,7 +119,8 @@ public class DeathListener implements Listener {
 			@Override
 			public void run() {
 				if (RolecraftConfig.isFireworkEnabled()) {
-					Firework firework = (Firework) event.getEntity().getWorld().spawn(event.getEntity().getLocation(), Firework.class);
+					Firework firework = (Firework) event.getEntity().getWorld().spawn(event.getEntity().getLocation(),
+							Firework.class);
 					FireworkMeta data = firework.getFireworkMeta();
 					data.addEffects(new FireworkEffect[] { FireworkEffect.builder().flicker(false).withColor(Color.RED)
 							.withFade(Color.FUCHSIA).with(FireworkEffect.Type.CREEPER).build() });
@@ -126,7 +128,8 @@ public class DeathListener implements Listener {
 					firework.setFireworkMeta(data);
 				}
 
-				float newExp = event.getEntity().getExp() - RolecraftConfig.getExpLoseRate() * event.getEntity().getExp();
+				float newExp = event.getEntity().getExp()
+						- RolecraftConfig.getExpLoseRate() * event.getEntity().getExp();
 				if (newExp < 0) {
 					newExp = 0F;
 				}

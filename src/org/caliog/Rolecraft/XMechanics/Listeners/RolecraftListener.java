@@ -167,7 +167,7 @@ public class RolecraftListener implements Listener {
 		if (c == null) {
 			return;
 		}
-		if (!Weapon.isWeapon(c, event.getItem())) {
+		if (!Weapon.isWeapon(event.getItem())) {
 			return;
 		}
 		if (useable) {

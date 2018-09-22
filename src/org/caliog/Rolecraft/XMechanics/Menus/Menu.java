@@ -70,7 +70,11 @@ public abstract class Menu {
 		return name;
 	}
 
-	public ItemStack getItem(int i) {
+	public MenuItem getItem(int i) {
+		return items.get(i);
+	}
+
+	public ItemStack getItemStack(int i) {
 		return items.get(i).createItemStack();
 	}
 

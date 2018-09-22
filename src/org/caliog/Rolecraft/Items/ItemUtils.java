@@ -50,8 +50,8 @@ public class ItemUtils {
 			return true;
 		}
 		CustomItem item = null;
-		if (Weapon.isWeapon(player, stack)) {
-			item = Weapon.getInstance(player, stack);
+		if (Weapon.isWeapon(stack)) {
+			item = Weapon.getInstance(stack);
 		} else if (Armor.isArmor(stack)) {
 			item = Armor.getInstance(stack);
 		}

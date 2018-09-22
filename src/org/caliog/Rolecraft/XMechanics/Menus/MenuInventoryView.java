@@ -30,7 +30,8 @@ public class MenuInventoryView extends InventoryView {
 			public void onInventoryClick(InventoryClickEvent event) {
 				Inventory inv = null;
 				Class<?>[] a = new Class<?>[0];
-				if (BukkitReflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
+				if (BukkitReflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent",
+						"getClickedInventory", a)) {
 					inv = event.getClickedInventory();
 				} else {
 					inv = event.getInventory();
@@ -52,7 +53,7 @@ public class MenuInventoryView extends InventoryView {
 	private void createInventory() {
 		top = Bukkit.createInventory(null, menu.getHeight() * 9, menu.getName());
 		for (int i = 0; i < top.getSize(); i++) {
-			top.setItem(i, menu.getItem(i));
+			top.setItem(i, menu.getItemStack(i));
 		}
 	}
 
@@ -89,7 +90,7 @@ public class MenuInventoryView extends InventoryView {
 
 	public void reload() {
 		for (int i = 0; i < top.getSize(); i++) {
-			top.setItem(i, menu.getItem(i));
+			top.setItem(i, menu.getItemStack(i));
 		}
 	}
 

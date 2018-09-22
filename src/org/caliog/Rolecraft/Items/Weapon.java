@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
@@ -25,7 +24,8 @@ public class Weapon extends CustomItemInstance {
 	private int kills;
 	private final short durability;
 
-	public Weapon(Material type, String name, int level, int kills, short durabilty, boolean tradeable, YamlConfiguration config) {
+	public Weapon(Material type, String name, int level, int kills, short durabilty, boolean tradeable,
+			YamlConfiguration config) {
 		super(type, name, tradeable, config);
 		this.level = level;
 		this.kills = kills;
@@ -86,8 +86,8 @@ public class Weapon extends CustomItemInstance {
 		return a[e];
 	}
 
-	public static Weapon getInstance(RolecraftPlayer clazz, ItemStack item) {
-		if (!isWeapon(clazz, item)) {
+	public static Weapon getInstance(ItemStack item) {
+		if (!isWeapon(item)) {
 			return null;
 		}
 		String name = null;
@@ -139,7 +139,7 @@ public class Weapon extends CustomItemInstance {
 		return instance;
 	}
 
-	public static boolean isWeapon(RolecraftPlayer clazz, ItemStack item) {
+	public static boolean isWeapon(ItemStack item) {
 		boolean isWeapon = true;
 		if (item == null) {
 			return false;
@@ -166,8 +166,8 @@ public class Weapon extends CustomItemInstance {
 	public void raiseLevel(final Player p) {
 		if (this.level < 9) {
 			this.level += 1;
-			p.getInventory()
-					.setItemInMainHand(new Weapon(getType(), getName(), this.level, 0, this.durability, isTradeable(), this.config));
+			p.getInventory().setItemInMainHand(
+					new Weapon(getType(), getName(), this.level, 0, this.durability, isTradeable(), this.config));
 		}
 	}
 

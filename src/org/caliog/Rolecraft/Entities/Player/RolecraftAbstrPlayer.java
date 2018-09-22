@@ -68,9 +68,10 @@ public abstract class RolecraftAbstrPlayer extends Fighter {
 
 	public double getDamage() {
 		int damage = 0;
-		if ((Weapon.isWeapon((RolecraftPlayer) this, getPlayer().getInventory().getItemInMainHand()))) {
-			if (Weapon.getInstance((RolecraftPlayer) this, getPlayer().getInventory().getItemInMainHand()) != null)
-				damage += Weapon.getInstance((RolecraftPlayer) this, getPlayer().getInventory().getItemInMainHand()).getRandomDamage();
+		if ((Weapon.isWeapon(getPlayer().getInventory().getItemInMainHand()))) {
+			Weapon w = Weapon.getInstance(getPlayer().getInventory().getItemInMainHand());
+			if (w != null)
+				damage += w.getRandomDamage();
 		} else if (damage == 0) {
 			damage++;
 		}
@@ -92,8 +93,8 @@ public abstract class RolecraftAbstrPlayer extends Fighter {
 				s.add(Armor.getInstance(stack));
 			}
 		}
-		if (Weapon.isWeapon((RolecraftPlayer) this, this.player.getInventory().getItemInMainHand())) {
-			s.add(Weapon.getInstance((RolecraftPlayer) this, this.player.getInventory().getItemInMainHand()));
+		if (Weapon.isWeapon(this.player.getInventory().getItemInMainHand())) {
+			s.add(Weapon.getInstance(this.player.getInventory().getItemInMainHand()));
 		}
 		while (s.contains(null)) {
 			s.remove(null);

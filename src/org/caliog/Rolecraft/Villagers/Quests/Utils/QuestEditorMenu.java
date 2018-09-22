@@ -198,7 +198,7 @@ public class QuestEditorMenu extends Menu {
 						String l = lore.get(i);
 						if (l.contains("Class: ")) {
 							String c = l.split(": ")[1];
-							clazz = getNextClass(c);
+							clazz = ClazzLoader.getNextClass(c);
 							lore.set(i, l.replace(c, clazz));
 							((MenuInventoryView) event.getView()).reload();
 							break;
@@ -271,18 +271,6 @@ public class QuestEditorMenu extends Menu {
 		});
 		this.setItem(height * 9 - 1, item);
 
-	}
-
-	public static String getNextClass(String c) {
-		String[] classes = ClazzLoader.getClassesAsArray();
-		if (c.equals("none"))
-			return classes[0];
-		if (c.equals(classes[classes.length - 1]))
-			return "none";
-		for (int i = 0; i < classes.length - 1; i++)
-			if (c.equals(classes[i]))
-				return classes[i + 1];
-		return null;
 	}
 
 	public String getClazz() {

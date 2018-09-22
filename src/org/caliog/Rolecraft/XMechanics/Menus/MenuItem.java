@@ -194,6 +194,10 @@ public class MenuItem {
 		this.bch = bch;
 	}
 
+	public ButtonClickHandler getClickHandler() {
+		return bch;
+	}
+
 	public void onClick(InventoryClickEvent event) {
 		if (bch != null && event.getWhoClicked() instanceof Player)
 			bch.onClick(event, (Player) event.getWhoClicked());

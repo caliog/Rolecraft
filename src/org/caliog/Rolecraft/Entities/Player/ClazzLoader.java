@@ -106,4 +106,16 @@ public class ClazzLoader {
 		return spellMap.containsKey(name) ? spellMap.get(name) : empty;
 	}
 
+	public static String getNextClass(String c) {
+		String[] classes = getClassesAsArray();
+		if (c.equals("none"))
+			return classes[0];
+		if (c.equals(classes[classes.length - 1]))
+			return "none";
+		for (int i = 0; i < classes.length - 1; i++)
+			if (c.equals(classes[i]))
+				return classes[i + 1];
+		return null;
+	}
+
 }
