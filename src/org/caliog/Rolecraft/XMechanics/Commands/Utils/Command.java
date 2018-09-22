@@ -54,7 +54,7 @@ public class Command {
 	}
 
 	public CommandField[] getIdentifiers() {
-		CommandField[] ident = null;
+		CommandField[] ident = new CommandField[0];
 		for (CommandField field : fields)
 			if (!field.isIdentifier())
 				continue;

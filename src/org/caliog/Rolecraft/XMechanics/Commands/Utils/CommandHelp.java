@@ -7,20 +7,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 
-public class CommandHelp {
+public final class CommandHelp {
 
-	public CommandHelp(String name, Set<Command> cmds, Player player) {
-		work(name, cmds, player);
-
-	}
-
-	public CommandHelp(Command cmd, Player player) {
+	public static void sendCommandHelp(Command cmd, Player player) {
 		Set<Command> cmds = new HashSet<Command>();
 		cmds.add(cmd);
-		work(cmd.getName(), cmds, player);
+		sendCommandHelp(cmd.getName(), cmds, player);
 	}
 
-	private void work(String name, Set<Command> cmds, Player player) {
+	public static void sendCommandHelp(String name, Set<Command> cmds, Player player) {
 		if (player == null || cmds == null || cmds.isEmpty())
 			return;
 

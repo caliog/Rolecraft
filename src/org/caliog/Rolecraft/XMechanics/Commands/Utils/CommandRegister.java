@@ -2,6 +2,7 @@ package org.caliog.Rolecraft.XMechanics.Commands.Utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,11 +31,11 @@ public class CommandRegister {
 			if (args.length >= cmd.getMin() && args.length <= cmd.getMax())
 				new CommandExe((Command) obj, args, player);
 			else {
-				new CommandHelp(cmd, player);
+				CommandHelp.sendCommandHelp(cmd, player);
 			}
 			return true;
 		} else if (obj instanceof String) {
-			new CommandHelp((String) obj, cmds, player);
+			CommandHelp.sendCommandHelp((String) obj, cmds, player);
 			return true;
 		} else if (obj instanceof Integer) {
 			return false;
@@ -43,54 +44,107 @@ public class CommandRegister {
 	}
 
 	private Object identifyCommand(String name, String[] args) {
-		Command backsave = null;
-		if (isCommand(name)) {
-			for (Command cmd : cmds) {
-				if ((cmd.getFields() == null || cmd.getFields().length == 0) && (args == null || args.length == 0)) {
-					if (cmd.getName().equalsIgnoreCase(name))
-						return cmd;
-					else
-						continue;
-				} else if (cmd.getFields() == null || cmd.getFields().length == 0)
-					continue;
-				else if ((cmd.getIdentifiers() == null || cmd.getIdentifiers().length == 0) && CommandExe.checkFields(cmd, args, null)
-						&& args.length >= cmd.getMin() && args.length <= cmd.getMax()) {
-					if (cmd.getName().equals(name))
-						return cmd;
-					else
-						continue;
-				} else if (cmd.getIdentifiers() == null)
-					continue;
-				else if (args == null || args.length == 0)
-					continue;
-				boolean identified = true;
-				for (int i = 0; i < cmd.getIdentifiers().length && i < args.length; i++) {
-
-					if (!args[i].equalsIgnoreCase(cmd.getIdentifiers()[i].getName()))
-						identified = false;
-				}
-				if (identified && cmd.getName().equalsIgnoreCase(name) && args.length >= cmd.getMin() && args.length <= cmd.getMax())
-					return cmd;
-				else if (identified && cmd.getName().equalsIgnoreCase(name)) {
-					backsave = cmd;
-					continue;
-				}
-			}
-			if (backsave == null)
-				return name;
-			else {
-				return backsave;
-			}
-		} else
+		List<Command> list = getCommandsByName(name);
+		HashMap<Command, Integer> map = new HashMap<Command, Integer>();
+		if (list.isEmpty())
 			return 0;
+		for (Command cmd : list) {
+			if (cmd.getFields() == null || cmd.getFields().length == 0) {
+				if (args == null || args.length == 0)
+					return cmd;
+				else
+					map.put(cmd, 0);
+			} else {
+				if (args.length >= cmd.getMin()) {
+					boolean identified = true;
+					for (int i = 0; i < cmd.getIdentifiers().length && i < args.length; i++) {
+						if (!args[i].equalsIgnoreCase(cmd.getIdentifiers()[i].getName()))
+							identified = false;
+					}
+					if (identified && CommandExe.checkFields(cmd, args, null)) {
+						map.put(cmd, cmd.getIdentifiers().length);
+					} else if (identified) {
+						map.put(cmd, cmd.getIdentifiers().length);
+					}
+				}
+			}
+		}
 
+		if (map.isEmpty())
+			return name;
+		else {
+			int max = -1;
+			Command cmd = null;
+			for (Command c : map.keySet()) {
+				if (map.get(c) > max) {
+					cmd = c;
+					max = map.get(c);
+				}
+			}
+			return cmd;
+		}
 	}
 
-	private boolean isCommand(String name) {
-		for (Command cmd : cmds)
-			if (cmd.getName().equalsIgnoreCase(name))
-				return true;
-		return false;
+	//	private Object identifyyCommand(String name, String[] args) {
+	//		Command backsave = null;
+	//		boolean found = false;
+	//
+	//		for (Command cmd : cmds) {
+	//			if (cmd.getName().equalsIgnoreCase(name)) {
+	//				found = true;
+	//
+	//				if ((cmd.getFields() == null || cmd.getFields().length == 0) && (args == null || args.length == 0)) {
+	//					if (cmd.getName().equalsIgnoreCase(name))
+	//						return cmd;
+	//					else
+	//						continue;
+	//				} else if (cmd.getFields() == null || cmd.getFields().length == 0)
+	//					continue;
+	//				else if ((cmd.getIdentifiers() == null || cmd.getIdentifiers().length == 0)
+	//						&& CommandExe.checkFields(cmd, args, null) && args.length >= cmd.getMin()
+	//						&& args.length <= cmd.getMax()) {
+	//					if (cmd.getName().equals(name))
+	//						return cmd;
+	//					else
+	//						continue;
+	//				} else if (cmd.getIdentifiers() == null)
+	//					continue;
+	//				else if (args == null || args.length == 0)
+	//					continue;
+	//				boolean identified = true;
+	//				for (int i = 0; i < cmd.getIdentifiers().length && i < args.length; i++) {
+	//
+	//					if (!args[i].equalsIgnoreCase(cmd.getIdentifiers()[i].getName()))
+	//						identified = false;
+	//				}
+	//				if (identified && cmd.getName().equalsIgnoreCase(name) && args.length >= cmd.getMin()
+	//						&& args.length <= cmd.getMax())
+	//					return cmd;
+	//				else if (identified && cmd.getName().equalsIgnoreCase(name)) {
+	//					backsave = cmd;
+	//					continue;
+	//				}
+	//			}
+	//		}
+	//		if (found)
+	//			if (backsave == null)
+	//				return name;
+	//			else {
+	//				return backsave;
+	//			}
+	//
+	//		return 0;
+	//
+	//	}
+
+	private List<Command> getCommandsByName(String name) {
+		ArrayList<Command> list = new ArrayList<Command>();
+		for (Command cmd : cmds) {
+			if (name.equalsIgnoreCase(cmd.getName())) {
+				list.add(cmd);
+			}
+		}
+		return list;
 	}
 
 	private void init() {
@@ -112,8 +166,8 @@ public class CommandRegister {
 			try {
 				Commands commands = (Commands) c.getConstructor().newInstance();
 				cmds.addAll(commands.getCommands());
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-					| NoSuchMethodException | SecurityException e) {
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				e.printStackTrace();
 			}
 		}
