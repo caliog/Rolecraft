@@ -8,6 +8,7 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Items.Armor;
 import org.caliog.Rolecraft.Items.CustomItemInstance;
 import org.caliog.Rolecraft.Items.ItemEffect;
@@ -27,6 +28,9 @@ public class ItemSkeleton {
 	private String lore;
 	private int d;
 
+	// off
+	private ItemStack stack;
+
 	public ItemSkeleton() {
 		name = "";
 		tradeable = true;
@@ -43,6 +47,8 @@ public class ItemSkeleton {
 	}
 
 	public ItemSkeleton(CustomItemInstance instance) {
+		stack = instance;
+		material = instance.getType();
 		name = instance.getName();
 		tradeable = instance.isTradeable();
 		effects = instance.getEffects();
@@ -82,13 +88,22 @@ public class ItemSkeleton {
 
 	// save
 	public void saveToFile() {
-		if (name == null || name.equals(""))
+		if (name == null || name.equals("") || material == null)
 			return;
 		final String path = (isWeapon() ? FilePath.weapons : FilePath.armor) + name + ".yml";
 		File f = new File(path);
 		if (f.exists())
 			f.delete();
-		YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
+		YamlConfiguration config = saveToConfig();
+		try {
+			config.save(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private YamlConfiguration saveToConfig() {
+		YamlConfiguration config = new YamlConfiguration();
 		// material
 		config.set("material", material.name());
 		// damage / defense
@@ -105,12 +120,7 @@ public class ItemSkeleton {
 			for (ItemEffect effect : effects)
 				section.set(effect.getType().name(), effect.getPower());
 		}
-
-		try {
-			config.save(f);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return config;
 	}
 
 	// static
@@ -221,6 +231,19 @@ public class ItemSkeleton {
 				|| material.name().contains("LEGGINGS") || material.name().contains("HELMET"))
 			return false;
 		return true;
+	}
+
+	public ItemStack getStack() {
+		if (material != null && name != null && !name.equals("")) {
+			ItemStack s = isWeapon() ? new Weapon(material, name, 0, 0, (short) 0, tradeable, saveToConfig())
+					: new Armor(material, name, 0, (short) 0, tradeable, saveToConfig());
+			if (s != null)
+				return s;
+		}
+		if (stack == null && material != null)
+			return new ItemStack(material);
+
+		return stack;
 	}
 
 }

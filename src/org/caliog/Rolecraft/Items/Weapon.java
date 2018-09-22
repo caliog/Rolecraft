@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,7 +38,7 @@ public class Weapon extends CustomItemInstance {
 		String[] s = this.config.getString("damage").split(",");
 		int[] a = new int[s.length];
 		for (int i = 0; i < s.length; i++) {
-			a[i] = (Integer.parseInt(s[i]) + getLevel() - 1);
+			a[i] = (Integer.parseInt(s[i]) + getLevel());
 		}
 		return a;
 	}
@@ -47,7 +48,7 @@ public class Weapon extends CustomItemInstance {
 	}
 
 	public void syncItemStack() {
-		ItemMeta meta = getItemMeta();
+		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(getType());
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName() + ChatColor.GOLD + " Lv. " + getLevel());
 		if (BukkitReflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -72,7 +73,7 @@ public class Weapon extends CustomItemInstance {
 			lore.add(ChatColor.RED + "MinLv: " + getMinLevel());
 		}
 		if (hasClass()) {
-			lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_CLASS) + getClazz());
+			lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_CLASS) + ": " + getClazz());
 		}
 		if (!isTradeable())
 			lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_SOULBOUND) + "!");

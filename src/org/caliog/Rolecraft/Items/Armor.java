@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -38,7 +39,7 @@ public class Armor extends CustomItemInstance {
 	}
 
 	public void syncItemStack() {
-		ItemMeta meta = getItemMeta();
+		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(getType());
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName() + ChatColor.GOLD + " Lv. " + getLevel());
 		if (BukkitReflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -63,7 +64,7 @@ public class Armor extends CustomItemInstance {
 			lore.add(ChatColor.RED + "MinLv: " + getMinLevel());
 		}
 		if (hasClass()) {
-			lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_CLASS) + this.getClazz());
+			lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_CLASS) + ": " + this.getClazz());
 		}
 		if (!isTradeable()) {
 			lore.add(ChatColor.RED + Msg.getMessage(Key.WORD_SOULBOUND) + "!");

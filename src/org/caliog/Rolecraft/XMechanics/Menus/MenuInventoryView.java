@@ -1,12 +1,14 @@
 package org.caliog.Rolecraft.XMechanics.Menus;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -36,10 +38,18 @@ public class MenuInventoryView extends InventoryView {
 				} else {
 					inv = event.getInventory();
 				}
-				if (event.getView().equals(myself) && event.getWhoClicked() instanceof Player
-						&& event.getView().getTopInventory().equals(inv)) {
-					if (!myself.clicked(event)) {
-						event.setCancelled(true);
+				if (event.getView().equals(myself) && event.getWhoClicked() instanceof Player) {
+					if (event.getView().getTopInventory().equals(inv)) {
+						if (!myself.clicked(event)) {
+							event.setCancelled(true);
+							//TODO test
+							((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getEyeLocation(),
+									Sound.BLOCK_ANVIL_HIT, 1F, 1F);
+						}
+					} else if (event.getView().getBottomInventory().equals(inv)) {
+						if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+							event.setCancelled(true);
+						}
 					}
 				}
 			}

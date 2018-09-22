@@ -1,7 +1,6 @@
 package org.caliog.Rolecraft.Items.ItemCreation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -57,7 +56,6 @@ public class ItemEditMenu extends Menu {
 		item = new MenuItem((skel.getName() == null || skel.getName().length() == 0) ? "Name" : skel.getName(),
 				Material.NAME_TAG, lore);
 		{
-			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				public void onClick(InventoryClickEvent event, Player player) {
@@ -74,12 +72,9 @@ public class ItemEditMenu extends Menu {
 							} else {
 								if (!lastLine.equals("") && !lastLine.equalsIgnoreCase("none")) {
 									skel.setName(lastLine);
-									final_item.setName(lastLine);
 								} else {
 									skel.setName(null);
-									final_item.setName("Name");
 								}
-
 								quit();
 							}
 						}
@@ -87,6 +82,7 @@ public class ItemEditMenu extends Menu {
 						@Override
 						protected void quit() {
 							super.stop();
+							((ItemEditMenu) getMenu()).setup();
 							MenuManager.openMenu(player, getMenu());
 							((MenuInventoryView) event.getView()).reload();
 						}
@@ -96,9 +92,10 @@ public class ItemEditMenu extends Menu {
 		}
 		this.setItem(0, item);
 
+		//TODO damage format should be 3,4,4,5
 		// 1 - Damage/Defense
 		lore = new ArrayList<String>();
-		lore.add(ChatColor.GOLD + ddString().toLowerCase() + ": " + skel.getMinlvl());
+		lore.add(ChatColor.GOLD + ddString().toLowerCase() + ": " + skel.getD());
 		lore.add("<left> - increase");
 		lore.add("<right> - decrease");
 		item = new MenuItem(ddString(), isWeapon() ? Material.IRON_SWORD : Material.LEATHER_CHESTPLATE, lore);
@@ -107,19 +104,12 @@ public class ItemEditMenu extends Menu {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
-					List<String> lore = getMenu().getItem(1).getLore();
-					for (int i = 0; i < lore.size(); i++) {
-						String l = lore.get(i);
-						if (l.contains(ddString().toLowerCase() + ": ")) {
-							if (event.isLeftClick())
-								skel.setD(skel.getD() + 1);
-							else if (skel.getD() > 0)
-								skel.setD(skel.getD() - 1);
-							lore.set(i, ChatColor.GOLD + ddString().toLowerCase() + ": " + skel.getD());
-							((MenuInventoryView) event.getView()).reload();
-							break;
-						}
-					}
+					if (event.isLeftClick())
+						skel.setD(skel.getD() + 1);
+					else if (skel.getD() > 0)
+						skel.setD(skel.getD() - 1);
+					((ItemEditMenu) getMenu()).setup();
+					((MenuInventoryView) event.getView()).reload();
 				}
 			});
 		}
@@ -132,24 +122,16 @@ public class ItemEditMenu extends Menu {
 		lore.add("<right> - decrease");
 		item = new MenuItem("Minimum Level", Material.CAKE, lore);
 		{
-			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
-					List<String> lore = final_item.getLore();
-					for (int i = 0; i < lore.size(); i++) {
-						String l = lore.get(i);
-						if (l.contains("min-level: ")) {
-							if (event.isLeftClick())
-								skel.setMinlvl(skel.getMinlvl() + 1);
-							else if (skel.getMinlvl() > 0)
-								skel.setMinlvl(skel.getMinlvl() - 1);
-							lore.set(i, ChatColor.GOLD + "min-level: " + skel.getMinlvl());
-							((MenuInventoryView) event.getView()).reload();
-							break;
-						}
-					}
+					if (event.isLeftClick())
+						skel.setMinlvl(skel.getMinlvl() + 1);
+					else if (skel.getMinlvl() > 0)
+						skel.setMinlvl(skel.getMinlvl() - 1);
+					((ItemEditMenu) getMenu()).setup();
+					((MenuInventoryView) event.getView()).reload();
 				}
 
 			});
@@ -162,22 +144,13 @@ public class ItemEditMenu extends Menu {
 		lore.add("<click> - to switch between classes.");
 		item = new MenuItem("Required Class", Material.DIAMOND_HELMET, lore);
 		{
-			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
-					List<String> lore = final_item.getLore();
-					for (int i = 0; i < lore.size(); i++) {
-						String l = lore.get(i);
-						if (l.contains("Class: ")) {
-							String c = l.split(": ")[1];
-							skel.setClazz(ClazzLoader.getNextClass(c));
-							lore.set(i, l.replace(c, skel.getClazz()));
-							((MenuInventoryView) event.getView()).reload();
-							break;
-						}
-					}
+					skel.setClazz(ClazzLoader.getNextClass(skel.getClazz()));
+					((ItemEditMenu) getMenu()).setup();
+					((MenuInventoryView) event.getView()).reload();
 				}
 			});
 		}
@@ -193,7 +166,6 @@ public class ItemEditMenu extends Menu {
 		lore.add("Type none for no lore.");
 		item = new MenuItem("Lore", Mat.BOOK_AND_QUILL.e(), lore);
 		{
-			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				public void onClick(InventoryClickEvent event, Player player) {
@@ -213,14 +185,6 @@ public class ItemEditMenu extends Menu {
 								} else {
 									skel.setLore(null);
 								}
-								List<String> l = final_item.getLore();
-								l.clear();
-								if (skel.getLore() != null) {
-									l.add(ChatColor.GOLD + "Lore: " + ChatColor.GRAY + skel.getLore());
-								}
-								l.add("<click> - and enter the");
-								l.add("desired lore.");
-								l.add("Type none for no lore.");
 								quit();
 							}
 						}
@@ -228,6 +192,7 @@ public class ItemEditMenu extends Menu {
 						@Override
 						protected void quit() {
 							super.stop();
+							((ItemEditMenu) getMenu()).setup();
 							MenuManager.openMenu(player, getMenu());
 							((MenuInventoryView) event.getView()).reload();
 						}
@@ -243,23 +208,13 @@ public class ItemEditMenu extends Menu {
 		lore.add("<click> - to change.");
 		item = new MenuItem("Soulbound", Material.END_CRYSTAL, lore);
 		{
-			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
 				public void onClick(InventoryClickEvent event, Player player) {
-					List<String> lore = final_item.getLore();
-					for (int i = 0; i < lore.size(); i++) {
-						String l = lore.get(i);
-						if (l.contains("Soulbound: ")) {
-							String c = l.split(": ")[1].trim();
-							boolean b = Boolean.valueOf(c);
-							skel.setTradeable(b);
-							lore.set(i, l.replace(c, String.valueOf(!b)));
-							((MenuInventoryView) event.getView()).reload();
-							break;
-						}
-					}
+					skel.setTradeable(!skel.isTradeable());
+					((ItemEditMenu) getMenu()).setup();
+					((MenuInventoryView) event.getView()).reload();
 				}
 			});
 		}
@@ -276,24 +231,16 @@ public class ItemEditMenu extends Menu {
 				lore.add("<right> - decrease");
 				item = new MenuItem(type.name(), Material.ENCHANTED_BOOK, lore);
 				{
-					final MenuItem final_item = item;
 					item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 						@Override
 						public void onClick(InventoryClickEvent event, Player player) {
-							List<String> lore = final_item.getLore();
-							for (int i = 0; i < lore.size(); i++) {
-								String l = lore.get(i);
-								if (l.contains("Power: ")) {
-									if (event.isLeftClick())
-										skel.setEffectPower(skel.getEffectPower(type) + 1, type);
-									else if (skel.getEffectPower(type) > 0)
-										skel.setEffectPower(skel.getEffectPower(type) - 1, type);
-									lore.set(i, ChatColor.GOLD + "Power: " + skel.getEffectPower(type));
-									((MenuInventoryView) event.getView()).reload();
-									break;
-								}
-							}
+							if (event.isLeftClick())
+								skel.setEffectPower(skel.getEffectPower(type) + 1, type);
+							else if (skel.getEffectPower(type) > 0)
+								skel.setEffectPower(skel.getEffectPower(type) - 1, type);
+							((ItemEditMenu) getMenu()).setup();
+							((MenuInventoryView) event.getView()).reload();
 						}
 					});
 				}
@@ -302,12 +249,16 @@ public class ItemEditMenu extends Menu {
 		}
 
 		// 7 - Input
-		final MenuItem input = new MenuItem();
+		MenuItem input = new MenuItem();
+		ItemStack stack = skel.getStack();
+		if (stack != null) {
+			input = new MenuItem(stack, true);
+		}
 		input.setButtonClickHandler(input.new ButtonClickHandler(this) {
 
 			@Override
 			public void onClick(InventoryClickEvent event, Player player) {
-				ItemStack stack = event.getCursor();
+				ItemStack stack = event.getCursor().clone();
 				if (stack == null)
 					return;
 				if (Weapon.isWeapon(stack)) {
@@ -317,20 +268,8 @@ public class ItemEditMenu extends Menu {
 				} else {
 					skel = new ItemSkeleton(stack.getType());
 				}
-				MenuItem item = new MenuItem(stack.clone(), true);
-				item.setButtonClickHandler(input.getClickHandler());
-				getMenu().setItem(7, item);
 
-				// damage / weapon manipulation
-				ArrayList<String> lore = new ArrayList<String>();
-				lore.add(ChatColor.GOLD + ddString().toLowerCase() + ": " + skel.getMinlvl());
-				lore.add("<left> - increase");
-				lore.add("<right> - decrease");
-				MenuItem d = new MenuItem(ddString(), isWeapon() ? Material.IRON_SWORD : Material.LEATHER_CHESTPLATE,
-						lore);
-				d.setButtonClickHandler(getMenu().getItem(1).getClickHandler());
-				getMenu().setItem(1, d);
-
+				((ItemEditMenu) getMenu()).setup();
 				((MenuInventoryView) event.getView()).reload();
 			}
 		});

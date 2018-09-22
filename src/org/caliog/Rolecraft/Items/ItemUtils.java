@@ -58,6 +58,9 @@ public class ItemUtils {
 		if (item == null) {
 			return true;
 		}
+		// update item
+		updateItem(stack, item);
+
 		if ((item.hasClass()) && (!item.getClazz().equals(player.getType()))) {
 			if (Math.random() < 0.5D) {
 				Msg.sendMessage(p, Key.NEED_CLASS1, Msg.CLASS, item.getClazz());
@@ -108,9 +111,6 @@ public class ItemUtils {
 		} else {
 			name = string;
 		}
-		if (Material.matchMaterial(name) != null) {
-			return new ItemStack(Material.matchMaterial(name), al);
-		}
 
 		if ((name.equals("HealthPotion_1")) || (name.equals("Health Potion I"))) {
 			return HealthPotion.getHP1(al);
@@ -122,7 +122,19 @@ public class ItemUtils {
 			return HealthPotion.getHP3(al);
 		}
 
-		return getCustomItem(name, al, d, !soulbound);
+		ItemStack s = getCustomItem(name, al, d, !soulbound);
+		if (s != null)
+			return s;
+
+		if (Material.matchMaterial(name) != null) {
+			return new ItemStack(Material.matchMaterial(name), al);
+		}
+
+		return null;
+	}
+
+	public static void updateItem(ItemStack stack, ItemStack update) {
+		stack.setItemMeta(update.getItemMeta());
 	}
 
 }

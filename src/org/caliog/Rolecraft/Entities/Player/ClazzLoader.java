@@ -52,7 +52,8 @@ public class ClazzLoader {
 
 			for (String id : ids) {
 				if (config.isSet("spells." + id)) {
-					clazz.addSpell(id.toLowerCase().replaceAll("x", "1").replaceAll("o", "0"), config.getString("spells." + id));
+					clazz.addSpell(id.toLowerCase().replaceAll("x", "1").replaceAll("o", "0"),
+							config.getString("spells." + id));
 				}
 			}
 			@SuppressWarnings("deprecation")
@@ -108,14 +109,12 @@ public class ClazzLoader {
 
 	public static String getNextClass(String c) {
 		String[] classes = getClassesAsArray();
-		if (c.equals("none"))
-			return classes[0];
 		if (c.equals(classes[classes.length - 1]))
 			return "none";
 		for (int i = 0; i < classes.length - 1; i++)
 			if (c.equals(classes[i]))
 				return classes[i + 1];
-		return null;
+		return classes[0];
 	}
 
 }
