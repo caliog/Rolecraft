@@ -192,11 +192,7 @@ public class RolecraftListener implements Listener {
 	public void customItemClick(PlayerInteractEvent event) {
 		if (RolecraftConfig.isWorldDisabled(event.getPlayer().getWorld()))
 			return;
-		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand(); // TODO
-																				// CHECK
-																				// FOR
-																				// VERSION
-																				// CONTROLL
+		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
 		if (((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 				&& (Skillstar.isSkillstar(stack))) {
 			event.getPlayer()
