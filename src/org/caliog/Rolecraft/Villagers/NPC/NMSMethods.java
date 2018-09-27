@@ -1,5 +1,6 @@
 package org.caliog.Rolecraft.Villagers.NPC;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -56,11 +57,13 @@ public class NMSMethods {
 
 	}
 
-	public static String getRecipeListFieldName() {
+	private static String getCareerLevelField() {
 		if (Manager.getServerVersion().equals("v1_12_R1"))
 			return "bK";
-		else
+		else if (Manager.getServerVersion().startsWith("v1_11"))
 			return "bJ";
+		else
+			return "careerId";
 	}
 
 	public static boolean openInventory(Trader trader, Player player) {
@@ -77,15 +80,20 @@ public class NMSMethods {
 			Class<?> imerchant = Reflect.getNMSClass("IMerchant");
 			Class<?> statistic = Reflect.getNMSClass("Statistic");
 			Class<?> statisticList = Reflect.getNMSClass("StatisticList");
+			Class<?> minecraftKey = Reflect.getNMSClass("MinecraftKey");
+			Class<?> aminecraftKey = Array.newInstance(minecraftKey, 0).getClass();
 
 			Object handle = craftPlayer.getMethod("getHandle").invoke(player);
 			Object villager = entityVillager.getConstructor(world, int.class)
 					.newInstance(entityPlayer.getField("world").get(handle), 0);
 			if ((trader.getName() != null)) {
-				entityVillager.getMethod("setCustomName", String.class).invoke(villager, trader.getName());
+				if (!Manager.getServerVersion().startsWith("v1_13"))
+					entityVillager.getMethod("setCustomName", String.class).invoke(villager, trader.getName());
+				else
+					;//TODO name for 1.13?
 			}
 
-			Field careerLevelField = entityVillager.getDeclaredField(getRecipeListFieldName());
+			Field careerLevelField = entityVillager.getDeclaredField(getCareerLevelField());
 			careerLevelField.setAccessible(true);
 			careerLevelField.set(villager, Integer.valueOf(10));
 
@@ -108,8 +116,16 @@ public class NMSMethods {
 			entityVillager.getMethod("setTradingPlayer", entityHuman).invoke(villager, handle);
 			entityPlayer.getMethod("openTrade", imerchant).invoke(handle, villager);
 
-			// TODO method name "b" and field name "F" are variable
-			entityPlayer.getMethod("b", statistic).invoke(handle, statisticList.getField("F").get(null));
+			// -- VC
+			// TODO orga
+			if (Manager.getServerVersion().startsWith("v1_13")) {
+				Object key = Array.newInstance(minecraftKey, 1);
+				Array.set(key, 0, minecraftKey.cast(statisticList.getField("TRADED_WITH_VILLAGER").get(null)));
+				entityPlayer.getMethod("a", aminecraftKey).invoke(handle, key);
+			} else
+				entityPlayer.getMethod("b", statistic).invoke(handle, statisticList.getField("F").get(null));
+			//--
+
 			return true;
 		} catch (Exception e) {
 			Debugger.exception("NPC.NMSMethods in openInventory threw exception:", e.getMessage());

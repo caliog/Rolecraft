@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Villagers.Traders;
+package org.caliog.Rolecraft.Villagers.TraderMenu;
 
 import java.util.HashMap;
 import java.util.List;

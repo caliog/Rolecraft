@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Villagers.Traders.TraderMenu;
+import org.caliog.Rolecraft.Villagers.TraderMenu.TraderMenu;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 

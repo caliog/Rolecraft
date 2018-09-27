@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.NPC.Trader;
-import org.caliog.Rolecraft.Villagers.Traders.TraderEditMenu;
+import org.caliog.Rolecraft.Villagers.TraderMenu.TraderEditMenu;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
