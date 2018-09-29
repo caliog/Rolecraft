@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -35,7 +36,6 @@ import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
-import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
 public class VManager {
@@ -99,7 +99,8 @@ public class VManager {
 		villagers.add(trader);
 
 		// LOG
-		Debugger.info(LogTitle.SPAWN, "Spawning villager (trader) (name=%s) at:", name, new Vector(location).toString());
+		Debugger.info(LogTitle.SPAWN, "Spawning villager (trader) (name=%s) at:", name,
+				new Vector(location).toString());
 
 		return trader;
 	}
@@ -218,7 +219,8 @@ public class VManager {
 					if (q != null) {
 						Location l = q.getTargetLocation(PlayerManager.getPlayer(e.getUniqueId()));
 						if (l == null) {
-							if (player.getQuestStatus(q.getName()).equals(QuestStatus.UNACCEPTED) || q.couldComplete(player))
+							if (player.getQuestStatus(q.getName()).equals(QuestStatus.UNACCEPTED)
+									|| q.couldComplete(player))
 								l = v.getEntityLocation();
 							else
 								continue;
@@ -228,7 +230,11 @@ public class VManager {
 								continue;
 						}
 						l.setY(l.getY() + 2.65);
-						ParticleEffect.VILLAGER_HAPPY.display(0.1F, 0.35F, 0.1F, 0.3F, 7, l, (Player) e);
+						try {
+							((Player) e).spawnParticle(Particle.VILLAGER_HAPPY, l, 7, 0.1F, 0.35F, 0.3F);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 					}
 				}
 			}
@@ -247,7 +253,8 @@ public class VManager {
 					for (Villager v : villagers) {
 						if (!RolecraftConfig.isNaturalSpawnDisabled(v.getBukkitEntity().getWorld().getName()))
 							for (Entity e : v.getBukkitEntity().getNearbyEntities(10, 4, 10)) {
-								if (e instanceof org.bukkit.entity.Villager && !EntityManager.isRegistered(e.getUniqueId())) {
+								if (e instanceof org.bukkit.entity.Villager
+										&& !EntityManager.isRegistered(e.getUniqueId())) {
 									if (e.getName().equals(v.getName()))
 										e.remove();
 								}
@@ -263,7 +270,8 @@ public class VManager {
 	public static synchronized void load(final Chunk chunk) {
 		List<Villager> list = villagers;
 		for (final Villager v : list) {
-			if (v.getEntityLocation().getChunk().getX() == chunk.getX() && v.getEntityLocation().getChunk().getZ() == chunk.getZ()) {
+			if (v.getEntityLocation().getChunk().getX() == chunk.getX()
+					&& v.getEntityLocation().getChunk().getZ() == chunk.getZ()) {
 				Manager.scheduleTask(new Runnable() {
 
 					@Override

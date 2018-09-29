@@ -1,8 +1,8 @@
 package org.caliog.Rolecraft.Spells;
 
+import org.bukkit.Particle;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
-import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 
 public class SpeedSpell extends Spell {
 	public SpeedSpell(RolecraftPlayer player) {
@@ -32,9 +32,8 @@ public class SpeedSpell extends Spell {
 
 			@Override
 			public void run() {
-				ParticleEffect.VILLAGER_HAPPY.display(0.1F, 0.2F, 0.1F, 0.2F, (int) (x * 50) + 50, getPlayer().getPlayer().getLocation(),
-						20D);
-
+				getPlayer().getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY,
+						getPlayer().getPlayer().getLocation(), (int) (x * 50) + 50, 0.1F, 0.15F, 0.1F);
 			}
 		}, 20L, 1L, 600L);
 

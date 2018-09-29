@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -15,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Fighter;
-import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
 
 public abstract class Mob extends Fighter {
@@ -45,8 +45,7 @@ public abstract class Mob extends Fighter {
 
 		Manager.scheduleRepeatingTask(new Runnable() {
 			public void run() {
-				ParticleEffect.SMOKE_NORMAL.display(0.1F, 0.3F, 0.1F, 0.25F, 10, loc, 30);
-
+				loc.getWorld().spawnParticle(Particle.SMOKE_NORMAL, loc, 12, 0.1F, 0.3F, 0.1F);
 			}
 		}, 0L, 2L, 8L);
 		if ((entity instanceof LivingEntity)) {
@@ -80,8 +79,8 @@ public abstract class Mob extends Fighter {
 	public abstract double getHP();
 
 	public String getCustomName() {
-		return (fightsBack() ? ChatColor.RED : ChatColor.BLUE) + "" + (isAgressive() ? ChatColor.ITALIC : "") + getName() + " Lv "
-				+ getLevel();
+		return (fightsBack() ? ChatColor.RED : ChatColor.BLUE) + "" + (isAgressive() ? ChatColor.ITALIC : "")
+				+ getName() + " Lv " + getLevel();
 	}
 
 	public abstract EntityType getType();

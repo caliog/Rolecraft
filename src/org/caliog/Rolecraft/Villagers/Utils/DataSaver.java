@@ -24,12 +24,15 @@ public class DataSaver {
 
 		config.set(String.valueOf(id), s);
 
+		return id;
+	}
+
+	public static void save() {
 		try {
 			config.save(f);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return id;
 	}
 
 	public static List<String> getStringList(String id) {

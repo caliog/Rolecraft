@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -19,10 +21,7 @@ import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
-import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
-
-import org.bukkit.ChatColor;
 
 public class Pet extends MobInstance {
 
@@ -62,8 +61,7 @@ public class Pet extends MobInstance {
 
 		Manager.scheduleRepeatingTask(new Runnable() {
 			public void run() {
-				ParticleEffect.SMOKE_NORMAL.display(0.1F, 0.3F, 0.1F, 0.25F, 10, loc, 30);
-
+				loc.getWorld().spawnParticle(Particle.SMOKE_NORMAL, loc, 8, 0.1F, 0.3F, 0.1F);
 			}
 		}, 0L, 2L, 8L);
 		if ((entity instanceof LivingEntity)) {

@@ -49,7 +49,8 @@ public class SpellLoader {
 						BufferedReader reader = new BufferedReader(new InputStreamReader(jar.getInputStream(e)));
 						String line;
 						while ((line = reader.readLine()) != null) {
-							paths.add(line.replaceAll(".java", ""));
+							if (!line.startsWith("version:"))
+								paths.add(line.replaceAll(".java", ""));
 						}
 
 					}
@@ -74,7 +75,8 @@ public class SpellLoader {
 		paths.add("org.caliog.Rolecraft.Spells.SpeedSpell");
 		paths.add("org.caliog.Rolecraft.Spells.InvisibleSpell");
 		paths.add("org.caliog.Rolecraft.Spells.Curse");
-		classLoader = URLClassLoader.newInstance(urls.toArray(new URL[urls.size()]), Manager.plugin.getClass().getClassLoader());
+		classLoader = URLClassLoader.newInstance(urls.toArray(new URL[urls.size()]),
+				Manager.plugin.getClass().getClassLoader());
 
 	}
 

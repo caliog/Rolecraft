@@ -1,8 +1,13 @@
 package org.caliog.Rolecraft;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -169,6 +174,7 @@ public class RolecraftPlugin extends JavaPlugin {
 		return serverVersion;
 	}
 
+	@SuppressWarnings("resource")
 	private void createSpellCollection() {
 		if (RolecraftConfig.isSpellCollectionEnabled()) {
 			try {
@@ -176,6 +182,33 @@ public class RolecraftPlugin extends JavaPlugin {
 				if (!file.exists()) {
 					file.createNewFile();
 					fc.copyFile(FilePath.spellCollection, "SpellCollection.jar");
+				} else {
+					JarFile jar = new JarFile(file);
+					Enumeration<JarEntry> entries = jar.entries();
+					boolean versionNotFound = true;
+					while (entries.hasMoreElements()) {
+						JarEntry e = entries.nextElement();
+						if (e.getName().equalsIgnoreCase("spell.info")) {
+							BufferedReader reader = new BufferedReader(new InputStreamReader(jar.getInputStream(e)));
+							String line;
+							while ((line = reader.readLine()) != null) {
+								if (line.startsWith("version:")) {
+									versionNotFound = false;
+									if (line.split(":")[1].equals(this.getDescription().getVersion())) {
+										file.delete();
+										fc.copyFile(FilePath.spellCollection, "SpellCollection.jar");
+									}
+									break;
+								}
+							}
+							reader.close();
+							break;
+						}
+					}
+					if (versionNotFound) {
+						file.delete();
+						fc.copyFile(FilePath.spellCollection, "SpellCollection.jar");
+					}
 				}
 
 			} catch (IOException e) {
@@ -202,10 +235,12 @@ public class RolecraftPlugin extends JavaPlugin {
 
 				@Override
 				public void onFinish(Updater updater) {
-					if (updater.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE))
+					if (updater.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE)) {
 						getLogger().info(
 								"There is a new version (" + updater.getLatestName().replace("Rolecraft", "").trim()
 										+ ") of Rolecraft available!");
+						getLogger().info("Download the latest version here: https://dev.bukkit.org/projects/rolecraft");
+					}
 
 				}
 			});

@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -21,24 +24,56 @@ import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
-import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 
 public class Curse extends Spell {
 
-	// add Fireworks_Spark,Explosions or Cloud,Flame,Heart,Redstone,Portal,
 	public enum CurseType {
-		BLACK(ParticleEffect.SPELL_MOB, 0F), WHITE(ParticleEffect.SPELL_MOB, 1F), COLORFUL(ParticleEffect.SPELL_MOB,
-				0.5F), GREEN(ParticleEffect.VILLAGER_HAPPY, 1F), SPARK(ParticleEffect.FIREWORKS_SPARK, 1F), DUST(
-						ParticleEffect.CLOUD, 0.1F), FLAME(ParticleEffect.FLAME, 1F), HEART(ParticleEffect.HEART,
-								1F), COLORED(ParticleEffect.REDSTONE, 0.1F), REDSTONE(ParticleEffect.REDSTONE,
-										0F), PORTAL(ParticleEffect.PORTAL, 0.2F);
+		// @formatter:off
+		AQUA(Particle.REDSTONE, 0F, new DustOptions(Color.AQUA, 1.5F)),
+		BLACK(Particle.REDSTONE, 0F, new DustOptions(Color.BLACK, 1.5F)),
+		BLUE(Particle.REDSTONE, 0F, new DustOptions(Color.BLUE, 1.5F)),
+		FUCHSIA(Particle.REDSTONE, 0F, new DustOptions(Color.FUCHSIA, 1.5F)),
+		GRAY(Particle.REDSTONE, 0F, new DustOptions(Color.GRAY, 1.5F)),
+		GREEN(Particle.REDSTONE, 0F, new DustOptions(Color.GREEN, 1.5F)),
+		LIME(Particle.REDSTONE, 0F, new DustOptions(Color.LIME, 1.5F)),
+		MAROON(Particle.REDSTONE, 0F, new DustOptions(Color.MAROON, 1.5F)),
+		NAVY(Particle.REDSTONE, 0F, new DustOptions(Color.NAVY, 1.5F)),
+		OLIVE(Particle.REDSTONE, 0F, new DustOptions(Color.OLIVE, 1.5F)),
+		ORANGE(Particle.REDSTONE, 0F, new DustOptions(Color.ORANGE, 1.5F)),
+		PURPLE(Particle.REDSTONE, 0F, new DustOptions(Color.PURPLE, 1.5F)),
+		RED(Particle.REDSTONE, 0F, new DustOptions(Color.RED, 1.5F)),
+		SILVER(Particle.REDSTONE, 0F, new DustOptions(Color.SILVER, 1.5F)),
+		TEAL(Particle.REDSTONE, 0F, new DustOptions(Color.TEAL, 1.5F)),
+		WHITE(Particle.REDSTONE, 0F, new DustOptions(Color.WHITE, 1.5F)),
+		YELLOW(Particle.REDSTONE, 0F, new DustOptions(Color.YELLOW, 1.5F)),
+		DOLPHIN(Particle.DOLPHIN, 1F),
+		MAGIC(Particle.CRIT_MAGIC, 0.5F),
+		SPELL(Particle.SPELL,0.7F),
+		WITCH(Particle.CLOUD, 0.6F),
+		FLAME(Particle.FLAME, 1F),
+		HEART(Particle.HEART, 0.7F),
+		SWEEP(Particle.SWEEP_ATTACK,0.8F),
+		AURA(Particle.TOWN_AURA,0.6F);
+		// @formatter:on
+		public final Particle effect;
+		public final Object data;
+		public final float color; // speed
 
-		public final ParticleEffect effect;
-		public final float color;
+		CurseType(Particle e, float c) {
+			this(e, c, null);
+		}
 
-		CurseType(ParticleEffect e, float c) {
+		CurseType(Particle e, float c, Object d) {
 			effect = e;
 			color = c;
+			data = d;
+		}
+
+		public void cast(Location loc, int a) {
+			if (data == null)
+				loc.getWorld().spawnParticle(this.effect, loc, 8 + a, 0.1F, 0.1F, 0.1F, this.color);
+			else
+				loc.getWorld().spawnParticle(this.effect, loc, 8 + a, 0.1F, 0.1F, 0.1F, this.color, this.data);
 		}
 	}
 
@@ -133,17 +168,18 @@ public class Curse extends Spell {
 						if (v.clone().crossProduct(b).lengthSquared() < 0.4F) {
 							temp.add(entity);
 						}
-
 					}
 				}
 			}
+
+			// effects & damage
 			for (int i = 1; i < distance; i++) {
 				Location loc = center.clone().add(nextVector(v, i, distance, targets.get(v)));
 				Manager.scheduleTask(new Runnable() {
 
 					@Override
 					public void run() {
-						type.effect.display(0.1F, 0.1F, 0.1F, type.color, 8 + a, loc, 50D);
+						type.cast(loc, a);
 						for (Entity t : temp) {
 							Vector r = loc.toVector().clone().setY(0);
 							if (r.distanceSquared(loc.toVector().clone().setY(0)) < 2.2) {
@@ -162,9 +198,8 @@ public class Curse extends Spell {
 
 	private Vector nextVector(Vector v, int i, int distance, Entity target) {
 		float p = (float) i / (float) distance;
-		if (dir.equals(Direction.RAY) || dir.equals(Direction.FULL))
-			return v.clone().multiply(i);
-		else if (dir.equals(Direction.TWIRL)) {
+
+		if (dir.equals(Direction.TWIRL)) {
 			Vector v1 = new Vector(-Math.signum(v.getX()) * v.getY(), Math.signum(v.getX()) * v.getX(), 0);
 			v1.normalize();
 			v1.multiply(0.5F + p * 0.2F);
@@ -180,7 +215,7 @@ public class Curse extends Spell {
 				return target.getLocation().toVector().clone()
 						.subtract(getPlayer().getPlayer().getLocation().toVector()).normalize().multiply(i);
 		}
-		return v;
+		return v.clone().multiply(i);
 	}
 
 	private List<Vector> calculateVectors() {
