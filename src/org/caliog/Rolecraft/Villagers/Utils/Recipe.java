@@ -15,7 +15,7 @@ public class Recipe {
 	}
 
 	public void add(ItemStack give, int price) {
-		add(new Money(price), give);
+		add(new Money(price).getStackCopy(), give);
 	}
 
 	protected void add(ItemStack get, ItemStack give) {

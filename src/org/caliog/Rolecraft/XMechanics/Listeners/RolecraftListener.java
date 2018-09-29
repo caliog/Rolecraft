@@ -8,6 +8,7 @@ import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
@@ -59,7 +60,6 @@ import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
-import org.caliog.Rolecraft.XMechanics.Utils.ParticleEffect;
 import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
@@ -394,8 +394,12 @@ public class RolecraftListener implements Listener {
 							}
 						});
 					}
-					ParticleEffect.HEART.display(0.05F, 0.2F, 0.05F, 0.2F, 10, event.getPlayer().getEyeLocation(), 20);
-
+					try {
+						event.getPlayer().getWorld().spawnParticle(Particle.HEART, event.getPlayer().getEyeLocation(),
+								10, 0.2F, 0.05F, 0.2F);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -530,7 +534,6 @@ public class RolecraftListener implements Listener {
 			return;
 		Class<?>[] a = new Class<?>[0];
 		Inventory inv = null;
-		// TODO Version Controll
 		if (BukkitReflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
 			inv = event.getClickedInventory();
 		} else {

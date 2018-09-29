@@ -77,6 +77,12 @@ public abstract class CustomItem extends ItemStack {
 		return getMinLevel() > 0;
 	}
 
+	public ItemStack getStackCopy() {
+		ItemStack stack = new ItemStack(getType(), getAmount());
+		stack.setItemMeta(this.getItemMeta());
+		return stack;
+	}
+
 	public static boolean isItemTradeable(ItemStack item) {
 		if (!isCustomItem(item)) {
 			return true;
@@ -107,4 +113,5 @@ public abstract class CustomItem extends ItemStack {
 		}
 		return false;
 	}
+
 }

@@ -8,19 +8,25 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MerchantInventory;
+import org.bukkit.inventory.MerchantRecipe;
 import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Guards.GManager;
 import org.caliog.Rolecraft.Guards.Guard;
 import org.caliog.Rolecraft.Items.Books.QuestBook;
+import org.caliog.Rolecraft.Items.Custom.Money;
 import org.caliog.Rolecraft.Mobs.Mob;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.Chat.ChatManager;
+import org.caliog.Rolecraft.Villagers.NPC.NMSMethods;
 import org.caliog.Rolecraft.Villagers.NPC.Trader;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.Villagers.NPC.Villager.VillagerType;
@@ -178,6 +184,31 @@ public class VillagerListener implements Listener {
 		if (item != null && item.hasItemMeta() && item.getItemMeta().hasDisplayName()
 				&& item.getItemMeta().getDisplayName().equals(dummy.getItemMeta().getDisplayName())) {
 			dummy.clicked();
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onBarter(InventoryClickEvent event) {
+		if (event.getCursor() != null && event.getClickedInventory() != null
+				&& event.getClickedInventory().getType().equals(InventoryType.MERCHANT)) {
+			if ((event.getSlot() == 1 || event.getSlot() == 0) && Money.isMoney(event.getCursor())) {
+				MerchantInventory inv = (MerchantInventory) event.getClickedInventory();
+				MerchantRecipe recipe = NMSMethods.getCurrentRecipe(inv);
+				if (Money.isMoney(recipe.getIngredients().get(event.getSlot()))) {
+					Money cursor = Money.getMoney(event.getCursor());
+					Money needed = Money.getMoney(recipe.getIngredients().get(event.getSlot()));
+					Money current = Money.getMoney(event.getCurrentItem());
+					int place = Math.min(cursor.getMoneyAmount(),
+							needed.getMoneyAmount() - (current == null ? 0 : current.getMoneyAmount()));
+					event.setCurrentItem(new Money(place + (current == null ? 0 : current.getMoneyAmount())));
+					event.setCursor(null);
+					if (place < cursor.getMoneyAmount()) {
+						event.setCursor(new Money(cursor.getMoneyAmount() - place));
+					}
+					event.setCancelled(true);
+				}
+			}
 		}
 	}
 
