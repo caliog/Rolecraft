@@ -2,12 +2,15 @@ package org.caliog.Rolecraft.Villagers.NPC;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MerchantInventory;
+import org.bukkit.inventory.MerchantRecipe;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
 import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
@@ -72,8 +75,8 @@ public class NMSMethods {
 			return false;
 		try {
 			Class<?> entityVillager = Reflect.getNMSClass("EntityVillager");
-			Class<?> world = Reflect.getNMSClass("World");
 			Class<?> craftPlayer = Reflect.getCraftbukkitClass("entity.CraftPlayer");
+			Class<?> craftVillager = Reflect.getCraftbukkitClass("entity.CraftVillager");
 			Class<?> entityPlayer = Reflect.getNMSClass("EntityPlayer");
 			Class<?> entityHuman = Reflect.getNMSClass("EntityHuman");
 			Class<?> merchantRecipeList = Reflect.getNMSClass("MerchantRecipeList");
@@ -84,14 +87,7 @@ public class NMSMethods {
 			Class<?> aminecraftKey = Array.newInstance(minecraftKey, 0).getClass();
 
 			Object handle = craftPlayer.getMethod("getHandle").invoke(player);
-			Object villager = entityVillager.getConstructor(world, int.class)
-					.newInstance(entityPlayer.getField("world").get(handle), 0);
-			if ((trader.getName() != null)) {
-				if (!Manager.getServerVersion().startsWith("v1_13"))
-					entityVillager.getMethod("setCustomName", String.class).invoke(villager, trader.getName());
-				else
-					;//TODO name for 1.13?
-			}
+			Object villager = craftVillager.getMethod("getHandle").invoke(trader.getBukkitEntity());
 
 			Field careerLevelField = entityVillager.getDeclaredField(getCareerLevelField());
 			careerLevelField.setAccessible(true);
@@ -161,6 +157,35 @@ public class NMSMethods {
 			return null;
 		Class<?> craftItemStack = Reflect.getCraftbukkitClass("inventory.CraftItemStack");
 		return craftItemStack.getMethod("asNMSCopy", org.bukkit.inventory.ItemStack.class).invoke(null, item);
+	}
+
+	public static MerchantRecipe getCurrentRecipe(MerchantInventory inv) {
+		try {
+			Class<?> craftInventoryMerchant = Reflect.getCraftbukkitClass("inventory.CraftInventoryMerchant");
+			Class<?> merchantRecipe = Reflect.getNMSClass("MerchantRecipe");
+			Class<?> merchantRecipeList = Reflect.getNMSClass("MerchantRecipeList");
+			Class<?> inventoryMerchant = Reflect.getNMSClass("InventoryMerchant");
+			Class<?> entityVillager = Reflect.getNMSClass("EntityVillager");
+
+			Method getInventory = craftInventoryMerchant.getMethod("getInventory");
+			Field imerchant = inventoryMerchant.getDeclaredField("merchant");
+			Field selectedIndex = inventoryMerchant.getField("selectedIndex");
+			Field trades = entityVillager.getField("trades");
+
+			Object inventory = getInventory.invoke(craftInventoryMerchant.cast(inv));
+			imerchant.setAccessible(true);
+			Object merchant = imerchant.get(inventory);
+			int index = selectedIndex.getInt(inventory);
+			Object recipeList = trades.get(entityVillager.cast(merchant));
+			Object recipe = merchantRecipeList.getMethod("get", int.class).invoke(recipeList, index);
+			Object bukkitRecipe = merchantRecipe.getMethod("asBukkit").invoke(recipe);
+			return (MerchantRecipe) bukkitRecipe;
+
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
