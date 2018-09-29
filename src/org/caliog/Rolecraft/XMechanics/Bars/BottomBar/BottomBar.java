@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 
 public class BottomBar {
+
 	public static void display(Player player, String msg) {
 		NMSMethods.sendHotBar(player, ChatColor.translateAlternateColorCodes('&', msg));
 	}

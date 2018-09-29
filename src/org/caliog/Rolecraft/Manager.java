@@ -107,7 +107,10 @@ public final class Manager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		ChatManager.clear();
+
+		DataSaver.save();
 
 		Debugger.save();
 
@@ -123,32 +126,62 @@ public final class Manager {
 		setupEconomy();
 		ClazzLoader.init();
 
+		loadWorlds();
+
 		try {
-			loadWorlds();
 			Msg.init();
-			GroupManager.init();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		GroupManager.init();
 
-			// Quests
+		// Quests
+		try {
 			QManager.init();
-			QuestKill.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		QuestKill.load();
 
-			// Villagers
-			NPCManager.npcManager = NMSUtil.getNPCManager();
+		// Villagers
+		NPCManager.npcManager = NMSUtil.getNPCManager();
+		try {
 			VManager.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
 			GManager.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-			// Spells
+		// Spells
+		try {
 			SpellLoader.init();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
+		try {
 			MobSpawner.loadZones();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
 			EntityManager.load();
-
-			PlayerManager.load();
-			PlayerList.refreshList();
-
-			DataSaver.clean();// this has to be the last thing to do
 		} catch (Exception e) {
-			Debugger.exception("Manager load method gave exception:", e.getMessage());
+			e.printStackTrace();
+		}
+
+		PlayerManager.load();
+		PlayerList.refreshList();
+
+		try {
+			// this has to be the last thing to do
+			DataSaver.clean();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

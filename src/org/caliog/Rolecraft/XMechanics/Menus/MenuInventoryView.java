@@ -42,7 +42,6 @@ public class MenuInventoryView extends InventoryView {
 					if (event.getView().getTopInventory().equals(inv)) {
 						if (!myself.clicked(event)) {
 							event.setCancelled(true);
-							//TODO test
 							((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getEyeLocation(),
 									Sound.BLOCK_ANVIL_HIT, 1F, 1F);
 						}

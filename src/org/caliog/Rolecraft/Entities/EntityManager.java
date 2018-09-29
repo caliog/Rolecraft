@@ -33,7 +33,8 @@ public class EntityManager {
 				for (Entity e : w.getEntities()) {
 					Mob m = getMob(e.getUniqueId());
 					if (m != null) {
-						text = text + m.getName() + "=" + m.getUniqueId().toString() + "=" + m.getSpawnZone().toString() + "\r";
+						text = text + m.getName() + "=" + m.getUniqueId().toString() + "=" + m.getSpawnZone().toString()
+								+ "\r";
 					}
 				}
 
@@ -43,7 +44,7 @@ public class EntityManager {
 		register.clear();
 	}
 
-	public static void load() throws Exception {
+	public static void load() throws IOException {
 		File f = new File(FilePath.mobsFile);
 		if (!f.exists()) {
 			return;
