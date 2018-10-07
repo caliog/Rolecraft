@@ -25,7 +25,7 @@ public class Recipe {
 	public void add(ItemStack i, ItemStack j, ItemStack k) {
 		if (k == null || i == null)
 			return;
-		ItemStack[] array = { i, j, k };
+		ItemStack[] array = { i.clone(), j == null ? null : j.clone(), k.clone() };
 		recipes.add(array);
 	}
 

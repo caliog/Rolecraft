@@ -41,7 +41,9 @@ public class RolecraftPlugin extends JavaPlugin {
 	public CommandRegister cmdReg;
 	private String serverVersion;
 	private FileCreator fc = new FileCreator();
-	int backupTask;
+	private int backupTask;
+
+	private String needsUpdate = null;
 
 	public void onEnable() {
 		serverVersion = Bukkit.getServer().getClass().getPackage().getName().substring(23);
@@ -82,7 +84,7 @@ public class RolecraftPlugin extends JavaPlugin {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		searchForNewVersion();
+		needsUpdate = searchForNewVersion();
 		getLogger().info(getDescription().getFullName() + " enabled!");
 	}
 
@@ -229,21 +231,30 @@ public class RolecraftPlugin extends JavaPlugin {
 					20L * 60L * RolecraftConfig.getBackupTime(), 20L * 60L * RolecraftConfig.getBackupTime());
 	}
 
-	private void searchForNewVersion() {
+	private String searchForNewVersion() {
 		if (RolecraftConfig.isUpdateEnabled()) {
-			new Updater(this, 45030, this.getFile(), UpdateType.NO_DOWNLOAD, new UpdateCallback() {
+			Updater upd = new Updater(this, 45030, this.getFile(), UpdateType.NO_DOWNLOAD, new UpdateCallback() {
 
 				@Override
 				public void onFinish(Updater updater) {
 					if (updater.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE)) {
-						getLogger().info(
-								"There is a new version (" + updater.getLatestName().replace("Rolecraft", "").trim()
-										+ ") of Rolecraft available!");
+						String update = "There is a new version ("
+								+ updater.getLatestName().replace("Rolecraft", "").trim() + ") of Rolecraft available!";
+						getLogger().info(update);
 						getLogger().info("Download the latest version here: https://dev.bukkit.org/projects/rolecraft");
 					}
 
 				}
 			});
+			return upd.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE) ? ("There is a new version ("
+					+ upd.getLatestName().replace("Rolecraft", "").trim() + ") of Rolecraft available!") : null;
+		}
+		return null;
+	}
+
+	public void updateMessage(Player p) {
+		if (needsUpdate != null && p != null && p.isOp()) {
+			p.sendMessage(needsUpdate);
 		}
 	}
 }
