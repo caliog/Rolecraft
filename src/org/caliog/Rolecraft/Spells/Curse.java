@@ -21,9 +21,10 @@ import org.bukkit.util.Vector;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
+import org.caliog.Rolecraft.Spells.Mechanics.Spell;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
 
 public class Curse extends Spell {
 

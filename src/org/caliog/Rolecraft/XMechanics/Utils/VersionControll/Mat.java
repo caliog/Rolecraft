@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.VersionControll;
+package org.caliog.Rolecraft.XMechanics.Utils.VersionControll;
 
 import org.bukkit.Material;
 import org.caliog.Rolecraft.Manager;

@@ -30,7 +30,7 @@ import org.caliog.Rolecraft.Villagers.NPC.NMSMethods;
 import org.caliog.Rolecraft.Villagers.NPC.Trader;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.Villagers.NPC.Villager.VillagerType;
-import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestKill;
 
 public class VillagerListener implements Listener {
 

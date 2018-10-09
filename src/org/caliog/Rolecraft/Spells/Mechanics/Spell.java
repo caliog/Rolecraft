@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Spells;
+package org.caliog.Rolecraft.Spells.Mechanics;
 
 import java.io.File;
 import java.util.HashMap;

@@ -14,9 +14,9 @@ import org.caliog.Rolecraft.Items.Armor;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.Weapon;
 import org.caliog.Rolecraft.Utils.QuestStatus;
-import org.caliog.Rolecraft.Villagers.Quests.QManager;
+import org.caliog.Rolecraft.Villagers.Quests.QuestManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
-import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestKill;
 import org.caliog.Rolecraft.XMechanics.Bars.CenterBar.CenterBar;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Permissions;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
@@ -103,12 +103,12 @@ public abstract class RolecraftAbstrPlayer extends Fighter {
 	}
 
 	public void newQuest(String name) {
-		QuestKill.addNew(getPlayer(), QManager.getQuest(name));
+		QuestKill.addNew(getPlayer(), QuestManager.getQuest(name));
 		this.quests.put(name, QuestStatus.FIRST);
 	}
 
 	public void completeQuest(String name) {
-		Quest q = QManager.getQuest(name);
+		Quest q = QuestManager.getQuest(name);
 		if (q == null)
 			return;
 		giveExp(q.getExp());
@@ -121,7 +121,7 @@ public abstract class RolecraftAbstrPlayer extends Fighter {
 	public void checkQuests() {
 		String remove = null;
 		for (String q : quests.keySet()) {
-			Quest quest = QManager.getQuest(q);
+			Quest quest = QuestManager.getQuest(q);
 			if (quest != null) {
 				if (quest.couldComplete(this)) {
 					completeQuest(q);

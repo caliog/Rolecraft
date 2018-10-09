@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 
 public abstract class CustomItem extends ItemStack {
 	private final String name;
@@ -37,7 +37,7 @@ public abstract class CustomItem extends ItemStack {
 	public void syncItemStack() {
 		ItemMeta meta = getItemMeta();
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName());
-		if (BukkitReflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
+		if (Reflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		List<String> lore = new ArrayList<String>();
 		if (getLore() != null) {

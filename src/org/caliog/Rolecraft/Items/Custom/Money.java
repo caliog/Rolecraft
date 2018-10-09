@@ -12,11 +12,11 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
 
 public class Money extends CustomItem {
 

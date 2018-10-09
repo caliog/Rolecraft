@@ -10,14 +10,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.Books.Spellbook;
-import org.caliog.Rolecraft.Spells.Spell;
+import org.caliog.Rolecraft.Spells.Mechanics.Spell;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Pair;
-import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 public class SpellMenu extends Menu {
 

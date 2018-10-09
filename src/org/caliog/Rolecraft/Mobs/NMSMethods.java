@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 
 public class NMSMethods {
 	private static Class<?> entityCreature;

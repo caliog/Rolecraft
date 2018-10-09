@@ -21,14 +21,14 @@ import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage.MessageType;
 import org.caliog.Rolecraft.Villagers.Chat.ChatTask;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
-import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestEditorMenu;
-import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInfoMenu;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.Villagers.Quests.Menu.QuestEditorMenu;
+import org.caliog.Rolecraft.Villagers.Quests.Menu.QuestInfoMenu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
+import org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole.Stoppable;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
-import org.caliog.Rolecraft.XMechanics.PlayerConsole.Stoppable;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class YmlQuest extends Quest {
 
@@ -312,7 +312,7 @@ public class YmlQuest extends Quest {
 			config.set("completed-message", 1);
 
 			config.save(f);
-			QManager.addYmlQuest(new YmlQuest(this.getName()));
+			QuestManager.addYmlQuest(new YmlQuest(this.getName()));
 		} catch (IOException e) {
 			Debugger.exception("YmlQuest.editedQuest threw an IOException : ", e.getMessage());
 			e.printStackTrace();

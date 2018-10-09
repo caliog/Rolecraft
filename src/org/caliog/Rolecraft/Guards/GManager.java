@@ -18,8 +18,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Villagers.Utils.LocationUtil;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.LocationUtil;
 import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
 import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 

@@ -13,7 +13,7 @@ import java.util.logging.Level;
 
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class DataFolder {
 

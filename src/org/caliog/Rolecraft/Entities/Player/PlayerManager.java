@@ -13,8 +13,8 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class PlayerManager {
 	private static HashMap<UUID, RolecraftPlayer> players = new HashMap<UUID, RolecraftPlayer>();

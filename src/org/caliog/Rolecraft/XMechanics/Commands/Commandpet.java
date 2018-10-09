@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Entities.EntityUtils;
 import org.caliog.Rolecraft.Mobs.MobInstance;
-import org.caliog.Rolecraft.Mobs.Pet;
+import org.caliog.Rolecraft.Mobs.Pets.Pet;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;

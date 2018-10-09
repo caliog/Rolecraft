@@ -3,6 +3,7 @@ package org.caliog.Rolecraft.Spells;
 import org.bukkit.Particle;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
+import org.caliog.Rolecraft.Spells.Mechanics.Spell;
 
 public class SpeedSpell extends Spell {
 	public SpeedSpell(RolecraftPlayer player) {

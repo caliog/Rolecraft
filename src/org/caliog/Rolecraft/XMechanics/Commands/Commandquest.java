@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Items.Books.QuestBook;
-import org.caliog.Rolecraft.Villagers.Quests.QManager;
+import org.caliog.Rolecraft.Villagers.Quests.QuestManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
-import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestEditorMenu;
+import org.caliog.Rolecraft.Villagers.Quests.Menu.QuestEditorMenu;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
@@ -36,7 +36,7 @@ public class Commandquest extends Commands {
 				QuestEditorMenu menu = new QuestEditorMenu(player, args[1]);
 				if (args.length >= 3) {
 					String req_quest = args[2];
-					Quest q = QManager.getQuest(req_quest);
+					Quest q = QuestManager.getQuest(req_quest);
 					if (q == null) {
 						player.sendMessage(ChatColor.RED + args[2] + " could not be found! Did you spell it wrong?");
 						return;

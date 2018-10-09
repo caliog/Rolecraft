@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 public class Node { // Holds data about each block we check
 

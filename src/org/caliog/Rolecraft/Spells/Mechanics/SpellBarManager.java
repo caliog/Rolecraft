@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Spells;
+package org.caliog.Rolecraft.Spells.Mechanics;
 
 import java.util.HashMap;
 import java.util.UUID;

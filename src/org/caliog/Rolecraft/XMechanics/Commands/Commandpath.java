@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.caliog.Rolecraft.Guards.PathUtil;
+import org.caliog.Rolecraft.Guards.Paths.PathUtil;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Command;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;

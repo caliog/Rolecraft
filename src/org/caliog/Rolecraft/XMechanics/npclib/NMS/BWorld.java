@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.World;
-import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 
 public class BWorld {
 

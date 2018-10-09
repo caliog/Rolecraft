@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 
 public class NPCUtils {
 	public static void sendPacketNearby(Location location, Object packet) {

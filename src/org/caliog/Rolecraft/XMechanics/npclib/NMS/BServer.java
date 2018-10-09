@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
-import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 
 /**
  * Server hacks for Bukkit

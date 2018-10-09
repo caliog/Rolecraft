@@ -15,10 +15,10 @@ import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
 
 public class Msg {
 

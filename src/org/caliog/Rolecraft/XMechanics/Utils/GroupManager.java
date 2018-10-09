@@ -7,11 +7,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 import net.milkbowl.vault.permission.Permission;
 
-public class GroupManager {
+public abstract class GroupManager {
 
 	private static Permission permission;
 

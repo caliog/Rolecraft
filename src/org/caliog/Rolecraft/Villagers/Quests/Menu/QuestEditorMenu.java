@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Villagers.Quests.Utils;
+package org.caliog.Rolecraft.Villagers.Quests.Menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +21,8 @@ import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
-import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
-import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole.ConsoleReader;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 public class QuestEditorMenu extends Menu {
 

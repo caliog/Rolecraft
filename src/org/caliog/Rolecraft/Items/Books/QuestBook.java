@@ -10,14 +10,14 @@ import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
-import org.caliog.Rolecraft.Villagers.Quests.QManager;
+import org.caliog.Rolecraft.Villagers.Quests.QuestManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
 import org.caliog.Rolecraft.Villagers.Quests.YmlQuest;
-import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestInfoMenu;
+import org.caliog.Rolecraft.Villagers.Quests.Menu.QuestInfoMenu;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
-import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 public class QuestBook extends CustomItem {
 
@@ -64,7 +64,7 @@ public class QuestBook extends CustomItem {
 							@Override
 							public void onClick(InventoryClickEvent event, Player player) {
 								// TODO this cannot stay here forever!
-								Quest quest = QManager.getQuest(quests.get(j));
+								Quest quest = QuestManager.getQuest(quests.get(j));
 								if (quest instanceof YmlQuest)
 									MenuManager.openMenu(player, new QuestInfoMenu((YmlQuest) quest));
 							}

@@ -6,10 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Guards.GManager;
 import org.caliog.Rolecraft.Guards.Guard;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;;
 
-public class PlayerList {
+public abstract class PlayerList {
 
 	public static void refreshList() {
 		ArrayList<Object> hide = new ArrayList<Object>();

@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Villagers.Quests;
+package org.caliog.Rolecraft.Villagers.Quests.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Mobs.Mob;
-import org.caliog.Rolecraft.Villagers.Quests.Utils.MobAmount;
+import org.caliog.Rolecraft.Villagers.Quests.Quest;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class QuestKill {

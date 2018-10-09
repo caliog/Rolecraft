@@ -2,7 +2,7 @@ package org.caliog.Rolecraft.XMechanics.Bars.CenterBar;
 
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 
 public class NMSMethods {
 

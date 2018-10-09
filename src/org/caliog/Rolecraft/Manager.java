@@ -13,21 +13,21 @@ import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Guards.GManager;
 import org.caliog.Rolecraft.Mobs.MobSpawner;
-import org.caliog.Rolecraft.Mobs.PetController;
-import org.caliog.Rolecraft.Spells.SpellLoader;
+import org.caliog.Rolecraft.Mobs.Pets.PetController;
+import org.caliog.Rolecraft.Spells.Mechanics.SpellLoader;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.Chat.ChatManager;
-import org.caliog.Rolecraft.Villagers.Quests.QManager;
-import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
-import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
+import org.caliog.Rolecraft.Villagers.Quests.QuestManager;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestKill;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
 import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.DataSaver;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.npclib.NMSUtil;
 import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 
@@ -137,7 +137,7 @@ public final class Manager {
 
 		// Quests
 		try {
-			QManager.init();
+			QuestManager.init();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

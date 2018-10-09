@@ -10,8 +10,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
+import org.caliog.Rolecraft.Guards.Paths.CheckpointPath;
 import org.caliog.Rolecraft.Villagers.VManager;
-import org.caliog.Rolecraft.XMechanics.PlayerConsole.Stoppable;
+import org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole.Stoppable;
 
 public class GuardWatcher {
 

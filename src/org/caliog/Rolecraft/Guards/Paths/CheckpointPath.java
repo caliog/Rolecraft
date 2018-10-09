@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Guards;
+package org.caliog.Rolecraft.Guards.Paths;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +11,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Villagers.Utils.LocationUtil;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.LocationUtil;
 
 public class CheckpointPath {
 

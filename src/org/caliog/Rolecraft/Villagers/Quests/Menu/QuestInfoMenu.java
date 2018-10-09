@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Villagers.Quests.Utils;
+package org.caliog.Rolecraft.Villagers.Quests.Menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,14 +12,14 @@ import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.Playerface;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
-import org.caliog.Rolecraft.Villagers.Quests.QuestKill;
 import org.caliog.Rolecraft.Villagers.Quests.YmlQuest;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestKill;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 public class QuestInfoMenu extends Menu {
 

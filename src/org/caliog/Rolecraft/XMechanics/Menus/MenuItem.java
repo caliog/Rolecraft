@@ -13,8 +13,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
-import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 public class MenuItem {
 
@@ -114,7 +114,7 @@ public class MenuItem {
 			for (Enchantment e : enchantments.keySet())
 				meta.addEnchant(e, enchantments.get(e), true);
 		if (!editable)
-			if (BukkitReflect.isBukkitClass("org.bukkit.inventory.ItemFlag")) {
+			if (Reflect.isBukkitClass("org.bukkit.inventory.ItemFlag")) {
 				meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS);
 			}
 		stack.setItemMeta(meta);

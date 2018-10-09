@@ -10,16 +10,16 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.NPC.Trader;
-import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem.ExitButton;
+import org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole.ConsoleReader;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.PlayerConsole.ConsoleReader;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.DataSaver;
 
 public class TraderEditMenu extends Menu {
 

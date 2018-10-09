@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 
 public class StrBook extends Book {
@@ -20,7 +20,7 @@ public class StrBook extends Book {
 	public void syncItemStack() {
 		ItemMeta meta = getItemMeta();
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName());
-		if (BukkitReflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
+		if (Reflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.values());
 		List<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.BLUE + " + " + this.player.getStrength());

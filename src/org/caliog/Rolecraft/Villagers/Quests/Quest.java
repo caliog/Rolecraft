@@ -11,6 +11,7 @@ import org.caliog.Rolecraft.Entities.Player.RolecraftAbstrPlayer;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Utils.QuestStatus;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestKill;
 
 public abstract class Quest {
 
@@ -72,7 +73,7 @@ public abstract class Quest {
 	public abstract String getChainQuest();
 
 	public boolean isChainQuest() {
-		return getChainQuest() != null && QManager.getQuest(getChainQuest()) != null;
+		return getChainQuest() != null && QuestManager.getQuest(getChainQuest()) != null;
 	}
 
 	public abstract QuestStatus hasToReach();

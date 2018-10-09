@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Guards;
+package org.caliog.Rolecraft.Guards.Paths;
 
 import org.bukkit.Location;
 

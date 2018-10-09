@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Villagers.Quests.Utils;
+package org.caliog.Rolecraft.Villagers.Quests.Menu;
 
 public class QuestInventoryConsole {
 

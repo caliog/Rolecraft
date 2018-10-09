@@ -52,18 +52,18 @@ import org.caliog.Rolecraft.Items.Custom.Apple_2;
 import org.caliog.Rolecraft.Items.Custom.HealthPotion;
 import org.caliog.Rolecraft.Items.Custom.Money;
 import org.caliog.Rolecraft.Items.Custom.Skillstar;
-import org.caliog.Rolecraft.Mobs.Pet;
+import org.caliog.Rolecraft.Mobs.Pets.Pet;
 import org.caliog.Rolecraft.Utils.SkillInventoryView;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
 import org.caliog.Rolecraft.XMechanics.Utils.ChestHelper;
 import org.caliog.Rolecraft.XMechanics.Utils.GroupManager;
 import org.caliog.Rolecraft.XMechanics.Utils.PlayerList;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
-import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 @SuppressWarnings("deprecation")
 public class RolecraftListener implements Listener {
@@ -534,7 +534,7 @@ public class RolecraftListener implements Listener {
 			return;
 		Class<?>[] a = new Class<?>[0];
 		Inventory inv = null;
-		if (BukkitReflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
+		if (Reflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory", a)) {
 			inv = event.getClickedInventory();
 		} else {
 			inv = event.getInventory();

@@ -18,19 +18,19 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.Items.ItemEffect.ItemEffectType;
+import org.caliog.Rolecraft.Mobs.Pets.Pet;
 import org.caliog.Rolecraft.Items.Books.Spellbook;
-import org.caliog.Rolecraft.Mobs.Pet;
 import org.caliog.Rolecraft.Spells.InvisibleSpell;
-import org.caliog.Rolecraft.Spells.Spell;
-import org.caliog.Rolecraft.Spells.SpellBarManager;
-import org.caliog.Rolecraft.Spells.SpellLoader;
+import org.caliog.Rolecraft.Spells.Mechanics.Spell;
+import org.caliog.Rolecraft.Spells.Mechanics.SpellBarManager;
+import org.caliog.Rolecraft.Spells.Mechanics.SpellLoader;
 import org.caliog.Rolecraft.XMechanics.Bars.BottomBar.BottomBar;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Pair;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
 
 public class RolecraftPlayer extends RolecraftAbstrPlayer {
 

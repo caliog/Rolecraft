@@ -14,8 +14,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
-import org.caliog.Rolecraft.XMechanics.Reflection.BukkitReflect;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
 public class Armor extends CustomItemInstance {
@@ -41,7 +41,7 @@ public class Armor extends CustomItemInstance {
 	public void syncItemStack() {
 		ItemMeta meta = Bukkit.getItemFactory().getItemMeta(getType());
 		meta.setDisplayName(ChatColor.DARK_GRAY + getName() + ChatColor.GOLD + " Lv. " + getLevel());
-		if (BukkitReflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
+		if (Reflect.isBukkitClass("org.bukkit.inventory.ItemFlag"))
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		if (RolecraftConfig.disableDurability())
 			meta.setUnbreakable(true);

@@ -10,7 +10,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
 
-public class Utils {
+public abstract class Utils {
 
 	public static String cleanString(String str) {
 		char[] abc = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',

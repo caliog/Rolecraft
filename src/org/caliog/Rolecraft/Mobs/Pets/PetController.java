@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Mobs;
+package org.caliog.Rolecraft.Mobs.Pets;
 
 import org.bukkit.entity.Entity;
 import org.caliog.Rolecraft.Manager;

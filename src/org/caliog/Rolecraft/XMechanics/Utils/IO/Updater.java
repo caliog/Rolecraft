@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.Utils;
+package org.caliog.Rolecraft.XMechanics.Utils.IO;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

@@ -9,7 +9,7 @@ import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
-public class QManager {
+public class QuestManager {
 
 	private static List<Quest> quests = new ArrayList<Quest>();
 

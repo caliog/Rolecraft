@@ -4,6 +4,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
+import org.caliog.Rolecraft.Spells.Mechanics.Spell;
 
 public class InvisibleSpell extends Spell {
 	public InvisibleSpell(RolecraftPlayer player) {

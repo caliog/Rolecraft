@@ -15,7 +15,7 @@ import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.Items.ItemEffect.ItemEffectType;
 import org.caliog.Rolecraft.Items.Weapon;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
-import org.caliog.Rolecraft.XMechanics.VersionControll.Mat;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 public class ItemSkeleton {
 

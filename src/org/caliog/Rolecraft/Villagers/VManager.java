@@ -21,22 +21,22 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.EntityManager;
 import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
-import org.caliog.Rolecraft.Guards.CheckpointPath;
+import org.caliog.Rolecraft.Guards.Paths.CheckpointPath;
 import org.caliog.Rolecraft.Utils.QuestStatus;
 import org.caliog.Rolecraft.Villagers.NPC.Priest;
 import org.caliog.Rolecraft.Villagers.NPC.Trader;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.Villagers.NPC.Villager.VillagerType;
-import org.caliog.Rolecraft.Villagers.Quests.QManager;
+import org.caliog.Rolecraft.Villagers.Quests.QuestManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
-import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
-import org.caliog.Rolecraft.Villagers.Utils.LocationUtil;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.LocationUtil;
 import org.caliog.Rolecraft.XMechanics.Utils.Vector;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.DataSaver;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
 
 public class VManager {
 
@@ -215,7 +215,7 @@ public class VManager {
 			for (Entity e : v.getVillager().getNearbyEntities(50, 25, 50)) {
 				if (e instanceof Player) {
 					RolecraftPlayer player = PlayerManager.getPlayer(e.getUniqueId());
-					Quest q = QManager.searchFittingQuest(PlayerManager.getPlayer(e.getUniqueId()), v);
+					Quest q = QuestManager.searchFittingQuest(PlayerManager.getPlayer(e.getUniqueId()), v);
 					if (q != null) {
 						Location l = q.getTargetLocation(PlayerManager.getPlayer(e.getUniqueId()));
 						if (l == null) {

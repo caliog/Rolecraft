@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.PlayerConsole;
+package org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

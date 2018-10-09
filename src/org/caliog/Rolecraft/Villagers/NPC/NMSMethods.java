@@ -13,8 +13,8 @@ import org.bukkit.inventory.MerchantInventory;
 import org.bukkit.inventory.MerchantRecipe;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Villagers.Utils.Recipe;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class NMSMethods {
 

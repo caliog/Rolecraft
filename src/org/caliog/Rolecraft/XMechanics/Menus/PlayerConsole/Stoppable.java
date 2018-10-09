@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.PlayerConsole;
+package org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole;
 
 import org.caliog.Rolecraft.Manager;
 

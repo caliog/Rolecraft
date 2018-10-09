@@ -20,8 +20,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandRegister;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Listeners.DamageListener;
 import org.caliog.Rolecraft.XMechanics.Listeners.DeathListener;
 import org.caliog.Rolecraft.XMechanics.Listeners.MenuListener;
@@ -31,11 +29,13 @@ import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
-import org.caliog.Rolecraft.XMechanics.Utils.Metrics;
-import org.caliog.Rolecraft.XMechanics.Utils.Updater;
-import org.caliog.Rolecraft.XMechanics.Utils.Updater.UpdateCallback;
-import org.caliog.Rolecraft.XMechanics.Utils.Updater.UpdateType;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Metrics;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Updater;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Updater.UpdateCallback;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Updater.UpdateType;
 
 public class RolecraftPlugin extends JavaPlugin {
 	public CommandRegister cmdReg;

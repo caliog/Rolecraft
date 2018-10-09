@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 
-public class ChestHelper {
+public abstract class ChestHelper {
 
 	private static HashMap<String, UUID> chests = new HashMap<String, UUID>();
 	private static HashMap<String, Integer[]> tasks = new HashMap<String, Integer[]>();
@@ -35,7 +35,9 @@ public class ChestHelper {
 		for (int h = 0; h < 7; h++) {
 			if (loc.getBlock().getType().equals(Material.AIR)) {
 				loc.getBlock().setType(Material.CHEST);
-				placeInChest(player, new Vector(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), loc.getWorld().getName()).toString(),
+				placeInChest(player,
+						new Vector(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), loc.getWorld().getName())
+								.toString(),
 						stacks);
 				return true;
 			}

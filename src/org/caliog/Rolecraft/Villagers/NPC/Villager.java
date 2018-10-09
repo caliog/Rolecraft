@@ -8,10 +8,10 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
-import org.caliog.Rolecraft.Villagers.Quests.QManager;
-import org.caliog.Rolecraft.Villagers.Utils.DataSaver;
-import org.caliog.Rolecraft.Villagers.Utils.LocationUtil;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
+import org.caliog.Rolecraft.Villagers.Quests.QuestManager;
+import org.caliog.Rolecraft.XMechanics.Utils.LocationUtil;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.DataSaver;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class Villager extends VillagerNPC {
 
@@ -75,7 +75,7 @@ public class Villager extends VillagerNPC {
 	}
 
 	public boolean addQuest(String q) {
-		if (QManager.getQuest(q) != null) {
+		if (QuestManager.getQuest(q) != null) {
 			quests.add(q);
 			return true;
 		}

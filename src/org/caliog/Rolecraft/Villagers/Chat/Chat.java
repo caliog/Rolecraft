@@ -9,7 +9,7 @@ import org.caliog.Rolecraft.Entities.Player.PlayerManager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage.MessageType;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
-import org.caliog.Rolecraft.Villagers.Quests.QManager;
+import org.caliog.Rolecraft.Villagers.Quests.QuestManager;
 import org.caliog.Rolecraft.Villagers.Quests.Quest;
 
 public class Chat {
@@ -26,7 +26,7 @@ public class Chat {
 	public Chat(Player p, Villager v) {
 		player = PlayerManager.getPlayer(p.getUniqueId());
 		this.villager = v;
-		this.q = QManager.searchFittingQuest(player, villager);
+		this.q = QuestManager.searchFittingQuest(player, villager);
 		if (q != null) {
 			messages = q.getMessages();
 

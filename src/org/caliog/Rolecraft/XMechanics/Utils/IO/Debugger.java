@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.XMechanics.Debug;
+package org.caliog.Rolecraft.XMechanics.Utils.IO;
 
 import java.io.BufferedWriter;
 import java.io.File;

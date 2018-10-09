@@ -11,8 +11,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
-import org.caliog.Rolecraft.XMechanics.Reflection.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 import org.caliog.Rolecraft.XMechanics.npclib.NMS.BWorld;
 
 public abstract class NMSUtil {

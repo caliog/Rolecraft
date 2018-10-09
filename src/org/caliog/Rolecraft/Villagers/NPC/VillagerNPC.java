@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Villager.Profession;
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.Guards.CPMoveable;
+import org.caliog.Rolecraft.Guards.Paths.CPMoveable;
 
 public class VillagerNPC extends CPMoveable {
 

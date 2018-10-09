@@ -15,8 +15,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.caliog.Rolecraft.Manager;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class QuestLoader {
 

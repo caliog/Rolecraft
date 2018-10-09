@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.caliog.Rolecraft.Guards.CheckpointPath;
-import org.caliog.Rolecraft.Guards.PathUtil;
+import org.caliog.Rolecraft.Guards.Paths.CheckpointPath;
+import org.caliog.Rolecraft.Guards.Paths.PathUtil;
 import org.caliog.Rolecraft.Villagers.VManager;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
@@ -15,8 +15,8 @@ import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField.FieldProperty;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Messages.CmdMessage;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class Commandvg extends Commands {
 

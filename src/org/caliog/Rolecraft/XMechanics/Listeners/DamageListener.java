@@ -25,7 +25,7 @@ import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemUtils;
 import org.caliog.Rolecraft.Mobs.Mob;
-import org.caliog.Rolecraft.Mobs.Pet;
+import org.caliog.Rolecraft.Mobs.Pets.Pet;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 
 public class DamageListener implements Listener {

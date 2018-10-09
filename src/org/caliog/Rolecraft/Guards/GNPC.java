@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.caliog.Rolecraft.Guards.Paths.CPMoveable;
 import org.caliog.Rolecraft.XMechanics.npclib.NPC;
 import org.caliog.Rolecraft.XMechanics.npclib.NPCManager;
 

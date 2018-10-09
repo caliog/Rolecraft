@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Spells;
+package org.caliog.Rolecraft.Spells.Mechanics;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,9 +22,9 @@ import java.util.jar.JarFile;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class SpellLoader {
 
