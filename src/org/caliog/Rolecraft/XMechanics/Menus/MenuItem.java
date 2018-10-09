@@ -221,7 +221,7 @@ public class MenuItem {
 	public class ExitButton extends MenuItem {
 
 		public ExitButton(Menu menu, String title) {
-			super(title, Mat.STAINED_GLASS_PANE.e(), (short) 13, 1);
+			super(title, Mat.GREEN_STAINED_GLASS_PANE.f(), (short) 13, 1);
 			this.setButtonClickHandler(this.new ButtonClickHandler(menu) {
 
 				@Override

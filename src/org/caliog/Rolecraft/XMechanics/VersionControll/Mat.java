@@ -6,8 +6,7 @@ import org.caliog.Rolecraft.Manager;
 public enum Mat {
 
 	// @formatter:off
-	//test
-	STATIONARY_WATER, LEASH, SKULL_ITEM, BOOK_AND_QUILL, EXP_BOTTLE, STAINED_GLASS_PANE, FENCE, WHITE_WOOL;
+	STATIONARY_WATER, LEASH, SKULL_ITEM, BOOK_AND_QUILL, EXP_BOTTLE, STAINED_GLASS_PANE, FENCE, WHITE_WOOL, GREEN_STAINED_GLASS_PANE;
 	// @formatter:on
 
 	public Material e() {

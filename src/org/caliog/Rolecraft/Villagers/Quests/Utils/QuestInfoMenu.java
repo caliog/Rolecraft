@@ -141,8 +141,7 @@ public class QuestInfoMenu extends Menu {
 
 		if (accept) {
 			// accept button
-			item = new MenuItem(Msg.getMessage(Key.WORD_ACCEPT), Mat.STAINED_GLASS_PANE.e(),
-					(short) 13, 1);
+			item = new MenuItem(Msg.getMessage(Key.WORD_ACCEPT), Mat.GREEN_STAINED_GLASS_PANE.e(), (short) 13, 1);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override

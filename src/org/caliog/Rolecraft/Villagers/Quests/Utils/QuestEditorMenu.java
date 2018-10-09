@@ -260,7 +260,7 @@ public class QuestEditorMenu extends Menu {
 		this.setItem(7, item);
 
 		// exit button
-		item = new MenuItem("Save..", Mat.STAINED_GLASS_PANE.e(), (short) 13, 1);
+		item = new MenuItem("Save..", Mat.GREEN_STAINED_GLASS_PANE.e(), (short) 13, 1);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override
