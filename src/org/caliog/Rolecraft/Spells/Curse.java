@@ -27,6 +27,7 @@ import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 
 public class Curse extends Spell {
 
+	// TODO version controll
 	public enum CurseType {
 		// @formatter:off
 		AQUA(Particle.REDSTONE, 0F, new DustOptions(Color.AQUA, 1.5F)),
