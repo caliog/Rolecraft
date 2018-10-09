@@ -241,7 +241,8 @@ public class RolecraftPlugin extends JavaPlugin {
 						String update = "There is a new version ("
 								+ updater.getLatestName().replace("Rolecraft", "").trim() + ") of Rolecraft available!";
 						getLogger().info(update);
-						getLogger().info("Download the latest version here: https://dev.bukkit.org/projects/rolecraft");
+						getLogger()
+								.info("Download the latest version here:\nhttps://dev.bukkit.org/projects/rolecraft");
 					}
 
 				}
