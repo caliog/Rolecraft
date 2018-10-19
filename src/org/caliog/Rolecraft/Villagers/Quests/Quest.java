@@ -9,9 +9,9 @@ import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
 import org.caliog.Rolecraft.Entities.Player.RolecraftAbstrPlayer;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
-import org.caliog.Rolecraft.Utils.QuestStatus;
 import org.caliog.Rolecraft.Villagers.Chat.CMessage;
 import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestKill;
+import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestStatus;
 
 public abstract class Quest {
 

@@ -1,4 +1,4 @@
-package org.caliog.Rolecraft.Utils;
+package org.caliog.Rolecraft.Items.Custom.Utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
