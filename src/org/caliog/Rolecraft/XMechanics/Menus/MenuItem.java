@@ -50,7 +50,7 @@ public class MenuItem {
 	}
 
 	public MenuItem(String name, Material mat, short data, int amount, boolean editable) {
-		this(name, mat, data, amount, null, null, null, editable, 0);
+		this(name, mat, data, amount, new ArrayList<String>(), null, null, editable, 0);
 	}
 
 	public MenuItem(String name, Material mat, List<String> lore) {
@@ -70,7 +70,7 @@ public class MenuItem {
 	}
 
 	public MenuItem(ItemStack stack, boolean editable) {
-		this(null, stack.getType(), (short) 0, 1, null, null, stack, editable, 0);
+		this(null, stack.getType(), (short) 0, 1, new ArrayList<String>(), null, stack, editable, 0);
 	}
 
 	public MenuItem(ItemStack stack, int costs) {
