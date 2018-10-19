@@ -31,9 +31,9 @@ import org.caliog.Rolecraft.XMechanics.Resource.FileCreator;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Utils.IO.Metrics;
 import org.caliog.Rolecraft.XMechanics.Utils.IO.Updater;
-import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
 import org.caliog.Rolecraft.XMechanics.Utils.IO.Updater.UpdateCallback;
 import org.caliog.Rolecraft.XMechanics.Utils.IO.Updater.UpdateType;
 
@@ -47,7 +47,6 @@ public class RolecraftPlugin extends JavaPlugin {
 
 	public void onEnable() {
 		serverVersion = Bukkit.getServer().getClass().getPackage().getName().substring(23);
-
 		if (!serverVersion.equalsIgnoreCase("v1_12_R1") && !serverVersion.equalsIgnoreCase("v1_11_R1")
 				&& !serverVersion.equalsIgnoreCase("v1_13_R2")) {
 			getLogger().warning("\u001B[31mGuards will not work with your bukkit version. \u001B[0m");
@@ -61,7 +60,7 @@ public class RolecraftPlugin extends JavaPlugin {
 
 		RolecraftConfig.init();
 		Debugger.info(LogTitle.NONE, "Enabled :", getDescription().getFullName());
-		Debugger.info(LogTitle.NONE, "Bukkit version:", serverVersion);
+		Debugger.info(LogTitle.NONE, "Server version:", serverVersion);
 
 		createSpellCollection();
 
@@ -84,7 +83,9 @@ public class RolecraftPlugin extends JavaPlugin {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		needsUpdate = searchForNewVersion();
+
+		searchForNewVersion();
+
 		getLogger().info(getDescription().getFullName() + " enabled!");
 	}
 
@@ -231,26 +232,36 @@ public class RolecraftPlugin extends JavaPlugin {
 					20L * 60L * RolecraftConfig.getBackupTime(), 20L * 60L * RolecraftConfig.getBackupTime());
 	}
 
-	private String searchForNewVersion() {
-		if (RolecraftConfig.isUpdateEnabled()) {
-			Updater upd = new Updater(this, 45030, this.getFile(), UpdateType.NO_DOWNLOAD, new UpdateCallback() {
+	private void searchForNewVersion() {
+		Manager.scheduleTask(new Runnable() {
 
-				@Override
-				public void onFinish(Updater updater) {
-					if (updater.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE)) {
-						String update = "There is a new version ("
-								+ updater.getLatestName().replace("Rolecraft", "").trim() + ") of Rolecraft available!";
-						getLogger().info(update);
-						getLogger()
-								.info("Download the latest version here:\nhttps://dev.bukkit.org/projects/rolecraft");
-					}
+			@Override
+			public void run() {
+				if (RolecraftConfig.isUpdateEnabled()) {
+					Updater upd = new Updater(Manager.plugin, 45030, Manager.plugin.getFile(), UpdateType.NO_DOWNLOAD,
+							new UpdateCallback() {
 
+								@Override
+								public void onFinish(Updater updater) {
+									if (updater.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE)) {
+										String update = "There is a new version ("
+												+ updater.getLatestName().replace("Rolecraft", "").trim()
+												+ ") of Rolecraft available!";
+										getLogger().info(update);
+										getLogger().info(
+												"Download the latest version here:\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>https://dev.bukkit.org/projects/rolecraft");
+									}
+
+								}
+							});
+					Manager.plugin.needsUpdate = upd.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE)
+							? ("There is a new version (" + upd.getLatestName().replace("Rolecraft", "").trim()
+									+ ") of Rolecraft available!")
+							: null;
 				}
-			});
-			return upd.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE) ? ("There is a new version ("
-					+ upd.getLatestName().replace("Rolecraft", "").trim() + ") of Rolecraft available!") : null;
-		}
-		return null;
+
+			}
+		});
 	}
 
 	public void updateMessage(Player p) {
