@@ -10,5 +10,7 @@ public class CmdMessage {
 	public static String hereIsNoMSZ = ChatColor.GOLD + "I cannot find a spawn-zone near you!";
 	public static String noVillager = ChatColor.RED + "There is no villager around you!";
 	public static String noGuard = ChatColor.RED + "There is no guard around you!";
+	public static String savedItemMob = ChatColor.GOLD + "Saved as %A% to your files.";
+	public static String failedSaveItemMob = ChatColor.RED + "Couldn't save that, missing info.";
 
 }

@@ -87,9 +87,9 @@ public class ItemSkeleton {
 	}
 
 	// save
-	public void saveToFile() {
+	public boolean saveToFile() {
 		if (name == null || name.equals("") || material == null)
-			return;
+			return false;
 		final String path = (isWeapon() ? FilePath.weapons : FilePath.armor) + name + ".yml";
 		File f = new File(path);
 		if (f.exists())
@@ -97,9 +97,11 @@ public class ItemSkeleton {
 		YamlConfiguration config = saveToConfig();
 		try {
 			config.save(f);
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	private YamlConfiguration saveToConfig() {

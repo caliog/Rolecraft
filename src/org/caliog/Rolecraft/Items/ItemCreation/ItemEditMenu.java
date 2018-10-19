@@ -17,6 +17,7 @@ import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
 import org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole.ConsoleReader;
+import org.caliog.Rolecraft.XMechanics.Messages.CmdMessage;
 import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Mat;
 
 public class ItemEditMenu extends Menu {
@@ -282,7 +283,10 @@ public class ItemEditMenu extends Menu {
 
 			@Override
 			public void onClick(InventoryClickEvent event, Player player) {
-				skel.saveToFile();
+				if (skel.saveToFile()) {
+					player.sendMessage(CmdMessage.savedItemMob.replaceAll("%A%", skel.getName()));
+				} else
+					player.sendMessage(CmdMessage.failedSaveItemMob);
 				MenuManager.exitMenu(player);
 			}
 		});
