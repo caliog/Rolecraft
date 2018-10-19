@@ -18,9 +18,9 @@ import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandExecutable;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandField.FieldProperty;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.Commands;
-import org.caliog.Rolecraft.XMechanics.Debug.Debugger;
 import org.caliog.Rolecraft.XMechanics.Resource.DataFolder;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
+import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 
 public class Commandrc extends Commands {
 
@@ -38,6 +38,7 @@ public class Commandrc extends Commands {
 			@Override
 			public void execute(String[] args, Player player) {
 				player.sendMessage(Manager.plugin.getDescription().getFullName());
+				Manager.plugin.updateMessage(player);
 				player.sendMessage("Type /rc help [page] for commands!");
 			}
 		}));
@@ -55,6 +56,7 @@ public class Commandrc extends Commands {
 			public void execute(String[] args, Player player) {
 				Manager.plugin.reload();
 				player.sendMessage(ChatColor.GOLD + "Reloaded " + Manager.plugin.getDescription().getFullName());
+				Manager.plugin.updateMessage(player);
 			}
 		}, new CommandField("reload", FieldProperty.IDENTIFIER)));
 
@@ -191,7 +193,7 @@ public class Commandrc extends Commands {
 				}
 			}
 		}, new CommandField("weapons", FieldProperty.IDENTIFIER),
-				new CommandField("page", "positve items", FieldProperty.OPTIONAL)));
+				new CommandField("page", "positve integer", FieldProperty.OPTIONAL)));
 
 		/*
 		 * Name: rc SubName: armor
@@ -220,7 +222,8 @@ public class Commandrc extends Commands {
 				}
 			}
 		}, new CommandField("armor", FieldProperty.IDENTIFIER),
-				new CommandField("page", "positve items", FieldProperty.OPTIONAL)));
+				new CommandField("page", "positve integer", FieldProperty.OPTIONAL)));
+
 		return cmds;
 	}
 }
