@@ -2,7 +2,7 @@ name: Rolecraft
 author: caliog
 website: http://www.caliog.org
 main: org.caliog.Rolecraft.RolecraftPlugin
-version: 3.2.17
+version: 3.2.18
 api-version: 1.13
 softdepend: [Vault]
 
@@ -48,3 +48,6 @@ commands:
     spellbook:
         usage: /spellbook
         description: Gives you your spellbook if you dont have one already.
+    mob:
+        usage: /mob edit [name]
+        description: Creates and edits mobs in game.
