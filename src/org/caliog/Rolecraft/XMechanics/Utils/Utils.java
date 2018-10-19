@@ -43,21 +43,6 @@ public abstract class Utils {
 		return players;
 	}
 
-	public static int[] addElementToArray(int[] array, int element) {
-		if (array != null) {
-			int[] newarray = new int[array.length + 1];
-			for (int i = 0; i < array.length; i++) {
-				newarray[i] = array[i];
-			}
-
-			newarray[array.length] = element;
-			return newarray;
-		} else {
-			int[] newarray = { element };
-			return newarray;
-		}
-	}
-
 	public static boolean isNotNegativeInteger(String string) {
 		if (isInteger(string))
 			if (Integer.parseInt(string) >= 0)

@@ -14,8 +14,8 @@ import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem.ExitButton;
-import org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole.ConsoleReader;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuManager;
+import org.caliog.Rolecraft.XMechanics.Menus.PlayerConsole.ConsoleReader;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
 import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
@@ -64,18 +64,22 @@ public class TraderEditMenu extends Menu {
 									@Override
 									protected void doWork(String lastLine) {
 										if (lastLine == null) {
-											player.sendMessage(ChatColor.GOLD + "Enter the money this item should cost !" + ChatColor.GRAY
-													+ "(q to quit)");
+											player.sendMessage(
+													ChatColor.GOLD + "Enter the money this item should cost !"
+															+ ChatColor.GRAY + "(q to quit)");
 											return;
 										}
 
 										if (!Utils.isInteger(lastLine)) {
-											player.sendMessage(ChatColor.DARK_GRAY + lastLine + ChatColor.RED + " is not an integer!");
-											player.sendMessage(ChatColor.GOLD + "Enter the money this item should cost !" + ChatColor.GRAY
-													+ "(q to quit)");
+											player.sendMessage(ChatColor.DARK_GRAY + lastLine + ChatColor.RED
+													+ " is not an integer!");
+											player.sendMessage(
+													ChatColor.GOLD + "Enter the money this item should cost !"
+															+ ChatColor.GRAY + "(q to quit)");
 											return;
 										} else {
-											((TraderEditMenu) getMenu()).changedCosts(event.getSlot(), Integer.valueOf(lastLine));
+											((TraderEditMenu) getMenu()).changedCosts(event.getSlot(),
+													Integer.valueOf(lastLine));
 											quit();
 										}
 									}
@@ -127,8 +131,7 @@ public class TraderEditMenu extends Menu {
 
 			@Override
 			public void onClick(InventoryClickEvent event, Player player) {
-				saveToMenu(event.getInventory());// craftbukkit vs spigot
-													// (getClickedInventory)
+				saveToMenu(event.getInventory());// craftbukkit vs spigot (getClickedInventory)
 				MenuManager.exitMenu(player);
 			}
 

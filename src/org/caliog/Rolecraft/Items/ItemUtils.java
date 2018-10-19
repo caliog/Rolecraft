@@ -90,6 +90,7 @@ public class ItemUtils {
 		return stack;
 	}
 
+	//compatible with MATERIAL:AMOUNT:SOULBOUND:DATA
 	public static ItemStack getItem(String string) {
 		if (string == null) {
 			return null;
