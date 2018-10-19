@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantInventory;
 import org.bukkit.inventory.MerchantRecipe;
@@ -31,6 +32,7 @@ import org.caliog.Rolecraft.Villagers.NPC.Trader;
 import org.caliog.Rolecraft.Villagers.NPC.Villager;
 import org.caliog.Rolecraft.Villagers.NPC.Villager.VillagerType;
 import org.caliog.Rolecraft.Villagers.Quests.Utils.QuestKill;
+import org.caliog.Rolecraft.XMechanics.Utils.Reflect;
 
 public class VillagerListener implements Listener {
 
@@ -190,11 +192,18 @@ public class VillagerListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBarter(InventoryClickEvent event) {
-		if (event.getCursor() != null && event.getClickedInventory() != null
-				&& event.getClickedInventory().getType().equals(InventoryType.MERCHANT)) {
+		Inventory inv = null;
+		if (Reflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory",
+				new Class<?>[0])) {
+			inv = event.getClickedInventory();
+		} else {
+			inv = event.getInventory();
+		}
+
+		if (event.getCursor() != null && inv != null && inv.getType().equals(InventoryType.MERCHANT)) {
 			if ((event.getSlot() == 1 || event.getSlot() == 0) && Money.isMoney(event.getCursor())) {
-				MerchantInventory inv = (MerchantInventory) event.getClickedInventory();
-				MerchantRecipe recipe = NMSMethods.getCurrentRecipe(inv);
+				MerchantInventory minv = (MerchantInventory) inv;
+				MerchantRecipe recipe = NMSMethods.getCurrentRecipe(minv);
 				if (Money.isMoney(recipe.getIngredients().get(event.getSlot()))) {
 					Money cursor = Money.getMoney(event.getCursor());
 					Money needed = Money.getMoney(recipe.getIngredients().get(event.getSlot()));
