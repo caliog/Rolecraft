@@ -69,7 +69,7 @@ public class NPCPathFinder extends Thread {
 					for (int k = -1; k <= 1; k++) {
 						adjacentBlock = getNode(c.b.getRelative(i, j, k));
 						if (adjacentBlock != c
-								&& !(j == 1 && adjacentBlock.b.getRelative(0, -1, 0).getType() == Mat.FENCE.e())) {
+								&& !(j == 1 && adjacentBlock.b.getRelative(0, -1, 0).getType() == Mat.FENCE.match())) {
 							scoreBlock(adjacentBlock, c);
 						}
 					}

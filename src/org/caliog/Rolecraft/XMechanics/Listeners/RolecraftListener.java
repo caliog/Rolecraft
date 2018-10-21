@@ -465,7 +465,7 @@ public class RolecraftListener implements Listener {
 		if (!player.getPlayer().isSneaking())
 			return;
 		ItemStack hand = player.getPlayer().getInventory().getItemInMainHand();
-		if (hand == null || !hand.getType().equals(Mat.LEASH.e()))
+		if (hand == null || !hand.getType().equals(Mat.LEASH.match()))
 			return;
 		for (Pet pet : player.getPets()) {
 			Entity entity = EntityUtils.getEntity(pet.getUniqueId(), event.getPlayer().getWorld());

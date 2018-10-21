@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -83,6 +84,7 @@ public class MenuItem {
 
 	public MenuItem(String name, Material mat, short data, int amount, List<String> lore,
 			HashMap<Enchantment, Integer> enc, ItemStack stack, boolean editable, int costs) {
+		Validate.notNull(mat, "Material cannot be null!");
 		this.material = mat;
 		this.data = data;
 		this.amount = amount;
@@ -221,7 +223,7 @@ public class MenuItem {
 	public class ExitButton extends MenuItem {
 
 		public ExitButton(Menu menu, String title) {
-			super(title, Mat.GREEN_STAINED_GLASS_PANE.f(), (short) 13, 1);
+			super(title, Mat.GREEN_STAINED_GLASS_PANE.remove_first(), (short) 13, 1);
 			this.setButtonClickHandler(this.new ButtonClickHandler(menu) {
 
 				@Override

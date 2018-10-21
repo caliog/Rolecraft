@@ -63,7 +63,7 @@ public class QuestEditorMenu extends Menu {
 		// 0. item - mob kills
 		lore.add("Choose mobs the quester has to kill.");
 
-		item = new MenuItem("Kill Mobs", Mat.SKULL_ITEM.e(), lore);
+		item = new MenuItem("Kill Mobs", Mat.SKULL_ITEM.match(), lore);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override
@@ -108,7 +108,7 @@ public class QuestEditorMenu extends Menu {
 		lore = new ArrayList<String>();
 		lore.add("Choose items the quester will");
 		lore.add("receive when he starts the quest.");
-		item = new MenuItem("Start Items", Mat.BOOK_AND_QUILL.e(), lore);
+		item = new MenuItem("Start Items", Mat.BOOK_AND_QUILL.match(), lore);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override
@@ -125,7 +125,7 @@ public class QuestEditorMenu extends Menu {
 		lore.add(ChatColor.GOLD + "exp: " + exp);
 		lore.add("<left> - increase");
 		lore.add("<right> - decrease");
-		item = new MenuItem("Experience Reward", Mat.EXP_BOTTLE.e(), lore);
+		item = new MenuItem("Experience Reward", Mat.EXP_BOTTLE.match(), lore);
 		{
 			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
@@ -216,7 +216,8 @@ public class QuestEditorMenu extends Menu {
 		lore.add("receives the collect items.");
 		lore.add(ChatColor.GRAY + "leave it blank and the");
 		lore.add(ChatColor.GRAY + "quester can keep his items.");
-		item = new MenuItem(targetVillager == null ? "Villager" : targetVillager, Mat.SKULL_ITEM.e(), (short) 3, lore);
+		item = new MenuItem(targetVillager == null ? "Villager" : targetVillager, Mat.SKULL_ITEM.match(), (short) 3,
+				lore);
 		{
 			final MenuItem final_item = item;
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
@@ -260,7 +261,7 @@ public class QuestEditorMenu extends Menu {
 		this.setItem(7, item);
 
 		// exit button
-		item = new MenuItem("Save..", Mat.GREEN_STAINED_GLASS_PANE.e(), (short) 13, 1);
+		item = new MenuItem("Save..", Mat.GREEN_STAINED_GLASS_PANE.remove_first(), (short) 13, 1);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override
@@ -342,7 +343,7 @@ public class QuestEditorMenu extends Menu {
 				list.add(ChatColor.AQUA + "Amount: " + a);
 				list.add(ChatColor.GRAY + "<left> - increase");
 				list.add(ChatColor.GRAY + "<right> - decrease");
-				final MenuItem item = new MenuItem(name, Mat.SKULL_ITEM.e(), list);
+				final MenuItem item = new MenuItem(name, Mat.SKULL_ITEM.match(), list);
 				item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 					@Override
@@ -412,7 +413,7 @@ public class QuestEditorMenu extends Menu {
 			MenuItem item = new MenuItem("Info", Material.PAPER, list);
 			this.setItem(0, item);
 			// Exit button
-			item = new MenuItem("Save..", Mat.STAINED_GLASS_PANE.e(), (short) 13, 1);
+			item = new MenuItem("Save..", Mat.STAINED_GLASS_PANE.match(), (short) 13, 1);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override

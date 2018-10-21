@@ -56,7 +56,7 @@ public class QuestBook extends CustomItem {
 			public void init() {
 				super.init();
 				for (int i = 0; i < quests.size(); i++) {
-					MenuItem item = new MenuItem(quests.get(i), Mat.BOOK_AND_QUILL.e());
+					MenuItem item = new MenuItem(quests.get(i), Mat.BOOK_AND_QUILL.match());
 					{
 						final int j = i;
 						item.setButtonClickHandler(item.new ButtonClickHandler(this) {

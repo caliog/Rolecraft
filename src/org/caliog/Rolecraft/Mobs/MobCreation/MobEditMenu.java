@@ -33,37 +33,37 @@ public class MobEditMenu extends Menu {
 	};
 	public final static ArrayList<Material> helmet = new ArrayList<Material>() {
 		{
-			add(Mat.DIAMOND_HELMET.e());
-			add(Mat.GOLD_HELMET.e());
-			add(Mat.IRON_HELMET.e());
-			add(Mat.LEATHER_HELMET.e());
+			add(Mat.DIAMOND_HELMET.match());
+			add(Mat.GOLD_HELMET.match());
+			add(Mat.IRON_HELMET.match());
+			add(Mat.LEATHER_HELMET.match());
 		}
 	};
 
 	public final static ArrayList<Material> chestplate = new ArrayList<Material>() {
 		{
-			add(Mat.DIAMOND_CHESTPLATE.e());
-			add(Mat.GOLD_CHESTPLATE.e());
-			add(Mat.IRON_CHESTPLATE.e());
-			add(Mat.LEATHER_CHESTPLATE.e());
+			add(Mat.DIAMOND_CHESTPLATE.match());
+			add(Mat.GOLD_CHESTPLATE.match());
+			add(Mat.IRON_CHESTPLATE.match());
+			add(Mat.LEATHER_CHESTPLATE.match());
 		}
 	};
 
 	public final static ArrayList<Material> leggings = new ArrayList<Material>() {
 		{
-			add(Mat.DIAMOND_LEGGINGS.e());
-			add(Mat.GOLD_LEGGINGS.e());
-			add(Mat.IRON_LEGGINGS.e());
-			add(Mat.LEATHER_LEGGINGS.e());
+			add(Mat.DIAMOND_LEGGINGS.match());
+			add(Mat.GOLD_LEGGINGS.match());
+			add(Mat.IRON_LEGGINGS.match());
+			add(Mat.LEATHER_LEGGINGS.match());
 		}
 	};
 
 	public final static ArrayList<Material> boots = new ArrayList<Material>() {
 		{
-			add(Mat.DIAMOND_BOOTS.e());
-			add(Mat.GOLD_BOOTS.e());
-			add(Mat.IRON_BOOTS.e());
-			add(Mat.LEATHER_BOOTS.e());
+			add(Mat.DIAMOND_BOOTS.match());
+			add(Mat.GOLD_BOOTS.match());
+			add(Mat.IRON_BOOTS.match());
+			add(Mat.LEATHER_BOOTS.match());
 		}
 	};
 
@@ -84,7 +84,7 @@ public class MobEditMenu extends Menu {
 		MenuItem item;
 
 		// dummies
-		item = new MenuItem(" ", Mat.STAINED_GLASS_PANE.e());
+		item = new MenuItem(" ", Mat.STAINED_GLASS_PANE.match());
 		this.setItem(14, item);
 		this.setItem(15, item);
 		this.setItem(16, item);
@@ -134,7 +134,7 @@ public class MobEditMenu extends Menu {
 		// 1 - type
 		lore = new ArrayList<String>();
 		lore.add("The type of the mob.");
-		item = new MenuItem((skel.getType() == null) ? "Type" : skel.getType().name(), Mat.SKULL_ITEM.e(), lore);
+		item = new MenuItem((skel.getType() == null) ? "Type" : skel.getType().name(), Mat.SKULL_ITEM.match(), lore);
 		{
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
@@ -297,7 +297,7 @@ public class MobEditMenu extends Menu {
 		lore.add(ChatColor.GRAY + "Percentage of experience ");
 		lore.add(ChatColor.GRAY + "you need from this mob's");
 		lore.add(ChatColor.GRAY + "level to the next level.");
-		item = new MenuItem("Experience", Mat.EXP_BOTTLE.e(), lore);
+		item = new MenuItem("Experience", Mat.EXP_BOTTLE.match(), lore);
 		{
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
@@ -368,7 +368,7 @@ public class MobEditMenu extends Menu {
 					ArrayList<Material> list = ((ArrayList<Material>) field.get(null));
 					String name = id;
 					if (m == null) {
-						m = Mat.WHITE_WOOL.f();
+						m = Mat.WHITE_WOOL.last();
 						name = "NONE";
 					}
 					item = new MenuItem(name, m, lore);
@@ -431,7 +431,7 @@ public class MobEditMenu extends Menu {
 		}
 
 		// 26 - save button
-		item = new MenuItem("Save", Mat.GREEN_STAINED_GLASS_PANE.f(), (short) 13, 1);
+		item = new MenuItem("Save", Mat.GREEN_STAINED_GLASS_PANE.remove_first(), (short) 13, 1);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override

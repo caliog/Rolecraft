@@ -43,7 +43,7 @@ public class QuestInfoMenu extends Menu {
 
 		if (!quest.getMobs().isEmpty()) {
 			// 0. item - mob kills
-			item = new MenuItem(Msg.getMessage(Key.WORD_WANTED_MOBS), Mat.SKULL_ITEM.e());
+			item = new MenuItem(Msg.getMessage(Key.WORD_WANTED_MOBS), Mat.SKULL_ITEM.match());
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
@@ -98,7 +98,7 @@ public class QuestInfoMenu extends Menu {
 			lore = new ArrayList<String>();
 			lore.add(Msg.getMessage(Key.QUEST_INFO_START_ITEMS));
 			item = new MenuItem(Msg.getMessage(Key.WORD_START) + " " + Msg.getMessage(Key.WORD_ITEMS),
-					Mat.BOOK_AND_QUILL.e(), lore);
+					Mat.BOOK_AND_QUILL.match(), lore);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
@@ -116,7 +116,7 @@ public class QuestInfoMenu extends Menu {
 		// 4. item - exp reward
 		lore = new ArrayList<String>();
 		item = new MenuItem(Msg.getMessage(Key.WORD_EXPERIENCE) + ": " + ChatColor.GREEN + quest.getExp(),
-				Mat.EXP_BOTTLE.e());
+				Mat.EXP_BOTTLE.match());
 		this.setItem(4, item);
 
 		// 5. item - lvl
@@ -135,13 +135,14 @@ public class QuestInfoMenu extends Menu {
 			// 7. item - villager
 			lore = new ArrayList<String>();
 			lore.add(Msg.getMessage(Key.QUEST_TARGET_VILLAGER));
-			item = new MenuItem(quest.getTargetVillager(), Mat.SKULL_ITEM.e(), (short) 3, lore);
+			item = new MenuItem(quest.getTargetVillager(), Mat.SKULL_ITEM.match(), (short) 3, lore);
 			this.setItem(7, item);
 		}
 
 		if (accept) {
 			// accept button
-			item = new MenuItem(Msg.getMessage(Key.WORD_ACCEPT), Mat.GREEN_STAINED_GLASS_PANE.e(), (short) 13, 1);
+			item = new MenuItem(Msg.getMessage(Key.WORD_ACCEPT), Mat.GREEN_STAINED_GLASS_PANE.remove_first(),
+					(short) 13, 1);
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 				@Override
@@ -195,7 +196,7 @@ public class QuestInfoMenu extends Menu {
 							+ (map.get(name) - QuestKill.getKilled(player, getQuest().getName(), name)) + "/"
 							+ map.get(name);
 				list.add(str);
-				final MenuItem item = new MenuItem(name, Mat.SKULL_ITEM.e(), list);
+				final MenuItem item = new MenuItem(name, Mat.SKULL_ITEM.match(), list);
 				this.setItem(c, item);
 				c++;
 			}

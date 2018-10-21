@@ -13,7 +13,7 @@ public class Node { // Holds data about each block we check
 
 	static {
 		liquids.add(Material.WATER);
-		liquids.add(Mat.STATIONARY_WATER.e());
+		liquids.add(Mat.STATIONARY_WATER.match());
 		// liquids.add(Material.LAVA); Maybe swimming in lava isn't the best
 		// idea for npcs
 		// liquids.add(Material.STATIONARY_LAVA);

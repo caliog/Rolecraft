@@ -20,7 +20,7 @@ public enum Mat {
 	DIAMOND_BOOTS, GOLD_BOOTS, IRON_BOOTS, LEATHER_BOOTS;
 	// @formatter:on
 
-	public Material e() {
+	public Material match() {
 		if (Manager.getServerVersion().startsWith("v1_13")) {
 			return Material.getMaterial(this.name(), true);
 		} else {
@@ -28,7 +28,7 @@ public enum Mat {
 		}
 	}
 
-	public Material f() {
+	public Material last() {
 		if (Manager.getServerVersion().startsWith("v1_13")) {
 			return Material.getMaterial(this.name());
 		} else {
@@ -36,7 +36,15 @@ public enum Mat {
 		}
 	}
 
-	public Material g() {
+	public Material remove_first() {
+		if (Manager.getServerVersion().startsWith("v1_13")) {
+			return Material.getMaterial(this.name());
+		} else {
+			return Material.matchMaterial(this.name().replace(this.name().split("_")[0] + "_", ""));
+		}
+	}
+
+	public Material first() {
 		if (Manager.getServerVersion().startsWith("v1_13")) {
 			return Material.getMaterial(this.name());
 		} else {

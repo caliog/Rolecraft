@@ -46,7 +46,7 @@ public class ItemEditMenu extends Menu {
 		items.set(8, new MenuItem("Info", Material.SIGN, lore));
 
 		// 6,15 - dummies
-		item = new MenuItem(" ", Mat.STAINED_GLASS_PANE.e());
+		item = new MenuItem(" ", Mat.STAINED_GLASS_PANE.match());
 		this.setItem(6, item);
 		this.setItem(15, item);
 		this.setItem(16, item);
@@ -165,7 +165,7 @@ public class ItemEditMenu extends Menu {
 		lore.add("<click> - and enter the");
 		lore.add("desired lore.");
 		lore.add("Type none for no lore.");
-		item = new MenuItem("Lore", Mat.BOOK_AND_QUILL.e(), lore);
+		item = new MenuItem("Lore", Mat.BOOK_AND_QUILL.match(), lore);
 		{
 			item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
@@ -278,7 +278,7 @@ public class ItemEditMenu extends Menu {
 		this.setItem(7, input);
 
 		// 26 - save button
-		item = new MenuItem("Save", Mat.GREEN_STAINED_GLASS_PANE.f(), (short) 13, 1);
+		item = new MenuItem("Save", Mat.GREEN_STAINED_GLASS_PANE.remove_first(), (short) 13, 1);
 		item.setButtonClickHandler(item.new ButtonClickHandler(this) {
 
 			@Override

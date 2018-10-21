@@ -51,7 +51,7 @@ public class SpellMenu extends Menu {
 			lore.add(ChatColor.AQUA + e.substring(0, e.length() - 1));
 			if (t && canstillpowerup)
 				lore.add(ChatColor.GOLD + Msg.getMessage(Key.SPELL_CLICK_POWER));
-			item = new MenuItem(value.first.getName(), Mat.BOOK_AND_QUILL.e(), lore);
+			item = new MenuItem(value.first.getName(), Mat.BOOK_AND_QUILL.match(), lore);
 			{
 				final MenuItem final_item = item;
 				if (t && canstillpowerup)
