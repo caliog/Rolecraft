@@ -28,23 +28,26 @@ public class MobSpawner {
 	public static Set<MobSpawnZone> zones = new HashSet<MobSpawnZone>();
 	public static HashMap<String, String> mobs = new HashMap<String, String>();
 
+	public static void loadMobs() {
+		mobs.clear();
+		File m = new File(FilePath.mobs);
+		for (File ff : m.listFiles()) {
+			if (!ff.isDirectory() && ff.getName().endsWith(".yml")) {
+				YamlConfiguration c = YamlConfiguration.loadConfiguration(ff);
+				if (c.isSet("name")) {
+					mobs.put(ff.getName().replace(".yml", ""), c.getString("name"));
+				}
+			}
+		}
+	}
+
 	public static void loadZones() throws IOException {
 		File f = new File(FilePath.szFile);
 		if (!f.exists()) {
 			return;
 		}
-		{
-			// Load mobs
-			File m = new File(FilePath.mobs);
-			for (File ff : m.listFiles()) {
-				if (!ff.isDirectory() && ff.getName().endsWith(".yml")) {
-					YamlConfiguration c = YamlConfiguration.loadConfiguration(ff);
-					if (c.isSet("name")) {
-						mobs.put(ff.getName().replace(".yml", ""), c.getString("name"));
-					}
-				}
-			}
-		}
+
+		loadMobs();
 
 		BufferedReader reader = new BufferedReader(new FileReader(f));
 		String line = "";
@@ -97,7 +100,8 @@ public class MobSpawner {
 		if (m != null) {
 			for (MobSpawnZone zone : zones) {
 				if (zone.getM().equals(m.getSpawnZone())) {
-					if (m.getSpawnZone().distanceSquared(e.getLocation()) <= 3.5D * zone.getRadius() * zone.getRadius()) {
+					if (m.getSpawnZone().distanceSquared(e.getLocation()) <= 3.5D * zone.getRadius()
+							* zone.getRadius()) {
 						return true;
 					}
 					return false;

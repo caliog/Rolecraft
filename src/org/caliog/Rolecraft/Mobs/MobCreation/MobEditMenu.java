@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.caliog.Rolecraft.Manager;
+import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.XMechanics.Menus.Menu;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuInventoryView;
 import org.caliog.Rolecraft.XMechanics.Menus.MenuItem;
@@ -439,6 +440,7 @@ public class MobEditMenu extends Menu {
 				if (skel.saveToFile()) {
 					player.sendMessage(
 							CmdMessage.savedItemMob.replaceAll("%A%", skel.getName() + "_" + skel.getLevel()));
+					MobSpawner.loadMobs();
 				} else
 					player.sendMessage(CmdMessage.failedSaveItemMob);
 				MenuManager.exitMenu(player);
