@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -25,29 +24,30 @@ import org.caliog.Rolecraft.Spells.Mechanics.Spell;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger;
 import org.caliog.Rolecraft.XMechanics.Utils.IO.Debugger.LogTitle;
+import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Curses.VCDustOptions;
 
 public class Curse extends Spell {
 
-	// TODO version controll
+	//TODO test
 	public enum CurseType {
 		// @formatter:off
-		AQUA(Particle.REDSTONE, 0F, new DustOptions(Color.AQUA, 1.5F)),
-		BLACK(Particle.REDSTONE, 0F, new DustOptions(Color.BLACK, 1.5F)),
-		BLUE(Particle.REDSTONE, 0F, new DustOptions(Color.BLUE, 1.5F)),
-		FUCHSIA(Particle.REDSTONE, 0F, new DustOptions(Color.FUCHSIA, 1.5F)),
-		GRAY(Particle.REDSTONE, 0F, new DustOptions(Color.GRAY, 1.5F)),
-		GREEN(Particle.REDSTONE, 0F, new DustOptions(Color.GREEN, 1.5F)),
-		LIME(Particle.REDSTONE, 0F, new DustOptions(Color.LIME, 1.5F)),
-		MAROON(Particle.REDSTONE, 0F, new DustOptions(Color.MAROON, 1.5F)),
-		NAVY(Particle.REDSTONE, 0F, new DustOptions(Color.NAVY, 1.5F)),
-		OLIVE(Particle.REDSTONE, 0F, new DustOptions(Color.OLIVE, 1.5F)),
-		ORANGE(Particle.REDSTONE, 0F, new DustOptions(Color.ORANGE, 1.5F)),
-		PURPLE(Particle.REDSTONE, 0F, new DustOptions(Color.PURPLE, 1.5F)),
-		RED(Particle.REDSTONE, 0F, new DustOptions(Color.RED, 1.5F)),
-		SILVER(Particle.REDSTONE, 0F, new DustOptions(Color.SILVER, 1.5F)),
-		TEAL(Particle.REDSTONE, 0F, new DustOptions(Color.TEAL, 1.5F)),
-		WHITE(Particle.REDSTONE, 0F, new DustOptions(Color.WHITE, 1.5F)),
-		YELLOW(Particle.REDSTONE, 0F, new DustOptions(Color.YELLOW, 1.5F)),
+		AQUA(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.AQUA, 1.5F)),
+		BLACK(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.BLACK, 1.5F)),
+		BLUE(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.BLUE, 1.5F)),
+		FUCHSIA(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.FUCHSIA, 1.5F)),
+		GRAY(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.GRAY, 1.5F)),
+		GREEN(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.GREEN, 1.5F)),
+		LIME(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.LIME, 1.5F)),
+		MAROON(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.MAROON, 1.5F)),
+		NAVY(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.NAVY, 1.5F)),
+		OLIVE(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.OLIVE, 1.5F)),
+		ORANGE(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.ORANGE, 1.5F)),
+		PURPLE(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.PURPLE, 1.5F)),
+		RED(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.RED, 1.5F)),
+		SILVER(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.SILVER, 1.5F)),
+		TEAL(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.TEAL, 1.5F)),
+		WHITE(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.WHITE, 1.5F)),
+		YELLOW(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.YELLOW, 1.5F)),
 		DOLPHIN(Particle.DOLPHIN, 1F),
 		MAGIC(Particle.CRIT_MAGIC, 0.5F),
 		SPELL(Particle.SPELL,0.7F),
