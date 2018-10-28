@@ -32,8 +32,8 @@ public class MenuInventoryView extends InventoryView {
 			public void onInventoryClick(InventoryClickEvent event) {
 				Inventory inv = null;
 				Class<?>[] a = new Class<?>[0];
-				if (Reflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent",
-						"getClickedInventory", a)) {
+				if (Reflect.isBukkitMethod("org.bukkit.event.inventory.InventoryClickEvent", "getClickedInventory",
+						a)) {
 					inv = event.getClickedInventory();
 				} else {
 					inv = event.getInventory();
@@ -91,10 +91,11 @@ public class MenuInventoryView extends InventoryView {
 	}
 
 	public boolean clicked(InventoryClickEvent event) {
-		if (event.getInventory() != null && event.getInventory().getTitle() != null)
-			if (event.getInventory().getTitle().equals(top.getTitle()))
+		if (event.getInventory() != null)
+			if (event.getInventory().equals(this.top))
 				return menu.clicked(event);
-		return false;
+		// didnt click menu;
+		return true;
 	}
 
 	public void reload() {

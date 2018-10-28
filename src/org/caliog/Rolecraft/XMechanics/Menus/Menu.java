@@ -79,11 +79,12 @@ public abstract class Menu {
 	}
 
 	public boolean clicked(InventoryClickEvent event) {
-		if (items.size() > event.getSlot()) {
-			items.get(event.getSlot()).onClick(event);
-			return items.get(event.getSlot()).isEditable();
+		if (items.size() > event.getRawSlot()) {
+			items.get(event.getRawSlot()).onClick(event);
+			return items.get(event.getRawSlot()).isEditable();
 		}
-		return false;
+		// item not in Menu; editable
+		return true;
 	}
 
 	public boolean giveToolToPlayers() {

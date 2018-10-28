@@ -78,7 +78,7 @@ public class TraderEditMenu extends Menu {
 															+ ChatColor.GRAY + "(q to quit)");
 											return;
 										} else {
-											((TraderEditMenu) getMenu()).changedCosts(event.getSlot(),
+											((TraderEditMenu) getMenu()).changedCosts(event.getRawSlot(),
 													Integer.valueOf(lastLine));
 											quit();
 										}
