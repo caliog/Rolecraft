@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.caliog.Rolecraft.Entities.Player.ClazzLoader;
+import org.caliog.Rolecraft.Mobs.MobSpawner;
 import org.caliog.Rolecraft.XMechanics.RolecraftConfig;
 import org.caliog.Rolecraft.XMechanics.Commands.Utils.CommandRegister;
 import org.caliog.Rolecraft.XMechanics.Listeners.DamageListener;
@@ -221,11 +222,13 @@ public class RolecraftPlugin extends JavaPlugin {
 
 	}
 
+	// why not disable / enable ?
 	public void reload() {
-		Debugger.info(LogTitle.NONE, "Reloading Rolecraft version:", serverVersion);
+		Debugger.info(LogTitle.NONE, "Reloading Rolecraft version:", this.getDescription().getVersion());
 		RolecraftConfig.config = YamlConfiguration.loadConfiguration(new File(FilePath.config));
 		Msg.file = YamlConfiguration.loadConfiguration(new File(FilePath.messages));
 		ClazzLoader.classes = YamlConfiguration.loadConfiguration(new File(FilePath.classes));
+		MobSpawner.loadMobs();
 		Manager.cancelTask(backupTask);
 		if (RolecraftConfig.getBackupTime() > 0)
 			backupTask = Manager.scheduleRepeatingTask(DataFolder.backupTask(),
