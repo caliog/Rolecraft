@@ -18,8 +18,8 @@ import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Items.CustomItem;
 import org.caliog.Rolecraft.Items.ItemEffect;
 import org.caliog.Rolecraft.Items.ItemEffect.ItemEffectType;
-import org.caliog.Rolecraft.Mobs.Pets.Pet;
 import org.caliog.Rolecraft.Items.Books.Spellbook;
+import org.caliog.Rolecraft.Mobs.Pets.Pet;
 import org.caliog.Rolecraft.Spells.InvisibleSpell;
 import org.caliog.Rolecraft.Spells.Mechanics.Spell;
 import org.caliog.Rolecraft.Spells.Mechanics.SpellBarManager;
@@ -268,8 +268,8 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		default:
 			return;
 		}
-		if ((this.spell[0] == -1) && (this.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.BOW) ? s == 0 : s == 1)
-				&& (!getPlayer().isSneaking())) {
+		if ((this.spell[0] == -1) && (this.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.BOW)
+				? s == 0 : s == 1) && (!getPlayer().isSneaking())) {
 			return;
 		}
 		for (int i = 0; i < this.spell.length; i++) {
@@ -302,7 +302,8 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 	protected void castSpell() {
 		List<String> possible = ClazzLoader.getSpells(this.type);
 		for (String id : spells.keySet()) {
-			if (!possible.contains(spells.get(id).first.getName()))
+			if (!possible.contains(spells.get(id).first.getName())
+					&& !possible.contains(spells.get(id).first.getIdentifier()))
 				continue;
 			if (id.equals(String.valueOf(spell[0]) + String.valueOf(spell[1]) + String.valueOf(spell[2]))) {
 				Spell spell = spells.get(id).first;
@@ -318,8 +319,8 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 					}
 			}
 		}
-		Debugger.error(LogTitle.SPELL, "%s tried to cast spell:", getPlayer().getName(), String.valueOf(spell[0]), String.valueOf(spell[1]),
-				String.valueOf(spell[2]));
+		Debugger.error(LogTitle.SPELL, "%s tried to cast spell:", getPlayer().getName(), String.valueOf(spell[0]),
+				String.valueOf(spell[1]), String.valueOf(spell[2]));
 		BottomBar.display(getPlayer(), ChatColor.RED + "" + ChatColor.MAGIC + "Uups");
 	}
 
@@ -344,7 +345,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 		if (!config.isConfigurationSection("spells"))
 			config.createSection("spells");
 		for (Pair<Spell, Integer> value : spells.values()) {
-			config.set("spells." + value.first.getName(), value.second);
+			config.set("spells." + value.first.getIdentifier(), value.second);
 		}
 
 		config.save(file);
@@ -373,7 +374,7 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 					int power = config.getInt("spells." + spell, -1);
 					Spell s = SpellLoader.load(this, spell);
 					if (s != null) {
-						spells.put(spell, new Pair<Spell, Integer>(s, power));
+						spells.put(s.getIdentifier(), new Pair<Spell, Integer>(s, power));
 						s.reloadPower();
 					}
 				}
@@ -413,19 +414,21 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 
 	public void addSpell(String id, String spell) {
 		Pair<Spell, Integer> pair = null;
-		if (spells.containsKey(spell)) // in case there is a loaded spell dummy
+		spell = SpellLoader.getIdentifier(spell);
+		if (spells.containsKey(spell)) { // in case there is a loaded spell dummy
 			pair = spells.get(spell);
-		else {
+		} else {
 			Spell s = SpellLoader.load(this, spell);
 			if (s != null) {
 				pair = new Pair<Spell, Integer>(s, 0);
 				s.reloadPower();
 			}
 		}
-		if (pair != null)
+		if (pair != null) {
 			spells.put(id, pair);
-		else
-			Debugger.warning(LogTitle.SPELL, "%s gave a null loaded spell with spell=%s (in RolecraftPlayer.addSpell)", getName(), spell);
+		} else
+			Debugger.warning(LogTitle.SPELL, "%s gave a null loaded spell with spell=%s (in RolecraftPlayer.addSpell)",
+					getName(), spell);
 		spells.remove(spell); // removing spell dummy
 	}
 
@@ -447,7 +450,8 @@ public class RolecraftPlayer extends RolecraftAbstrPlayer {
 
 	public boolean spawnPet(Location loc, String name, String customName) {
 		Pet pet = Pet.spawnPet(name, customName, loc);
-		Debugger.info(LogTitle.PET, "%s is trying to spawn his pet: (name=%s)", getPlayer().getName(), name, customName);
+		Debugger.info(LogTitle.PET, "%s is trying to spawn his pet: (name=%s)", getPlayer().getName(), name,
+				customName);
 		if (pet == null)
 			return false;
 		Debugger.info(LogTitle.PET, "%s successfully spawned: (name=%s)", getPlayer().getName(), name, customName);

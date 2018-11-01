@@ -37,7 +37,7 @@ public class SpellMenu extends Menu {
 		int c = -1;
 		List<String> showOnly = ClazzLoader.getSpells(player.getType());
 		for (String k : map.keySet()) {
-			if (!showOnly.contains(map.get(k).first.getName()))
+			if (!showOnly.contains(map.get(k).first.getName()) && !showOnly.contains(map.get(k).first.getIdentifier()))
 				continue;
 			c++;
 			if (c >= 8)

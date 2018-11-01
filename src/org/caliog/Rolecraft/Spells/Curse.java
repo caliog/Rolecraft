@@ -28,7 +28,6 @@ import org.caliog.Rolecraft.XMechanics.Utils.VersionControll.Curses.VCDustOption
 
 public class Curse extends Spell {
 
-	//TODO test
 	public enum CurseType {
 		// @formatter:off
 		AQUA(Particle.REDSTONE, 0F, VCDustOptions.getDustOptions(Color.AQUA, 1.5F)),

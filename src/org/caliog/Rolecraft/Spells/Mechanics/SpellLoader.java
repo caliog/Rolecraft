@@ -146,13 +146,19 @@ public class SpellLoader {
 	}
 
 	public static boolean isCurse(String name) {
-		if (name.equals("Curse"))
-			return true;
 		File f = new File(FilePath.spells + name + ".yml");
 		if (f.exists()) {
 			YamlConfiguration spells = YamlConfiguration.loadConfiguration(f);
 			return spells.isConfigurationSection("curse");
 		}
 		return false;
+	}
+
+	public static String getIdentifier(String name) {
+		for (String key : spellIdName.keySet())
+			if (spellIdName.get(key).equals(name)) {
+				return key;
+			}
+		return name;
 	}
 }

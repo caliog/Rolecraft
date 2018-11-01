@@ -7,8 +7,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.caliog.Rolecraft.Manager;
 import org.caliog.Rolecraft.Entities.Player.RolecraftAbstrPlayer;
 import org.caliog.Rolecraft.Entities.Player.RolecraftPlayer;
-import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Messages.Key;
+import org.caliog.Rolecraft.XMechanics.Messages.Msg;
 import org.caliog.Rolecraft.XMechanics.Resource.FilePath;
 import org.caliog.Rolecraft.XMechanics.Utils.Utils;
 
@@ -16,7 +16,7 @@ public abstract class Spell {
 	private final RolecraftPlayer player;
 	private boolean active = false;
 	private String name;
-	private String identifier;
+	private final String identifier;
 	private int power = 0;
 	private final int maxPower;
 	private YamlConfiguration config;
@@ -25,7 +25,7 @@ public abstract class Spell {
 
 	public Spell(RolecraftPlayer player, String identifier) {
 		this.player = player;
-		this.setIdentifier(identifier);
+		this.identifier = identifier;
 		this.config = YamlConfiguration.loadConfiguration(new File(FilePath.spells + identifier + ".yml"));
 		if (config != null) {
 			this.setName(config.getString("name", identifier));
@@ -172,8 +172,4 @@ public abstract class Spell {
 		this.name = name;
 	}
 
-	private void setIdentifier(String identifier) {
-		this.identifier = identifier;
-
-	}
 }

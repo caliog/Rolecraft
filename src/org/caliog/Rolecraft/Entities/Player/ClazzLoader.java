@@ -102,9 +102,9 @@ public class ClazzLoader {
 		return r;
 	}
 
-	public static List<String> getSpells(String name) {
+	public static List<String> getSpells(String clazz) {
 		List<String> empty = new ArrayList<String>();
-		return spellMap.containsKey(name) ? spellMap.get(name) : empty;
+		return spellMap.containsKey(clazz) ? spellMap.get(clazz) : empty;
 	}
 
 	public static String getNextClass(String c) {
