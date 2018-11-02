@@ -31,7 +31,7 @@ public abstract class GroupManager {
 	}
 
 	public static void updateGroup(Player player, int level) {
-		if (permission == null || player == null)
+		if (permission == null || player == null || !permission.hasGroupSupport())
 			return;
 		String[] ignore = RolecraftConfig.getIgnoredPlayers();
 		if (ignore != null)
@@ -62,7 +62,7 @@ public abstract class GroupManager {
 	}
 
 	public static String getGroup(RolecraftPlayer player) {
-		if (permission != null)
+		if (permission != null && permission.hasGroupSupport())
 			return permission.getPrimaryGroup(player.getPlayer());
 		return null;
 	}

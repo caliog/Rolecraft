@@ -24,12 +24,13 @@ public class CommandExe {
 	public void exe() {
 		RolecraftPlayer player = PlayerManager.getPlayer(this.player.getUniqueId());
 		if (player == null) {
-			this.player.sendMessage(ChatColor.RED + "Uups, I don't know you! Maybe try to login again. See console for more information!");
-			Manager.plugin.getLogger()
-					.warning("Could not identify " + this.player.getName() + ". Check your config and class configuration.");
+			this.player.sendMessage(ChatColor.RED
+					+ "Uups, I don't know you! Maybe try to login again. See console for more information!");
+			Manager.plugin.getLogger().warning(
+					"Could not identify " + this.player.getName() + ". Check your config and class configuration.");
 			return;
 		}
-		if (!player.hasPermission(cmd.getPermission())) {
+		if (!player.getPlayer().isOp() && !player.hasPermission(cmd.getPermission())) {
 			Msg.noPermission(this.player);
 			return;
 		}

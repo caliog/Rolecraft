@@ -6,14 +6,15 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 
 public class Permissions {
+
 	private static Set<String> permissions = new HashSet<String>();
 
 	public static Set<String> getPermissions(Player player) {
 		Set<String> list = new HashSet<String>();
 
-		if (player.isOp() || player.hasPermission("rc.admin") || player.hasPermission("rc.*") || player.hasPermission("*")
-				|| player.hasPermission("'*'")) {
-			return permissions;
+		if (player.isOp() || player.hasPermission("rc.admin") || player.hasPermission("rc.*")
+				|| player.hasPermission("*") || player.hasPermission("'*'")) {
+			return new HashSet<String>(permissions);
 		} else {
 			for (String p : permissions) {
 				String[] split = p.split("\\.");
